@@ -20,6 +20,13 @@
 		591DC77221B6825500D66900 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC77121B6825500D66900 /* Renderable.swift */; };
 		5973DD4821B79F8C0097D1D6 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4721B79F8C0097D1D6 /* Vertex.swift */; };
 		5973DD4A21B79FB40097D1D6 /* VertexInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4921B79FB40097D1D6 /* VertexInfo.swift */; };
+		59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7221B7ADE8007E717E /* Camera.swift */; };
+		59E0EE7521B7D071007E717E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* Extension.swift */; };
+		59E0EE7A21B7D64E007E717E /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */; };
+		59E0EE7C21B7D651007E717E /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7B21B7D651007E717E /* ReactiveCocoa.framework */; };
+		59E0EE7E21B7D655007E717E /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7D21B7D655007E717E /* Result.framework */; };
+		59E0EE8021B7D7CB007E717E /* MetalCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7F21B7D7CB007E717E /* MetalCamera.swift */; };
+		59E0EE8321B7DD3F007E717E /* ImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE8221B7DD3F007E717E /* ImageSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +66,14 @@
 		591DC77121B6825500D66900 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		5973DD4721B79F8C0097D1D6 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		5973DD4921B79FB40097D1D6 /* VertexInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexInfo.swift; sourceTree = "<group>"; };
+		59E0EE7221B7ADE8007E717E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		59E0EE7421B7D071007E717E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		59E0EE7721B7D647007E717E /* ReactiveMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMapKit.framework; path = Carthage/Build/iOS/ReactiveMapKit.framework; sourceTree = "<group>"; };
+		59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		59E0EE7B21B7D651007E717E /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		59E0EE7D21B7D655007E717E /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		59E0EE7F21B7D7CB007E717E /* MetalCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalCamera.swift; sourceTree = "<group>"; };
+		59E0EE8221B7DD3F007E717E /* ImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +81,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59E0EE7E21B7D655007E717E /* Result.framework in Frameworks */,
+				59E0EE7A21B7D64E007E717E /* ReactiveSwift.framework in Frameworks */,
+				59E0EE7C21B7D651007E717E /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +111,7 @@
 				591DC75121B61CA800D66900 /* MetalTestTests */,
 				591DC75C21B61CA800D66900 /* MetalTestUITests */,
 				591DC73B21B61CA700D66900 /* Products */,
+				59E0EE7621B7D646007E717E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +130,10 @@
 			children = (
 				591DC73D21B61CA700D66900 /* AppDelegate.swift */,
 				591DC73F21B61CA700D66900 /* ViewController.swift */,
+				59E0EE7221B7ADE8007E717E /* Camera.swift */,
+				59E0EE7F21B7D7CB007E717E /* MetalCamera.swift */,
+				59E0EE8221B7DD3F007E717E /* ImageSource.swift */,
+				59E0EE7421B7D071007E717E /* Extension.swift */,
 				591DC76F21B6705700D66900 /* Types.swift */,
 				5973DD4721B79F8C0097D1D6 /* Vertex.swift */,
 				5973DD4921B79FB40097D1D6 /* VertexInfo.swift */,
@@ -143,6 +166,17 @@
 			path = MetalTestUITests;
 			sourceTree = "<group>";
 		};
+		59E0EE7621B7D646007E717E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59E0EE7D21B7D655007E717E /* Result.framework */,
+				59E0EE7B21B7D651007E717E /* ReactiveCocoa.framework */,
+				59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */,
+				59E0EE7721B7D647007E717E /* ReactiveMapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -153,6 +187,7 @@
 				591DC73621B61CA700D66900 /* Sources */,
 				591DC73721B61CA700D66900 /* Frameworks */,
 				591DC73821B61CA700D66900 /* Resources */,
+				59E0EE8121B7D885007E717E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -269,6 +304,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		59E0EE8121B7D885007E717E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		591DC73621B61CA700D66900 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -277,11 +335,15 @@
 				591DC76C21B623A900D66900 /* Shader.metal in Sources */,
 				591DC76E21B64C2500D66900 /* Renderer.swift in Sources */,
 				591DC74021B61CA700D66900 /* ViewController.swift in Sources */,
+				59E0EE8021B7D7CB007E717E /* MetalCamera.swift in Sources */,
 				591DC77221B6825500D66900 /* Renderable.swift in Sources */,
 				591DC77021B6705700D66900 /* Types.swift in Sources */,
+				59E0EE7521B7D071007E717E /* Extension.swift in Sources */,
 				5973DD4A21B79FB40097D1D6 /* VertexInfo.swift in Sources */,
+				59E0EE8321B7DD3F007E717E /* ImageSource.swift in Sources */,
 				5973DD4821B79F8C0097D1D6 /* Vertex.swift in Sources */,
 				591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */,
+				59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +520,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GK254W84RB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MetalTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -477,6 +543,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GK254W84RB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = MetalTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (

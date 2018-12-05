@@ -12,6 +12,8 @@ import Metal
 
 class ViewController: UIViewController {
 
+    let camera = MetalCamera()
+    
     var metalView: MTKView!
     
     var renderer: Renderer!
