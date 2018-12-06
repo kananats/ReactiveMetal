@@ -13,8 +13,17 @@ import ReactiveSwift
 // MARK: Main
 public final class MetalCamera: Camera {
     
+    /// Metal supported device
+    private let device: MTLDevice
+    
     /// Pipe for observing `MTLTexture` output
     private let pipe = Signal<MTLTexture, NoError>.pipe()
+    
+    init?(device: MTLDevice, position: AVCaptureDevice.Position = .back) {
+        self.device = device
+        
+        super.init(position: position)
+    }
 }
 
 // MARK: Inheritance

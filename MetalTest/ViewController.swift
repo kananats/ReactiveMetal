@@ -12,23 +12,20 @@ import Metal
 
 class ViewController: UIViewController {
 
-    let camera = MetalCamera()
+    var camera: MetalCamera!
     
-    var metalView: MTKView!
-    
-    var renderer: Renderer!
+    var renderView: RenderView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.renderer = Renderer()
+        guard let device = MTLCreateSystemDefaultDevice() else { return }
         
-        self.metalView = MTKView(frame: self.view.frame)
-        self.metalView.delegate = self.renderer
-        self.metalView.device = self.renderer.device
+        self.camera = MetalCamera(device: device)
+        self.renderView = RenderView(device: device, frame: self.view.frame)
 
-        self.view.addSubview(self.metalView)
+        self.view.addSubview(self.renderView)
     }
 }
 

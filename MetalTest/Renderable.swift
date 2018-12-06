@@ -12,11 +12,9 @@ import MetalKit
 protocol Renderable {
     
     /// Metal device
-    /// Make strong reference to this
     var device: MTLDevice { get }
     
     /// Command queue of metal device
-    /// Make strong reference to this
     var commandQueue: MTLCommandQueue { get }
     
     /// Render pipeline state

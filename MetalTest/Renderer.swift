@@ -10,18 +10,21 @@ import MetalKit
 
 // MARK: Main
 class Renderer: NSObject {
-    
+
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     
+    public var texture: MTLTexture?
+
     private var _vertexBuffer: MTLBuffer!
     private var _indexBuffer: MTLBuffer!
     private var _pipelineState: MTLRenderPipelineState!
     
-    init?(device: MTLDevice! = MTLCreateSystemDefaultDevice()) {
-        
-        // Check if device supports Metal
-        guard let device = device, let commandQueue = device.makeCommandQueue() else { return nil }
+    init(device: MTLDevice) {
+
+        guard let commandQueue = device.makeCommandQueue() else {
+            fatalError("Unable to initialize `commandQueue`")
+        }
         
         self.device = device
         self.commandQueue = commandQueue
@@ -60,11 +63,4 @@ extension Renderer: Renderable {
 
     var indexCount: Int { return Data.indices.count }
     
-}
-
-extension Renderer: MTKViewDelegate {
-    
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
-    
-    func draw(in view: MTKView) { self.render(in: view) }
 }
