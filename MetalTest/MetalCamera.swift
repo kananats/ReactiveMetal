@@ -33,6 +33,7 @@ extension MetalCamera {
 
 // MARK: Protocol
 extension MetalCamera: ImageSource {
+    
     typealias Output = MTLTexture
     
     var output: Signal<MTLTexture, NoError> { return self.pipe.output }

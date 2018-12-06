@@ -74,6 +74,7 @@ extension Renderable {
     
     /// Renders in a `MTKView`
     func render(in view: MTKView) {
+        
         guard let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }

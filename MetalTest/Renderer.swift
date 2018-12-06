@@ -6,7 +6,6 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
-import Metal
 import MetalKit
 
 // MARK: Main
