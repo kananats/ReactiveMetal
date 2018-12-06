@@ -7,59 +7,14 @@
 //
 
 import MetalKit
+import ReactiveSwift
 
-// MARK: Main
-class Renderer: NSObject {
-
-    let device: MTLDevice
-    let commandQueue: MTLCommandQueue
+/// Renderer
+protocol Renderer {
     
-    public var texture: MTLTexture?
-
-    private var _vertexBuffer: MTLBuffer!
-    private var _indexBuffer: MTLBuffer!
-    private var _pipelineState: MTLRenderPipelineState!
+    /// Type of the view
+    associatedtype View: UIView
     
-    init(device: MTLDevice) {
-
-        guard let commandQueue = device.makeCommandQueue() else {
-            fatalError("Failed to initialize `commandQueue`")
-        }
-        
-        self.device = device
-        self.commandQueue = commandQueue
-        
-        super.init()
-        
-        guard let vertexBuffer = self.makeBuffer(from: Data.vertices) else {
-            fatalError("Failed to initialize `vertexBuffer`")
-        }
-        
-        guard let indexBuffer = self.makeBuffer(from: Data.indices) else {
-            fatalError("Failed to initialize `indexBuffer`")
-        }
-        
-        guard let pipelineState = self.makePipelineState(vertexShader: "vertex_shader", fragmentShader: "fragment_shader") else {
-            fatalError("Failed to initialize `pipelineState`")
-        }
-
-        self._vertexBuffer = vertexBuffer
-        self._indexBuffer = indexBuffer
-        
-        self._pipelineState = pipelineState
-    }
-}
-
-// MARK: Protocol
-extension Renderer: Renderable {
-    
-    var vertexBuffer: MTLBuffer { return self._vertexBuffer }
-    
-    var indexBuffer: MTLBuffer { return self._indexBuffer }
-    
-    var pipelineState: MTLRenderPipelineState { return self._pipelineState }
-    
-    var vertexDescriptor: MTLVertexDescriptor { return Vertex.descriptor }
-
-    var indexCount: Int { return Data.indices.count }
+    /// Renders on the view
+    func render(in view: View)
 }

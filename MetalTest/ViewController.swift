@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         
         self.camera = MetalCamera(device: device)
         self.renderView = RenderView(device: device, frame: self.view.frame)
-
+        
         self.view.addSubview(self.renderView)
     }
 }

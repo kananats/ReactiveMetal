@@ -1,50 +1,53 @@
 //
-//  Renderable.swift
+//  MetalRenderer.swift
 //  MetalTest
 //
-//  Created by s.kananat on 2018/12/04.
+//  Created by s.kananat on 2018/12/06.
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
-import Metal
 import MetalKit
 
-protocol Renderable {
+/// Renderer using metal supported device
+protocol MetalRenderer: Renderer where View == MTKView {
     
-    /// Metal device
+    /// Metal supported device
     var device: MTLDevice { get }
     
-    /// Command queue of metal device
+    /// Command queue of metal supported device
     var commandQueue: MTLCommandQueue { get }
     
     /// Render pipeline state
-    var pipelineState: MTLRenderPipelineState { get }
+    var pipelineState: MTLRenderPipelineState! { get }
     
-    /// Vertex buffer
-    var vertexBuffer: MTLBuffer { get }
-    
-    /// Vertex descriptor
-    var vertexDescriptor: MTLVertexDescriptor { get }
-    
-    /// Index buffer
-    var indexBuffer: MTLBuffer { get }
-    
-    /// Index count
-    var indexCount: Int { get }
+    /// Encode
+    func encode(with encoder: MTLRenderCommandEncoder)
 }
 
-extension Renderable {
+extension MetalRenderer {
     
-    /// Make buffer from array
+    /// Makes buffer from `Array<T>`
     func makeBuffer<T>(from array: [T]) -> MTLBuffer? {
         return self.device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)
     }
-
-    /// Make pipeline state
-    func makePipelineState(vertexShader: String, fragmentShader: String? = nil) -> MTLRenderPipelineState? {
+    
+    /// Makes texture from `UIImage`
+    func makeTexture(from image: UIImage?) -> MTLTexture? {
+        guard let image = image?.cgImage else { return nil }
+        
+        let loader = MTKTextureLoader(device: self.device)
+        
+        var options: [MTKTextureLoader.Option: MTKTextureLoader.Origin] = [:]
+        if #available(iOS 10.0, *) { options = [.origin: .bottomLeft] }
+        
+        return try? loader.newTexture(cgImage: image, options: options)
+    }
+    
+    /// Makes pipeline state
+    func makePipelineState(vertexShader: String, fragmentShader: String? = nil, vertexDescriptor: MTLVertexDescriptor? = nil) -> MTLRenderPipelineState? {
         
         let library = self.device.makeDefaultLibrary()!
- 
+        
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
@@ -63,16 +66,16 @@ extension Renderable {
             
             pipelineDescriptor.fragmentFunction = fragmentFunction
         }
-    
-        // Vertex descriptor
-        pipelineDescriptor.vertexDescriptor = self.vertexDescriptor
         
+        // Vertex descriptor (optional)
+        if let vertexDescriptor = vertexDescriptor {
+            pipelineDescriptor.vertexDescriptor = vertexDescriptor
+        }
+
         return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }
     
-    /// Renders in a `MTKView`
     func render(in view: MTKView) {
-        
         guard let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }
@@ -81,8 +84,7 @@ extension Renderable {
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         
         commandEncoder.setRenderPipelineState(self.pipelineState)
-        commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: self.indexCount, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
+        self.encode(with: commandEncoder)
         
         commandEncoder.endEncoding()
         commandBuffer.present(drawable)

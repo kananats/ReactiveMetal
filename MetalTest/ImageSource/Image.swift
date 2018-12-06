@@ -7,18 +7,21 @@
 //
 
 import MetalKit
+import Result
+import ReactiveSwift
 
 // MARK: Main
 class Image {
     
 }
-/*
+
 // MARK: Protocol
 extension Image: ImageSource {
-
+    
     typealias Output = MTLTexture
     
-    
+    var output: Signal<MTLTexture, NoError> {
+        fatalError()
+    }
 }
-*/
 

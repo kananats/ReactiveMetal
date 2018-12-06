@@ -1,0 +1,55 @@
+//
+//  TextureMapVertex.swift
+//  MetalTest
+//
+//  Created by s.kananat on 2018/12/05.
+//  Copyright © 2018 s.kananat. All rights reserved.
+//
+
+import simd
+
+// MARK: Main
+/// Vertex for mapping texture coordinates to render view
+struct TextureMapVertex {
+    
+    /// position (x, y, z, w)
+    var position: float3
+    
+    /// color (r, g, b, a)
+    var color: float4
+    
+    /// texture coordinates (u, v)
+    var texture: float2
+}
+
+// MARK: Protocol
+extension TextureMapVertex: Vertex {
+    
+    init() { self.init(position: float3(), color: float4(), texture: float2()) }
+}
+
+// MARK: Internal
+extension TextureMapVertex {
+    
+    /// All coordinate vertices
+    static let vertices: [TextureMapVertex] = [.topLeft, .bottomLeft, .bottomRight, .topRight]
+    
+    /// All coordinate indices
+    static let indices: [UInt16] = [0, 1, 2, 2, 3, 0]
+}
+
+// MARK: Private
+extension TextureMapVertex {
+    
+    /// Top left coordinate
+    static let topLeft = TextureMapVertex(position: float3(-1, 1, 0), color: float4(1, 0, 0, 1), texture: float2(0, 1))
+    
+    /// Bottom left coordinate
+    static let bottomLeft = TextureMapVertex(position: float3(-1, -1, 0), color: float4(0, 1, 0, 1), texture: float2(0, 0))
+
+    /// Bottom right coordinate
+    static let bottomRight = TextureMapVertex(position: float3(1, -1, 0), color: float4(0, 0, 1, 1), texture: float2(1, 0))
+    
+    /// Top right coordinate
+    static let topRight = TextureMapVertex(position: float3(1, 1, 0), color: float4(1, 0, 1, 1), texture: float2(1, 1))
+}

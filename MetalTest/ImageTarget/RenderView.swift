@@ -8,14 +8,14 @@
 
 import MetalKit
 
+// MARK: Main
 /// View for rendering image output
 class RenderView: UIView {
     
-    /// Metal supported device
-    private let device: MTLDevice
+    let device: MTLDevice
+    let commandQueue: MTLCommandQueue
     
-    /// Metal renderable
-    private let renderable: Renderable
+    var pipelineState: MTLRenderPipelineState!
     
     /// Metal view
     private lazy var metalView: MTKView = {
@@ -26,11 +26,27 @@ class RenderView: UIView {
         return view
     }()
     
+    /// Texture
+    private var texture: MTLTexture!
+    
+    /// Vertex buffer
+    private var vertexBuffer: MTLBuffer!
+    
+    /// Index buffer
+    private var indexBuffer: MTLBuffer!
+    
     init(device: MTLDevice, frame: CGRect = .zero) {
         self.device = device
-        self.renderable = Renderer(device: device)
+        self.commandQueue = device.makeCommandQueue()!
         
         super.init(frame: frame)
+        
+        self.pipelineState = self.makePipelineState(vertexShader: "vertex_shader", fragmentShader: "fragment_shader", vertexDescriptor: TextureMapVertex.descriptor)!
+        
+        self.vertexBuffer = self.makeBuffer(from: TextureMapVertex.vertices)!
+        self.indexBuffer = self.makeBuffer(from: TextureMapVertex.indices)!
+        
+        self.texture = self.makeTexture(from: UIImage(named: "wallpaper"))!
         
         self.addSubview(self.metalView)
     }
@@ -40,9 +56,20 @@ class RenderView: UIView {
     }
 }
 
+/// MARK: Protocol
+extension RenderView: MetalRenderer {
+    
+    func encode(with encoder: MTLRenderCommandEncoder) {
+        encoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
+        //encoder.setFragmentTexture(self.texture, index: 0)
+        
+        encoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
+    }
+}
+
 extension RenderView: MTKViewDelegate {
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
-    func draw(in view: MTKView) { self.renderable.render(in: view) }
+    func draw(in view: MTKView) { self.render(in: view) }
 }
