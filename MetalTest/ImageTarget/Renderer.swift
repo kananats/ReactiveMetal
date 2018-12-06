@@ -23,7 +23,7 @@ class Renderer: NSObject {
     init(device: MTLDevice) {
 
         guard let commandQueue = device.makeCommandQueue() else {
-            fatalError("Unable to initialize `commandQueue`")
+            fatalError("Failed to initialize `commandQueue`")
         }
         
         self.device = device
@@ -32,15 +32,15 @@ class Renderer: NSObject {
         super.init()
         
         guard let vertexBuffer = self.makeBuffer(from: Data.vertices) else {
-            fatalError("Unable to initialize `vertexBuffer`")
+            fatalError("Failed to initialize `vertexBuffer`")
         }
         
         guard let indexBuffer = self.makeBuffer(from: Data.indices) else {
-            fatalError("Unable to initialize `indexBuffer`")
+            fatalError("Failed to initialize `indexBuffer`")
         }
         
         guard let pipelineState = self.makePipelineState(vertexShader: "vertex_shader", fragmentShader: "fragment_shader") else {
-            fatalError("Unable to initialize `pipelineState`")
+            fatalError("Failed to initialize `pipelineState`")
         }
 
         self._vertexBuffer = vertexBuffer
@@ -62,5 +62,4 @@ extension Renderer: Renderable {
     var vertexDescriptor: MTLVertexDescriptor { return Vertex.descriptor }
 
     var indexCount: Int { return Data.indices.count }
-    
 }

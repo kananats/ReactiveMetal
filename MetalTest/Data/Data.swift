@@ -9,11 +9,12 @@
 import simd
 
 class Data {
+    
     static var vertices: [Vertex] = [
-        Vertex(position: float3(-1, 1, 0), color: float4(1, 0, 0, 1)),
-        Vertex(position: float3(-1, -1, 0), color: float4(0, 1, 0, 1)),
-        Vertex(position: float3(1, -1, 0), color: float4(0, 0, 1, 1)),
-        Vertex(position: float3(1, 1, 0), color: float4(1, 0, 1, 1))
+        Vertex(position: float3(-1, 1, 0), texture: float2(0, 0)),
+        Vertex(position: float3(-1, -1, 0), texture: float2(0, 1)),
+        Vertex(position: float3(1, -1, 0), texture: float2(1, 1)),
+        Vertex(position: float3(1, 1, 0), texture: float2(1, 0))
     ]
     
     static var indices: [UInt16] = [

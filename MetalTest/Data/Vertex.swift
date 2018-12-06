@@ -13,13 +13,11 @@ struct Vertex {
     /// position (x, y, z)
     var position: float3
     
-    /// color (r, g, b, a)
-    var color: float4
+    /// texture (u, v)
+    var texture: float2
 }
 
 extension Vertex: VertexInfo {
     
-    init() {
-        self.init(position: float3(0, 0, 0), color: float4(0, 0, 0, 0))
-    }
+    init() { self.init(position: float3(0, 0, 0), texture: float2(0, 0)) }
 }

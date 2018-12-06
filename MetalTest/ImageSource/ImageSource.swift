@@ -6,6 +6,7 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
+import MetalKit
 import Result
 import ReactiveSwift
 
@@ -16,3 +17,6 @@ protocol ImageSource {
     /// Image output (observable)
     var output: Signal<Output, NoError> { get }
 }
+
+/// Protocol for image source for metal supported device
+protocol MetalImageSource: ImageSource where Output == MTLTexture { }
