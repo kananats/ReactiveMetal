@@ -9,10 +9,6 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct Constants {
-    float moveBy;
-};
-
 struct VertexIn {
     float4 position [[ attribute(0) ]];
     float4 color [[ attribute(1) ]];

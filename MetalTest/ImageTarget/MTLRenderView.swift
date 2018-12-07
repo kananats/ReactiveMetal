@@ -49,9 +49,6 @@ class MTLRenderView: UIView {
         self.vertexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.vertices, device: device)!
         self.indexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.indices, device: device)!
 
-        // TODO
-        self.texture = MTLHelper.makeTexture(from:  UIImage(named: "wallpaper"), device: device)!
-
         self.addSubview(self.metalView)
     }
     
@@ -70,6 +67,8 @@ extension MTLRenderView: MTLRenderer {
     }
     
     func encode(with encoder: MTLRenderCommandEncoder) {
+        guard self.texture != nil else { return }
+        
         encoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         encoder.setFragmentTexture(self.texture, index: 0)
         

@@ -17,6 +17,7 @@ public final class MTLHelper {
 
 // MARK: Public
 public extension MTLHelper {
+    
     /// Makes pipeline state
     static func makePipelineState(vertexShader: String, fragmentShader: String? = nil, vertexDescriptor: MTLVertexDescriptor? = nil, device: MTLDevice) -> MTLRenderPipelineState? {
         
