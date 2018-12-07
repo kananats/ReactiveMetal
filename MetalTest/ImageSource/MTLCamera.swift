@@ -42,25 +42,7 @@ public extension MTLCamera {
         // Makes `MTLTexture` and forward to pipe
         guard let texture = MTLHelper.makeTexture(from: sampleBuffer, textureCache: self.textureCache, device: self.device) else { return }
         
-        // self.pipe.input.send(value: texture)
-        
-        let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
-        
-        let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
-        
-        let image : UIImage = self.convert(cmage: ciimage)
-        
-        guard let kuy = MTLHelper.makeTexture(from: image, device: self.device) else { return }
-        
-        self.pipe.input.send(value: kuy)
-    }
-    
-    func convert(cmage:CIImage) -> UIImage
-    {
-        let context:CIContext = CIContext.init(options: nil)
-        let cgImage:CGImage = context.createCGImage(cmage, from: cmage.extent)!
-        let image:UIImage = UIImage.init(cgImage: cgImage)
-        return image
+        self.pipe.input.send(value: texture)
     }
 }
 

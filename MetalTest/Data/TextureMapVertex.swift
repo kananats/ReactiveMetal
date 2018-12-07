@@ -41,15 +41,16 @@ extension TextureMapVertex {
 // MARK: Private
 extension TextureMapVertex {
     
-    /// Top left coordinate
-    static let topLeft = TextureMapVertex(position: float3(-1, 1, 0), color: float4(1, 0, 0, 1), texture: float2(0, 1))
-    
     /// Bottom left coordinate
-    static let bottomLeft = TextureMapVertex(position: float3(-1, -1, 0), color: float4(0, 1, 0, 1), texture: float2(0, 0))
-
-    /// Bottom right coordinate
-    static let bottomRight = TextureMapVertex(position: float3(1, -1, 0), color: float4(0, 0, 1, 1), texture: float2(1, 0))
+    static let bottomLeft = TextureMapVertex(position: float3(-1, 1, 0), color: float4(1, 0, 0, 1), texture: float2(0, 0))
+    
+    /// Top left coordinate
+    static let topLeft = TextureMapVertex(position: float3(-1, -1, 0), color: float4(0, 1, 0, 1), texture: float2(0, 1))
     
     /// Top right coordinate
-    static let topRight = TextureMapVertex(position: float3(1, 1, 0), color: float4(1, 0, 1, 1), texture: float2(1, 1))
+    static let topRight = TextureMapVertex(position: float3(1, -1, 0), color: float4(0, 0, 1, 1), texture: float2(1, 1))
+
+    /// Bottom right coordinate
+    static let bottomRight =
+        TextureMapVertex(position: float3(1, 1, 0), color: float4(1, 0, 1, 1), texture: float2(1, 0))
 }

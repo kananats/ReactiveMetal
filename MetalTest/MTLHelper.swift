@@ -80,11 +80,8 @@ public extension MTLHelper {
         guard let image = image?.cgImage else { return nil }
         
         let loader = MTKTextureLoader(device: device)
-        
-        var options: [MTKTextureLoader.Option: MTKTextureLoader.Origin] = [:]
-        if #available(iOS 10.0, *) { options = [.origin: .bottomLeft] }
-        
-        return try? loader.newTexture(cgImage: image, options: options)
+
+        return try? loader.newTexture(cgImage: image)
     }
     
     /// Makes `MTLBuffer` from `Array<T>`
