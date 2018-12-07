@@ -10,7 +10,7 @@ import MetalKit
 import ReactiveSwift
 
 /// Renderer
-protocol Renderer {
+protocol Renderer: ImageTarget {
     
     /// Type of the view
     associatedtype View: UIView

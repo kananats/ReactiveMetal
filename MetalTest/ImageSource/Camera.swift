@@ -6,6 +6,7 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
+import UIKit
 import AVFoundation
 
 // MARK: Main
@@ -64,11 +65,34 @@ public class Camera: NSObject {
         // Add output to session
         guard self.session.canAddOutput(self.output) else { return nil }
         
-        self.session.addOutput(output)
+        self.session.addOutput(self.output)
         
         // Finish atomic operation
         self.session.commitConfiguration()
-        
+        /*
+        // Fix orientation
+        UIDevice.current.reactive.orientation.observeValues { [weak self] value in
+            guard let `self` = self else { return }
+            
+            guard let connection = `self`.output.connection(with: .video),
+                connection.isVideoOrientationSupported
+                else { return }
+            
+            let orientation: AVCaptureVideoOrientation
+
+            switch value {
+            case .portraitUpsideDown:
+                orientation = .portraitUpsideDown
+            case .landscapeLeft:
+                orientation = .landscapeLeft
+            case .landscapeRight:
+                orientation = .landscapeRight
+            default:
+                orientation = .portrait
+            }
+            connection.videoOrientation = orientation
+        }
+        */
         // Start running
         self.session.startRunning()
     }
@@ -81,8 +105,21 @@ public class Camera: NSObject {
 // MARK: Protocol
 extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
 
-    public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    public final func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+        guard self.output == output else { return }
+        
+        connection.videoOrientation = .portrait
+        
+        self.didReceiveSampleBuffer(sampleBuffer)
     }
+}
+
+// MARK: Public
+public extension Camera {
+    
+    /// Overrides this to perform custom action with `CMSampleBuffer`
+    @objc func didReceiveSampleBuffer(_ sampleBuffer: CMSampleBuffer) { }
 }
 
 // MARK: Private

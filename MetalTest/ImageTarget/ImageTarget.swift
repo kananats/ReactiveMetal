@@ -12,8 +12,8 @@ import ReactiveSwift
 protocol ImageTarget {
     
     /// Input data type
-    associatedtype Input
+    associatedtype Data
     
-    /// Image input for binding
-    var input: BindingTarget<Input> { get }
+    /// Operates with image input
+    var input: BindingTarget<Data> { get }
 }

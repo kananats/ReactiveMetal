@@ -8,13 +8,14 @@
 
 import UIKit
 import MetalKit
-import Metal
+import ReactiveSwift
 
 class ViewController: UIViewController {
 
-    var camera: MetalCamera!
+    var source: MTLCamera!
+    var target: MTLRenderView!
     
-    var renderView: RenderView!
+    //var camera: MTLCamera!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +23,13 @@ class ViewController: UIViewController {
         
         guard let device = MTLCreateSystemDefaultDevice() else { return }
         
-        self.camera = MetalCamera(device: device)
-        self.renderView = RenderView(device: device, frame: self.view.frame)
+        self.source = MTLCamera(device: device)!
+        //let source = MTLImage(UIImage(named: "wallpaper"), device: device)!
+        self.target = MTLRenderView(device: device, frame: self.view.frame)
         
-        self.view.addSubview(self.renderView)
+        self.target <-- source
+        
+        self.view.addSubview(self.target)
     }
 }
 
