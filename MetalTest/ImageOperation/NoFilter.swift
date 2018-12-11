@@ -11,7 +11,7 @@ import Result
 import ReactiveSwift
 
 /// Filter that passes the input to the output
-final class NoFilter {
+final class NoFilter: NSObject {
     
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
@@ -20,49 +20,36 @@ final class NoFilter {
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
-    private let textureIn: MutableProperty<MTLTexture>
-    private let textureOut: MutableProperty<MTLTexture>
-    
-    var texture: MTLTexture
+    private let textureOut: MutableProperty<MTLTexture?>
     
     init(device: MTLDevice) {
         self.device = device
         self.commandQueue = device.makeCommandQueue()!
         self.pipelineState = MTLHelper.makePipelineState(
             vertexShader: "vertex_nofilter",
+            // TODO
             fragmentShader: "fragment_grayscale",
             vertexDescriptor: TextureMapVertex.descriptor,
             device: device
         )!
         
-        self.texture = MTLHelper.makeEmptyTexture(width: 720, height: 1280, device: device)!
-        self.textureIn = MutableProperty<MTLTexture>(texture)
-        self.textureOut = MutableProperty<MTLTexture>(texture)
+        self.textureOut = MutableProperty<MTLTexture?>(nil)
 
         self.vertexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.vertices, device: device)!
         self.indexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.indices, device: device)!
-        
-        self.textureIn.signal.observeValues { [weak self] value in
-            guard let `self` = self else { return }
-            
-            let b = UIImage.init(mtlTexture: value)
-            
-            
-            `self`.render(texture: value) { value in
-                let a = UIImage.init(mtlTexture: value)
-                
-                `self`.textureOut.swap(value)
-            }
-        }
     }
 }
 
 extension NoFilter: MTLImageOperation {
     var input: BindingTarget<MTLTexture> {
-        return self.textureIn.bindingTarget
+        return self.reactive.makeBindingTarget { `self`, value in
+            `self`.render(texture: value) { value in
+                `self`.textureOut.swap(value)
+            }
+        }
     }
     
     var output: SignalProducer<MTLTexture, NoError> {
-        return self.textureOut.producer
+        return self.textureOut.producer.skipNil()
     }
 }
