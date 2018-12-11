@@ -17,8 +17,8 @@ public final class MTLCamera: Camera {
     
     let device: MTLDevice
     
-    /// Pipe for observing `MTLTexture` output
-    private let pipe = Signal<MTLTexture, NoError>.pipe()
+    /// Latest `MTLTexture`
+    private let texture: MutableProperty<MTLTexture>
     
     /// Texture cache
     private let textureCache: CVMetalTextureCache
@@ -30,6 +30,10 @@ public final class MTLCamera: Camera {
         
         self.textureCache = textureCache
         
+        guard let texture = MTLHelper.makeEmptyTexture(width: 720, height: 1080, device: device) else { return nil }
+        
+        self.texture = MutableProperty(texture)
+        
         super.init(position: position)
     }
 }
@@ -39,15 +43,15 @@ public extension MTLCamera {
     
     override func didReceiveSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
         
-        // Makes `MTLTexture` and forward to pipe
+        // Makes `MTLTexture`
         guard let texture = MTLHelper.makeTexture(from: sampleBuffer, textureCache: self.textureCache, device: self.device) else { return }
         
-        self.pipe.input.send(value: texture)
+        self.texture.swap(texture)
     }
 }
 
 // MARK: Protocol
 extension MTLCamera: MTLImageSource {
     
-    var output: Signal<MTLTexture, NoError> { return self.pipe.output }
+    var output: SignalProducer<MTLTexture, NoError> { return self.texture.producer }
 }

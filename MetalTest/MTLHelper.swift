@@ -85,6 +85,14 @@ public extension MTLHelper {
         return try? loader.newTexture(cgImage: image)
     }
     
+    /// Makes empty `MTLTexture`
+    static func makeEmptyTexture(width: Int, height: Int, device: MTLDevice) -> MTLTexture? {
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
+        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        
+        return device.makeTexture(descriptor: textureDescriptor)
+    }
+    
     /// Makes `MTLBuffer` from `Array<T>`
     static func makeBuffer<T>(from array: [T], device: MTLDevice) -> MTLBuffer? {
         guard array.count > 0 else { return nil }

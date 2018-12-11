@@ -16,39 +16,40 @@ class MTLRenderView: UIView {
     
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
+    let pipelineState: MTLRenderPipelineState
     
-    var pipelineState: MTLRenderPipelineState!
+    let vertexBuffer: MTLBuffer
+    let indexBuffer: MTLBuffer
+    
+    var texture: MTLTexture
     
     /// Metal view
     private lazy var metalView: MTKView = {
         let view = MTKView(frame: frame)
-
+        
         view.device = self.device
         view.delegate = self
         
         return view
     }()
     
-    /// Texture
-    private var texture: MTLTexture!
-    
-    /// Vertex buffer
-    private var vertexBuffer: MTLBuffer!
-    
-    /// Index buffer
-    private var indexBuffer: MTLBuffer!
-    
     init(device: MTLDevice, frame: CGRect = .zero) {
         self.device = device
         self.commandQueue = device.makeCommandQueue()!
-        
-        super.init(frame: frame)
-        
-        self.pipelineState = MTLHelper.makePipelineState(vertexShader: "vertex_shader", fragmentShader: "textured_fragment", vertexDescriptor: TextureMapVertex.descriptor, device: device)!
+        self.pipelineState = MTLHelper.makePipelineState(
+            vertexShader: "vertex_texture",
+            fragmentShader: "fragment_texture",
+            vertexDescriptor: TextureMapVertex.descriptor,
+            device: device
+        )!
         
         self.vertexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.vertices, device: device)!
         self.indexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.indices, device: device)!
 
+        self.texture = MTLHelper.makeEmptyTexture(width: 720, height: 1280, device: device)!
+
+        super.init(frame: frame)
+        
         self.addSubview(self.metalView)
     }
     
@@ -58,21 +59,12 @@ class MTLRenderView: UIView {
 }
 
 /// MARK: Protocol
-extension MTLRenderView: MTLRenderer {
+extension MTLRenderView: MTLImageTarget {
     
     var input: BindingTarget<MTLTexture> {
         return self.reactive.makeBindingTarget { `self`, value in
             `self`.texture = value
         }
-    }
-    
-    func encode(with encoder: MTLRenderCommandEncoder) {
-        guard self.texture != nil else { return }
-        
-        encoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
-        encoder.setFragmentTexture(self.texture, index: 0)
-        
-        encoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
     }
 }
 
@@ -80,5 +72,7 @@ extension MTLRenderView: MTKViewDelegate {
     
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
-    func draw(in view: MTKView) { self.render(in: view) }
+    func draw(in view: MTKView) {
+        self.render(texture: self.texture, in: view)
+    }
 }

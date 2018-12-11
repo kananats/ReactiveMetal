@@ -25,7 +25,7 @@ protocol ImageSource {
     associatedtype Data
     
     /// Image output (observable)
-    var output: Signal<Data, NoError> { get }
+    var output: SignalProducer<Data, NoError> { get }
 }
 
 // MARK: Internal

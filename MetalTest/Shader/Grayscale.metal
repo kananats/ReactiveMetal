@@ -1,8 +1,8 @@
 //
-//  Shader.metal
+//  Grayscale.metal
 //  MetalTest
 //
-//  Created by s.kananat on 2018/12/04.
+//  Created by s.kananat on 2018/12/10.
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
@@ -21,7 +21,7 @@ struct VertexOut {
     float2 texture;
 };
 
-vertex VertexOut vertex_texture(const VertexIn vertexIn [[ stage_in ]]) {
+vertex VertexOut vertex_grayscale(const VertexIn vertexIn [[ stage_in ]]) {
     VertexOut vertexOut;
     vertexOut.position = vertexIn.position;
     vertexOut.color = vertexIn.color;
@@ -29,9 +29,10 @@ vertex VertexOut vertex_texture(const VertexIn vertexIn [[ stage_in ]]) {
     return vertexOut;
 };
 
-fragment half4 fragment_texture(VertexOut vertexIn [[ stage_in ]], texture2d<float> texture [[ texture(0) ]] ) {
-    constexpr sampler defaultSampler;
-    float4 color = texture.sample(defaultSampler, vertexIn.texture);
-    return half4(color);
+fragment half4 fragment_grayscale(VertexOut vertexIn [[ stage_in ]]) {
+    float4 color = vertexIn.color;
+    float gray = (color.r + color.g + color.b) / 3;
+    return half4(gray, gray, gray, color.a);
 }
+
 
