@@ -30,7 +30,7 @@ final class NoFilter {
         self.commandQueue = device.makeCommandQueue()!
         self.pipelineState = MTLHelper.makePipelineState(
             vertexShader: "vertex_nofilter",
-            fragmentShader: "fragment_nofilter",
+            fragmentShader: "fragment_grayscale",
             vertexDescriptor: TextureMapVertex.descriptor,
             device: device
         )!

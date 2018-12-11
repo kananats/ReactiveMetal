@@ -38,7 +38,7 @@ class MTLRenderView: UIView {
         self.commandQueue = device.makeCommandQueue()!
         self.pipelineState = MTLHelper.makePipelineState(
             vertexShader: "vertex_nofilter",
-            fragmentShader: "fragment_grayscale",
+            fragmentShader: "fragment_nofilter",
             vertexDescriptor: TextureMapVertex.descriptor,
             device: device
         )!
