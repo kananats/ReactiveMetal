@@ -14,23 +14,20 @@ import UIKit
 
 // MARK: Main
 public final class MTLCamera: Camera {
-    
-    let device: MTLDevice
-    
+
     /// Latest `MTLTexture`
-    private let texture: MutableProperty<MTLTexture>
+    private let texture: MutableProperty<MTLTexture?>
     
     /// Texture cache
     private let textureCache: CVMetalTextureCache
     
-    init?(device: MTLDevice, position: AVCaptureDevice.Position = .back) {
-        self.device = device
-        
-        guard let textureCache = MTLHelper.makeTextureCache(device: device) else { return nil }
+    override init?(position: AVCaptureDevice.Position = .back) {
+ 
+        guard let textureCache = MTL.default.makeTextureCache() else { return nil }
         
         self.textureCache = textureCache
         
-        guard let texture = MTLHelper.makeEmptyTexture(width: 720, height: 1080, device: device) else { return nil }
+        guard let texture = MTL.default.makeEmptyTexture(width: 720, height: 1080) else { return nil }
         
         self.texture = MutableProperty(texture)
         
@@ -44,7 +41,7 @@ public extension MTLCamera {
     override func didReceiveSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     
         // Makes `MTLTexture`
-        guard let texture = MTLHelper.makeTexture(from: sampleBuffer, textureCache: self.textureCache, device: self.device) else { return }
+        guard let texture = MTL.default.makeTexture(from: sampleBuffer, textureCache: self.textureCache) else { return }
 
         self.texture.swap(texture)
     }
@@ -53,5 +50,5 @@ public extension MTLCamera {
 // MARK: Protocol
 extension MTLCamera: MTLImageSource {
     
-    var output: SignalProducer<MTLTexture, NoError> { return self.texture.producer }
+    var output: SignalProducer<MTLTexture, NoError> { return self.texture.producer.skipNil() }
 }

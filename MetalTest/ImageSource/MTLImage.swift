@@ -12,16 +12,13 @@ import ReactiveSwift
 
 // MARK: Main
 class MTLImage {
-    
-    let device: MTLDevice
-    
+
     /// Latest `MTLTexture` (observable)
     private let texture: MutableProperty<MTLTexture>
     
-    init?(_ image: UIImage?, device: MTLDevice) {
-        self.device = device
+    init?(_ image: UIImage?) {
         
-        guard let texture = MTLHelper.makeTexture(from: image, device: device) else { return nil }
+        guard let texture = MTL.default.makeTexture(from: image) else { return nil }
         
         self.texture = MutableProperty(texture)
     }

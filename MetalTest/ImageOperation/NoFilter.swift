@@ -12,9 +12,7 @@ import ReactiveSwift
 
 /// Filter that passes the input to the output
 final class NoFilter: NSObject {
-    
-    let device: MTLDevice
-    let commandQueue: MTLCommandQueue
+
     let pipelineState: MTLRenderPipelineState
     
     let vertexBuffer: MTLBuffer
@@ -22,21 +20,18 @@ final class NoFilter: NSObject {
     
     private let textureOut: MutableProperty<MTLTexture?>
     
-    init(device: MTLDevice) {
-        self.device = device
-        self.commandQueue = device.makeCommandQueue()!
-        self.pipelineState = MTLHelper.makePipelineState(
-            vertexShader: "vertex_nofilter",
+    override init() {
+        self.pipelineState = MTL.default.makePipelineState(
+            vertexFunctionName: "vertex_nofilter",
             // TODO
-            fragmentShader: "fragment_grayscale",
-            vertexDescriptor: TextureMapVertex.descriptor,
-            device: device
+            fragmentFunctionName: "fragment_grayscale",
+            vertexDescriptor: TextureMapVertex.descriptor
         )!
         
         self.textureOut = MutableProperty<MTLTexture?>(nil)
 
-        self.vertexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.vertices, device: device)!
-        self.indexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.indices, device: device)!
+        self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
+        self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
     }
 }
 

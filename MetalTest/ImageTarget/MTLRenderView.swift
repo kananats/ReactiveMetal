@@ -13,9 +13,7 @@ import ReactiveCocoa
 // MARK: Main
 /// View for rendering image output
 class MTLRenderView: UIView {
-    
-    let device: MTLDevice
-    let commandQueue: MTLCommandQueue
+
     let pipelineState: MTLRenderPipelineState
     
     let vertexBuffer: MTLBuffer
@@ -26,27 +24,23 @@ class MTLRenderView: UIView {
     /// Metal view
     private lazy var metalView: MTKView = {
         let view = MTKView(frame: frame)
-        
-        view.device = self.device
+        view.device = MTL.default.device
         view.delegate = self
         
         return view
     }()
     
-    init(device: MTLDevice, frame: CGRect = .zero) {
-        self.device = device
-        self.commandQueue = device.makeCommandQueue()!
-        self.pipelineState = MTLHelper.makePipelineState(
-            vertexShader: "vertex_nofilter",
-            fragmentShader: "fragment_nofilter",
-            vertexDescriptor: TextureMapVertex.descriptor,
-            device: device
+    override init(frame: CGRect = .zero) {
+        self.pipelineState = MTL.default.makePipelineState(
+            vertexFunctionName: "vertex_nofilter",
+            fragmentFunctionName: "fragment_nofilter",
+            vertexDescriptor: TextureMapVertex.descriptor
         )!
         
-        self.vertexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.vertices, device: device)!
-        self.indexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.indices, device: device)!
+        self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
+        self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
 
-        self.texture = MTLHelper.makeEmptyTexture(width: 720, height: 1280, device: device)!
+        self.texture = MTL.default.makeEmptyTexture(width: 720, height: 1280)!
 
         super.init(frame: frame)
         

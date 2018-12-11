@@ -11,7 +11,6 @@
 		59132CB021B8BFBB0050D47B /* MTLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59132CAF21B8BFBB0050D47B /* MTLImage.swift */; };
 		59132CB221B8F5B60050D47B /* ImageTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59132CB121B8F5B60050D47B /* ImageTarget.swift */; };
 		59132CB421B8F68F0050D47B /* MTLImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59132CB321B8F68F0050D47B /* MTLImageSource.swift */; };
-		59132CBB21B929440050D47B /* MTLEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59132CBA21B929440050D47B /* MTLEnabled.swift */; };
 		59181C3A21BA129500CA48FB /* MTLImageTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59181C3921BA129500CA48FB /* MTLImageTarget.swift */; };
 		59181C3C21BA3C3600CA48FB /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59181C3B21BA3C3500CA48FB /* Extension.swift */; };
 		5918663021BDF59100E16C67 /* ImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5918662F21BDF59100E16C67 /* ImageOperation.swift */; };
@@ -29,7 +28,7 @@
 		5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */; };
 		5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4921B79FB40097D1D6 /* Vertex.swift */; };
 		59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7221B7ADE8007E717E /* Camera.swift */; };
-		59E0EE7521B7D071007E717E /* MTLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* MTLHelper.swift */; };
+		59E0EE7521B7D071007E717E /* MTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* MTL.swift */; };
 		59E0EE7A21B7D64E007E717E /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */; };
 		59E0EE7C21B7D651007E717E /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7B21B7D651007E717E /* ReactiveCocoa.framework */; };
 		59E0EE7E21B7D655007E717E /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7D21B7D655007E717E /* Result.framework */; };
@@ -59,7 +58,6 @@
 		59132CAF21B8BFBB0050D47B /* MTLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLImage.swift; sourceTree = "<group>"; };
 		59132CB121B8F5B60050D47B /* ImageTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTarget.swift; sourceTree = "<group>"; };
 		59132CB321B8F68F0050D47B /* MTLImageSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLImageSource.swift; sourceTree = "<group>"; };
-		59132CBA21B929440050D47B /* MTLEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLEnabled.swift; sourceTree = "<group>"; };
 		59181C3921BA129500CA48FB /* MTLImageTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLImageTarget.swift; sourceTree = "<group>"; };
 		59181C3B21BA3C3500CA48FB /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		5918662F21BDF59100E16C67 /* ImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOperation.swift; sourceTree = "<group>"; };
@@ -84,7 +82,7 @@
 		5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureMapVertex.swift; sourceTree = "<group>"; };
 		5973DD4921B79FB40097D1D6 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		59E0EE7221B7ADE8007E717E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		59E0EE7421B7D071007E717E /* MTLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLHelper.swift; sourceTree = "<group>"; };
+		59E0EE7421B7D071007E717E /* MTL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTL.swift; sourceTree = "<group>"; };
 		59E0EE7721B7D647007E717E /* ReactiveMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMapKit.framework; path = Carthage/Build/iOS/ReactiveMapKit.framework; sourceTree = "<group>"; };
 		59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		59E0EE7B21B7D651007E717E /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
@@ -198,8 +196,7 @@
 			children = (
 				591DC73D21B61CA700D66900 /* AppDelegate.swift */,
 				591DC73F21B61CA700D66900 /* ViewController.swift */,
-				59E0EE7421B7D071007E717E /* MTLHelper.swift */,
-				59132CBA21B929440050D47B /* MTLEnabled.swift */,
+				59E0EE7421B7D071007E717E /* MTL.swift */,
 				59181C3B21BA3C3500CA48FB /* Extension.swift */,
 				59132CAD21B8BF0D0050D47B /* Data */,
 				59132CAB21B8BE310050D47B /* ImageSource */,
@@ -408,9 +405,8 @@
 				59132CB421B8F68F0050D47B /* MTLImageSource.swift in Sources */,
 				5918663721BE5E2D00E16C67 /* Grayscale.metal in Sources */,
 				59132CB021B8BFBB0050D47B /* MTLImage.swift in Sources */,
-				59132CBB21B929440050D47B /* MTLEnabled.swift in Sources */,
 				59181C3C21BA3C3600CA48FB /* Extension.swift in Sources */,
-				59E0EE7521B7D071007E717E /* MTLHelper.swift in Sources */,
+				59E0EE7521B7D071007E717E /* MTL.swift in Sources */,
 				59181C3A21BA129500CA48FB /* MTLImageTarget.swift in Sources */,
 				5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */,
 				59E0EE8321B7DD3F007E717E /* ImageSource.swift in Sources */,

@@ -22,14 +22,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        self.source = MTLCamera()!
+        //let source = MTLImage(UIImage(named: "wallpaper"))!
+        self.target = MTLRenderView(frame: self.view.frame)
         
-        guard let device = MTLCreateSystemDefaultDevice() else { return }
-        
-        self.source = MTLCamera(device: device)!
-        //let source = MTLImage(UIImage(named: "wallpaper"), device: device)!
-        self.target = MTLRenderView(device: device, frame: self.view.frame)
-        
-        self.filter = NoFilter(device: device)
+        self.filter = NoFilter()
         self.filter <-- source
         self.target <-- self.filter
         

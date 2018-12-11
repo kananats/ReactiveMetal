@@ -9,11 +9,8 @@
 import MetalKit
 
 /// Protocol for image target using metal enabled device
-protocol MTLImageTarget: ImageTarget, MTLEnabled where Data == MTLTexture {
-    
-    /// Command queue of metal enabled device
-    var commandQueue: MTLCommandQueue { get }
-    
+protocol MTLImageTarget: ImageTarget where Data == MTLTexture {
+
     /// Render pipeline state
     var pipelineState: MTLRenderPipelineState { get }
     
@@ -28,7 +25,7 @@ extension MTLImageTarget {
     
     /// Renders to texture
     func render(texture input: MTLTexture, completion: @escaping (MTLTexture) -> ()) {
-        let output = MTLHelper.makeEmptyTexture(width: 720, height: 1280, device: self.device)!
+        let output = MTL.default.makeEmptyTexture(width: 720, height: 1280)!
         
         let descriptor = MTLRenderPassDescriptor()
         descriptor.colorAttachments[0].texture = output
@@ -36,7 +33,7 @@ extension MTLImageTarget {
         descriptor.colorAttachments[0].storeAction = .store
         descriptor.colorAttachments[0].loadAction = .clear
         
-        let commandBuffer = self.commandQueue.makeCommandBuffer()!
+        let commandBuffer = MTL.default.commandQueue.makeCommandBuffer()!
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         
         commandEncoder.setRenderPipelineState(self.pipelineState)
@@ -58,7 +55,7 @@ extension MTLImageTarget {
             let descriptor = view.currentRenderPassDescriptor
             else { return }
         
-        let commandBuffer = self.commandQueue.makeCommandBuffer()!
+        let commandBuffer = MTL.default.commandQueue.makeCommandBuffer()!
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         
         commandEncoder.setRenderPipelineState(self.pipelineState)

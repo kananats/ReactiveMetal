@@ -1,5 +1,5 @@
 //
-//  MTLHelper.swift
+//  MTL.swift
 //  MetalTest
 //
 //  Created by s.kananat on 2018/12/05.
@@ -10,33 +10,50 @@ import AVFoundation
 import MetalKit
 
 // MARK: Main
-public final class MTLHelper {
+/// Shared Metal resources
+public final class MTL {
     
-    private init() { }
+    /// Metal enabled device
+    let device: MTLDevice
+    
+    /// Command queue of Metal enabled device
+    let commandQueue: MTLCommandQueue
+    
+    private init?() {
+        guard let device = MTLCreateSystemDefaultDevice(),
+            let commandQueue = device.makeCommandQueue()
+            else { return nil }
+        
+        self.device = device
+        self.commandQueue = commandQueue
+    }
 }
 
 // MARK: Public
-public extension MTLHelper {
+public extension MTL {
+    
+    /// Shared instance
+    static let `default`: MTL! = MTL()
     
     /// Makes pipeline state
-    static func makePipelineState(vertexShader: String, fragmentShader: String? = nil, vertexDescriptor: MTLVertexDescriptor? = nil, device: MTLDevice) -> MTLRenderPipelineState? {
+    func makePipelineState(vertexFunctionName: String, fragmentFunctionName: String? = nil, vertexDescriptor: MTLVertexDescriptor? = nil) -> MTLRenderPipelineState? {
         
-        let library = device.makeDefaultLibrary()!
+        let library = self.device.makeDefaultLibrary()!
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = library.makeFunction(name: vertexShader) else {
-            fatalError("vertexFunction `\(vertexShader)` not found.")
+        guard let vertexFunction = library.makeFunction(name: vertexFunctionName) else {
+            fatalError("vertexFunction `\(vertexFunctionName)` not found.")
         }
         
         pipelineDescriptor.vertexFunction = vertexFunction
         
         // Fragment function (optional)
-        if let fragmentShader = fragmentShader {
-            guard let fragmentFunction = library.makeFunction(name: fragmentShader) else {
-                fatalError("fragmentFunction `\(fragmentShader)` not found.")
+        if let fragmentFunctionName = fragmentFunctionName {
+            guard let fragmentFunction = library.makeFunction(name: fragmentFunctionName) else {
+                fatalError("fragmentFunction `\(fragmentFunctionName)` not found.")
             }
             
             pipelineDescriptor.fragmentFunction = fragmentFunction
@@ -47,20 +64,20 @@ public extension MTLHelper {
             pipelineDescriptor.vertexDescriptor = vertexDescriptor
         }
         
-        return try? device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }
     
     /// Makes texture cache
-    static func makeTextureCache(device: MTLDevice) -> CVMetalTextureCache? {
+    func makeTextureCache() -> CVMetalTextureCache? {
         var textureCache: CVMetalTextureCache?
         
-        guard CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &textureCache) == kCVReturnSuccess else { return nil }
+        guard CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, self.device, nil, &textureCache) == kCVReturnSuccess else { return nil }
         
         return textureCache
     }
     
     /// Makes `MTLTexture` from `CMSampleBuffer`
-    static func makeTexture(from buffer: CMSampleBuffer, format: MTLPixelFormat = .bgra8Unorm, textureCache: CVMetalTextureCache, device: MTLDevice) -> MTLTexture? {
+    func makeTexture(from buffer: CMSampleBuffer, format: MTLPixelFormat = .bgra8Unorm, textureCache: CVMetalTextureCache) -> MTLTexture? {
         
         guard let imageBuffer = CMSampleBufferGetImageBuffer(buffer) else { return nil }
         
@@ -77,29 +94,29 @@ public extension MTLHelper {
     }
     
     /// Makes `MTLTexture` from `UIImage`
-    static func makeTexture(from image: UIImage?, device: MTLDevice) -> MTLTexture? {
+    func makeTexture(from image: UIImage?) -> MTLTexture? {
         guard let image = image?.cgImage else { return nil }
         
-        let loader = MTKTextureLoader(device: device)
+        let loader = MTKTextureLoader(device: self.device)
         
-        let textureUsage: MTLTextureUsage = [.renderTarget, .shaderRead, .shaderWrite]
+        let textureUsage: MTLTextureUsage = [.shaderRead]
         let a = textureUsage.rawValue
         let options: [MTKTextureLoader.Option: Any] = [.SRGB: false, .textureUsage: a]
         return try? loader.newTexture(cgImage: image, options: options)
     }
     
     /// Makes empty `MTLTexture`
-    static func makeEmptyTexture(width: Int, height: Int, device: MTLDevice) -> MTLTexture? {
+    func makeEmptyTexture(width: Int, height: Int) -> MTLTexture? {
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
-        textureDescriptor.usage = [.renderTarget, .shaderRead, .shaderWrite]
+        textureDescriptor.usage = [.renderTarget, .shaderRead]
         
         return device.makeTexture(descriptor: textureDescriptor)
     }
     
     /// Makes `MTLBuffer` from `Array<T>`
-    static func makeBuffer<T>(from array: [T], device: MTLDevice) -> MTLBuffer? {
+    func makeBuffer<T>(from array: [T]) -> MTLBuffer? {
         guard array.count > 0 else { return nil }
             
-        return device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)
+        return self.device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)
     }
 }

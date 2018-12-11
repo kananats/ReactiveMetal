@@ -9,4 +9,4 @@
 import MetalKit
 
 /// Protocol for image source using metal enabled device
-protocol MTLImageSource: ImageSource, MTLEnabled where Data == MTLTexture { }
+protocol MTLImageSource: ImageSource where Data == MTLTexture { }
