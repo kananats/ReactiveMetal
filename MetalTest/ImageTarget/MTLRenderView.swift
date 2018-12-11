@@ -63,6 +63,7 @@ extension MTLRenderView: MTLImageTarget {
     
     var input: BindingTarget<MTLTexture> {
         return self.reactive.makeBindingTarget { `self`, value in
+            // print("view got input")
             `self`.texture = value
         }
     }

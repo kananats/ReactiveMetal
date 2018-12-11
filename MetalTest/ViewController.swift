@@ -25,15 +25,15 @@ class ViewController: UIViewController {
         
         guard let device = MTLCreateSystemDefaultDevice() else { return }
         
-        //self.source = MTLCamera(device: device)!
-        let source = MTLImage(UIImage(named: "wallpaper"), device: device)!
+        self.source = MTLCamera(device: device)!
+        //let source = MTLImage(UIImage(named: "wallpaper"), device: device)!
         self.target = MTLRenderView(device: device, frame: self.view.frame)
         
-        //self.filter = NoFilter(device: device)
+        self.filter = NoFilter(device: device)
+        self.filter <-- source
+        self.target <-- self.filter
         
-        //self.filter <-- source
-        //self.target <-- self.filter
-        self.target <-- source
+        //self.target <-- source
         
         self.view.addSubview(self.target)
     }

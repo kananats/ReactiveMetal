@@ -29,8 +29,8 @@ final class NoFilter {
         self.device = device
         self.commandQueue = device.makeCommandQueue()!
         self.pipelineState = MTLHelper.makePipelineState(
-            vertexShader: "vertex_grayscale",
-            fragmentShader: "fragment_grayscale",
+            vertexShader: "vertex_texture",
+            fragmentShader: "fragment_texture",
             vertexDescriptor: TextureMapVertex.descriptor,
             device: device
         )!
@@ -41,17 +41,19 @@ final class NoFilter {
 
         self.vertexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.vertices, device: device)!
         self.indexBuffer = MTLHelper.makeBuffer(from: TextureMapVertex.indices, device: device)!
-        /*
-        self.textureOut <~ self.textureIn.map { [weak self] in
-            let image1 = UIImage(mtlTexture: $0)
+        
+        self.textureIn.signal.observeValues { [weak self] value in
+            guard let `self` = self else { return }
             
-            let value = self!.render(texture: $0)
+            let b = UIImage.init(mtlTexture: value)
             
-            let image2 = UIImage(mtlTexture: value)
-            print("sus")
-            return value
+            
+            `self`.render(texture: value) { value in
+                let a = UIImage.init(mtlTexture: value)
+                
+                `self`.textureOut.swap(value)
+            }
         }
- */
     }
 }
 

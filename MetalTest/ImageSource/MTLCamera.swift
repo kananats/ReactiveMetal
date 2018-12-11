@@ -42,10 +42,10 @@ public final class MTLCamera: Camera {
 public extension MTLCamera {
     
     override func didReceiveSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
-        
+    
         // Makes `MTLTexture`
         guard let texture = MTLHelper.makeTexture(from: sampleBuffer, textureCache: self.textureCache, device: self.device) else { return }
-        
+
         self.texture.swap(texture)
     }
 }

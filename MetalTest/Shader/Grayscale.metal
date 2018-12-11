@@ -32,7 +32,7 @@ vertex VertexOut vertex_grayscale(const VertexIn vertexIn [[ stage_in ]]) {
 fragment half4 fragment_grayscale(VertexOut vertexIn [[ stage_in ]]) {
     float4 color = vertexIn.color;
     float gray = (color.r + color.g + color.b) / 3;
-    return half4(gray, gray, gray, color.a);
+    return half4(color);
 }
 
 

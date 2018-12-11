@@ -81,8 +81,11 @@ public extension MTLHelper {
         guard let image = image?.cgImage else { return nil }
         
         let loader = MTKTextureLoader(device: device)
-
-        return try? loader.newTexture(cgImage: image)
+        
+        let textureUsage: MTLTextureUsage = [.renderTarget, .shaderRead, .shaderWrite]
+        let a = textureUsage.rawValue
+        let options: [MTKTextureLoader.Option: Any] = [.SRGB: false, .textureUsage: a]
+        return try? loader.newTexture(cgImage: image, options: options)
     }
     
     /// Makes empty `MTLTexture`

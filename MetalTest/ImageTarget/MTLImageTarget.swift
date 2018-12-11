@@ -27,11 +27,11 @@ protocol MTLImageTarget: ImageTarget, MTLEnabled where Data == MTLTexture {
 extension MTLImageTarget {
     
     /// Renders to texture
-    func render(texture: MTLTexture) -> MTLTexture {
-        //let texture = MTLHelper.makeEmptyTexture(width: 720, height: 1280, device: self.device)!
-
+    func render(texture input: MTLTexture, completion: @escaping (MTLTexture) -> ()) {
+        let output = MTLHelper.makeEmptyTexture(width: 720, height: 1280, device: self.device)!
+        
         let descriptor = MTLRenderPassDescriptor()
-        descriptor.colorAttachments[0].texture = texture
+        descriptor.colorAttachments[0].texture = output
         descriptor.colorAttachments[0].clearColor = MTLClearColorMake(1, 0, 0, 1)
         descriptor.colorAttachments[0].storeAction = .store
         descriptor.colorAttachments[0].loadAction = .clear
@@ -43,13 +43,13 @@ extension MTLImageTarget {
         
         // Renders
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
-        commandEncoder.setFragmentTexture(texture, index: 0)
+        commandEncoder.setFragmentTexture(input, index: 0)
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
-        commandBuffer.commit()
         
-        return texture
+        commandBuffer.addCompletedHandler { _ in completion(output) }
+        commandBuffer.commit()
     }
     
     /// Renders on `MTKView`

@@ -69,6 +69,11 @@ public class Camera: NSObject {
         
         // Finish atomic operation
         self.session.commitConfiguration()
+        
+        
+        guard let connection = self.output.connection(with: .video), connection.isVideoOrientationSupported else { return nil }
+        
+        connection.videoOrientation = .portrait
         /*
         // Fix orientation
         UIDevice.current.reactive.orientation.observeValues { [weak self] value in
@@ -108,9 +113,7 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
     public final func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         guard self.output == output else { return }
-        
-        connection.videoOrientation = .portrait
-        
+
         self.didReceiveSampleBuffer(sampleBuffer)
     }
 }
