@@ -44,9 +44,15 @@ extension MTLImageTarget {
         commandEncoder.setRenderPipelineState(self.pipelineState)
         
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
+        
         for i in 0 ..< self.maxNumberOfSources {
             commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
         }
+        
+        let test: [Float] = [0.3]
+        let a = MTL.default.makeBuffer(from: test)
+        commandEncoder.setFragmentBuffer(a, offset: 0, index: 0)
+        
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
@@ -68,6 +74,7 @@ extension MTLImageTarget {
         commandEncoder.setRenderPipelineState(self.pipelineState)
        
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
+        
         for i in 0 ..< self.maxNumberOfSources {
             commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
         }

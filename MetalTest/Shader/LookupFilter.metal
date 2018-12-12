@@ -8,10 +8,10 @@
 
 #include "MTLHeader.h"
 
-fragment half4 fragment_lookup(OutputVertex input [[stage_in]], texture2d<half> texture0 [[texture(0)]], texture2d<half> texture1 [[texture(1)]]) {
+fragment half4 fragment_lookup(OutputVertex input [[stage_in]], texture2d<half> texture0 [[texture(0)]], texture2d<half> texture1 [[texture(1)]], device const float &intensity [[buffer(0)]]) {
 
-    constexpr sampler defaultSampler;
-    half4 base = texture0.sample(defaultSampler, input.texcoord);
+    constexpr sampler baseSampler;
+    half4 base = texture0.sample(baseSampler, input.texcoord);
     
     half blueColor = base.b * 63.0;
     
@@ -31,13 +31,14 @@ fragment half4 fragment_lookup(OutputVertex input [[stage_in]], texture2d<half> 
     texPos2.x = (quad2.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.r);
     texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.g);
     
-    constexpr sampler quadSampler3;
-    half4 newColor1 = texture1.sample(quadSampler3, texPos1);
-    constexpr sampler quadSampler4;
-    half4 newColor2 = texture1.sample(quadSampler4, texPos2);
+    constexpr sampler quadSampler1;
+    half4 newColor1 = texture1.sample(quadSampler1, texPos1);
+    constexpr sampler quadSampler2;
+    half4 newColor2 = texture1.sample(quadSampler2, texPos2);
     
     half4 newColor = mix(newColor1, newColor2, fract(blueColor));
-    return half4(mix(base, half4(newColor.rgb, base.w), 1));
+    
+    return half4(mix(base, half4(newColor.rgb, base.w), half(intensity)));
 }
 
 

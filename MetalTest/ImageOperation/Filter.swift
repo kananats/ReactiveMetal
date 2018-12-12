@@ -21,7 +21,7 @@ open class Filter: NSObject {
     public var numberOfSources = 0
     
     /// Cached pre-rendering texture
-    private var inputs: [MutableProperty<MTLTexture?>] = []
+    private let inputs: [MutableProperty<MTLTexture?>]
     
     /// Cached post-rendering texture
     private let _output = MutableProperty<MTLTexture?>(nil)
@@ -36,7 +36,10 @@ open class Filter: NSObject {
         self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
         self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
         
-        for _ in 0 ... maxNumberOfSources { self.inputs.append(MutableProperty(nil)) }
+        var inputs: [MutableProperty<MTLTexture?>] = []
+        for _ in 0 ... maxNumberOfSources { inputs.append(MutableProperty(nil)) }
+        
+        self.inputs = inputs
         
         super.init()
         
