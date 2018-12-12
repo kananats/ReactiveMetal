@@ -99,10 +99,7 @@ public extension MTL {
         
         let loader = MTKTextureLoader(device: self.device)
         
-        let textureUsage: MTLTextureUsage = [.shaderRead]
-        let a = textureUsage.rawValue
-        let options: [MTKTextureLoader.Option: Any] = [.SRGB: false, .textureUsage: a]
-        return try? loader.newTexture(cgImage: image, options: options)
+        return try? loader.newTexture(cgImage: image, options: [.SRGB: false])
     }
     
     /// Makes empty `MTLTexture`

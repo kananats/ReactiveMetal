@@ -21,13 +21,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        self.source = MTLCamera()!
+        self.source = MTLCamera(position: .front)!
         self.filter = LookupFilter()
         self.target = MTLRenderView(frame: self.view.frame)
         
         self.filter <-- self.source
         self.target <-- self.filter
-
+        
         self.view.addSubview(self.target)
     }
 }
