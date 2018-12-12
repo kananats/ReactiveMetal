@@ -38,7 +38,6 @@ extension MTLImageTarget {
         
         commandEncoder.setRenderPipelineState(self.pipelineState)
         
-        // Renders
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         commandEncoder.setFragmentTexture(input, index: 0)
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
@@ -65,6 +64,7 @@ extension MTLImageTarget {
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
+        
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }

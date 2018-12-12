@@ -50,5 +50,5 @@ public extension MTLCamera {
 // MARK: Protocol
 extension MTLCamera: MTLImageSource {
     
-    var output: SignalProducer<MTLTexture, NoError> { return self.texture.producer.skipNil() }
+    public var output: SignalProducer<MTLTexture, NoError> { return self.texture.producer.skipNil() }
 }

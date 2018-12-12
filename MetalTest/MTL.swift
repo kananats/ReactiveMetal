@@ -110,7 +110,7 @@ public extension MTL {
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
         textureDescriptor.usage = [.renderTarget, .shaderRead]
         
-        return device.makeTexture(descriptor: textureDescriptor)
+        return self.device.makeTexture(descriptor: textureDescriptor)
     }
     
     /// Makes `MTLBuffer` from `Array<T>`

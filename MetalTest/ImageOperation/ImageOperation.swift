@@ -7,4 +7,4 @@
 //
 
 /// Protocol for image processing operation
-protocol ImageOperation: ImageSource, ImageTarget { }
+public protocol ImageOperation: ImageSource, ImageTarget { }

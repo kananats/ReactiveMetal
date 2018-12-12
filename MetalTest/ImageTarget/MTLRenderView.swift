@@ -21,6 +21,9 @@ class MTLRenderView: UIView {
     
     var texture: MTLTexture
     
+    var numberOfSources = 0
+    let maxNumberOfSources = 1
+    
     /// Metal view
     private lazy var metalView: MTKView = {
         let view = MTKView(frame: frame)

@@ -17,22 +17,17 @@ class ViewController: UIViewController {
     
     var filter: NoFilter!
     
-    //var camera: MTLCamera!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
         self.source = MTLCamera()!
-        //let source = MTLImage(UIImage(named: "wallpaper"))!
+        self.filter = GrayscaleFilter()
         self.target = MTLRenderView(frame: self.view.frame)
         
-        self.filter = NoFilter()
-        self.filter <-- source
+        self.filter <-- self.source
         self.target <-- self.filter
-        
-        //self.target <-- source
-        
+
         self.view.addSubview(self.target)
     }
 }

@@ -19,21 +19,11 @@ infix operator <-- : BindingPrecedence
 
 // MARK: Main
 /// Protocol for image source
-protocol ImageSource {
+public protocol ImageSource {
     
     /// Output data type
     associatedtype Data
     
     /// Image output (observable)
     var output: SignalProducer<Data, NoError> { get }
-}
-
-// MARK: Internal
-extension ImageSource {
-    
-    /// Forwards all values emitted from source to target
-    @discardableResult
-    static func <-- <Target: ImageTarget>(target: Target, source: Self) -> Disposable? where Self.Data == Target.Data {
-        return target.input <~ source.output
-    }
 }

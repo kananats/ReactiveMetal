@@ -11,32 +11,37 @@ import Result
 import ReactiveSwift
 
 /// Filter that passes the input to the output
-final class NoFilter: NSObject {
-
+open class NoFilter: NSObject {
+    
     let pipelineState: MTLRenderPipelineState
     
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
-    private let textureOut: MutableProperty<MTLTexture?>
+    public var numberOfSources = 0
+    public let maxNumberOfSources = 1
     
-    override init() {
+    private let textureOut = MutableProperty<MTLTexture?>(nil)
+
+    init(fragmentFunctionName: String) {
         self.pipelineState = MTL.default.makePipelineState(
             vertexFunctionName: "vertex_nofilter",
-            // TODO
-            fragmentFunctionName: "fragment_grayscale",
+            fragmentFunctionName: fragmentFunctionName,
             vertexDescriptor: TextureMapVertex.descriptor
         )!
         
-        self.textureOut = MutableProperty<MTLTexture?>(nil)
-
         self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
         self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
+    }
+    
+    public override convenience init() {
+        self.init(fragmentFunctionName: "fragment_nofilter")
     }
 }
 
 extension NoFilter: MTLImageOperation {
-    var input: BindingTarget<MTLTexture> {
+    
+    public var input: BindingTarget<MTLTexture> {
         return self.reactive.makeBindingTarget { `self`, value in
             `self`.render(texture: value) { value in
                 `self`.textureOut.swap(value)
@@ -44,7 +49,7 @@ extension NoFilter: MTLImageOperation {
         }
     }
     
-    var output: SignalProducer<MTLTexture, NoError> {
+    public var output: SignalProducer<MTLTexture, NoError> {
         return self.textureOut.producer.skipNil()
     }
 }
