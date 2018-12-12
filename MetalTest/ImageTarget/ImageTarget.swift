@@ -20,28 +20,6 @@ public protocol ImageTarget: AnyObject {
     /// Maximum number of sources
     var maxNumberOfSources: Int { get }
     
-    /// Operates with image input
-    var input: BindingTarget<Data> { get }
-}
-
-// MARK: Public
-public extension ImageTarget {
-    
-    /// Forwards all values emitted from source to target
-    @discardableResult
-    static func <-- <Source: ImageSource>(target: Self, source: Source) -> Disposable? where Self.Data == Source.Data {
-        
-        target.numberOfSources += 1
-        
-        guard target.numberOfSources <= target.maxNumberOfSources else { fatalError("Number of sources of the target had exceeded the limit.") }
-        
-        let disposable = CompositeDisposable()
-        
-        disposable += target.input <~ source.output
-        disposable += { [weak target] in
-            target?.numberOfSources -= 1
-        }
-
-        return disposable
-    }
+    /// Operates with image inputs
+    func input(at index: Int) -> BindingTarget<Data?>
 }

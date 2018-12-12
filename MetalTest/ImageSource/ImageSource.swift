@@ -27,3 +27,30 @@ public protocol ImageSource {
     /// Image output (observable)
     var output: SignalProducer<Data, NoError> { get }
 }
+
+public extension ImageSource {
+    
+    /// Forwards all values emitted from source to first input of the target
+    @discardableResult
+    static func <-- <Target: ImageTarget>(target: Target, source: Self) -> Disposable? where Self.Data == Target.Data {
+        
+        return (target, 0) <-- source
+    }
+    
+    /// Forwards all values emitted from source to specific input of the target
+    @discardableResult
+    static func <-- <Target: ImageTarget>(target: (Target, Int), source: Self) -> Disposable? where Self.Data == Target.Data {
+        
+        let (target, index) = target
+        target.numberOfSources += 1
+        
+        guard target.numberOfSources <= target.maxNumberOfSources else { fatalError("Number of sources of the target had exceeded the limit.") }
+        
+        let disposable = CompositeDisposable()
+        
+        disposable += target.input(at: index) <~ source.output
+        disposable += { [weak target] in target?.numberOfSources -= 1 }
+        
+        return disposable
+    }
+}

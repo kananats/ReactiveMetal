@@ -12,7 +12,7 @@ import ReactiveCocoa
 
 // MARK: Main
 /// View for rendering image output
-class MTLRenderView: UIView {
+public class MTLRenderView: UIView {
 
     let pipelineState: MTLRenderPipelineState
     
@@ -21,8 +21,8 @@ class MTLRenderView: UIView {
     
     var texture: MTLTexture
     
-    var numberOfSources = 0
-    let maxNumberOfSources = 1
+    public var numberOfSources = 0
+    public let maxNumberOfSources = 1
     
     /// Metal view
     private lazy var metalView: MTKView = {
@@ -58,8 +58,11 @@ class MTLRenderView: UIView {
 /// MARK: Protocol
 extension MTLRenderView: MTLImageTarget {
     
-    var input: BindingTarget<MTLTexture> {
+    public func input(at index: Int) -> BindingTarget<MTLTexture?> {
+        guard index == 0 else { fatalError() }
+        
         return self.reactive.makeBindingTarget { `self`, value in
+            guard let value = value else { return }
             `self`.texture = value
         }
     }
@@ -67,9 +70,9 @@ extension MTLRenderView: MTLImageTarget {
 
 extension MTLRenderView: MTKViewDelegate {
     
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         self.render(texture: self.texture, in: view)
     }
 }

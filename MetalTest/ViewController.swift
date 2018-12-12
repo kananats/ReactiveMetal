@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     var source: MTLCamera!
     var target: MTLRenderView!
     
-    var filter: NoFilter!
+    var filter: Filter!
     
     override func viewDidLoad() {
         super.viewDidLoad()

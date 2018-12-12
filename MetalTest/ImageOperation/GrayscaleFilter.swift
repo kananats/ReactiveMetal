@@ -6,7 +6,8 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
-public final class GrayscaleFilter: NoFilter {
+public final class GrayscaleFilter: Filter {
+
     public convenience init() {
         self.init(fragmentFunctionName: "fragment_grayscale")
     }

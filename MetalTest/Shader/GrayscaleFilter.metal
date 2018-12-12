@@ -1,5 +1,5 @@
 //
-//  Grayscale.metal
+//  GrayscaleFilter.metal
 //  MetalTest
 //
 //  Created by s.kananat on 2018/12/10.
