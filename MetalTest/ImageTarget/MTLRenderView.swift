@@ -19,7 +19,7 @@ public class MTLRenderView: UIView {
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
-    var texture: MTLTexture
+    private var texture: MTLTexture
     
     public var numberOfSources = 0
     public let maxNumberOfSources = 1
@@ -59,12 +59,18 @@ public class MTLRenderView: UIView {
 extension MTLRenderView: MTLImageTarget {
     
     public func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        guard index == 0 else { fatalError() }
+        guard index == 0 else { fatalError("Index out of bounds exception") }
         
         return self.reactive.makeBindingTarget { `self`, value in
             guard let value = value else { return }
             `self`.texture = value
         }
+    }
+    
+    func texture(at index: Int) -> MTLTexture? {
+        guard index == 0 else { fatalError("Index out of bounds exception") }
+        
+        return self.texture
     }
 }
 
@@ -73,6 +79,6 @@ extension MTLRenderView: MTKViewDelegate {
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
     public func draw(in view: MTKView) {
-        self.render(texture: self.texture, in: view)
+        self.render(in: view)
     }
 }

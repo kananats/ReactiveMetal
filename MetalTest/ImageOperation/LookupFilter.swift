@@ -16,6 +16,6 @@ public final class LookupFilter: Filter {
     public convenience init() {
         self.init(fragmentFunctionName: "fragment_lookup")
         
-        //self.output <-- self.image
+        (self, 1) <-- self.image
     }
 }

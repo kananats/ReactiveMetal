@@ -40,13 +40,10 @@ open class Filter: NSObject {
         
         super.init()
         
-        // TODO: fix
-        self.inputs[0].producer.startWithValues { [weak self] value in
-            guard let `self` = self, let value = value else { return }
-            
-            `self`.render(texture: value) { value in
-                `self`._output.swap(value)
-            }
+        SignalProducer.merge(self.inputs.map { $0.producer }).startWithValues { [weak self] _ in
+            guard let `self` = self else { return }
+   
+            `self`.render { value in `self`._output.swap(value) }
         }
     }
 }
@@ -55,11 +52,13 @@ extension Filter: MTLImageOperation {
     
     public var maxNumberOfSources: Int { return self.inputs.count }
     
-    public var output: SignalProducer<MTLTexture, NoError> {
-        return self._output.producer.skipNil()
-    }
-    
     public func input(at index: Int) -> BindingTarget<MTLTexture?> {
         return self.inputs[index].bindingTarget
     }
+    
+    public var output: SignalProducer<MTLTexture, NoError> {
+        return self._output.producer.skipNil()
+    }
+
+    func texture(at index: Int) -> MTLTexture? { return self.inputs[index].value }
 }

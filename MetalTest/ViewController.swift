@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         self.source = MTLCamera()!
-        self.filter = GrayscaleFilter()
+        self.filter = LookupFilter()
         self.target = MTLRenderView(frame: self.view.frame)
         
         self.filter <-- self.source

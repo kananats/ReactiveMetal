@@ -10,7 +10,9 @@
 
 fragment half4 fragment_lookup(OutputVertex input [[stage_in]], texture2d<float> texture0 [[texture(0)]], texture2d<float> texture1 [[texture(1)]]) {
     constexpr sampler defaultSampler;
-    float4 color = texture1.sample(defaultSampler, input.texcoord);
+    float4 color0 = texture0.sample(defaultSampler, input.texcoord);
+    float4 color1 = texture1.sample(defaultSampler, input.texcoord);
+    float4 color = (color0 + color1) / 2;
     return half4(color);
 }
 

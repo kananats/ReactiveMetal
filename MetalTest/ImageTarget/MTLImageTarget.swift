@@ -19,12 +19,17 @@ protocol MTLImageTarget: ImageTarget where Data == MTLTexture {
     
     /// Index buffer
     var indexBuffer: MTLBuffer { get }
+    
+    /// Texture
+    func texture(at index: Int) -> MTLTexture?
 }
 
 extension MTLImageTarget {
     
     /// Renders to texture
-    func render(texture input: MTLTexture, completion: @escaping (MTLTexture) -> ()) {
+    func render(completion: @escaping (MTLTexture) -> ()) {
+        guard self.texture(at: 0) != nil else { return }
+        
         let output = MTL.default.makeEmptyTexture(width: 720, height: 1280)!
         
         let descriptor = MTLRenderPassDescriptor()
@@ -39,7 +44,9 @@ extension MTLImageTarget {
         commandEncoder.setRenderPipelineState(self.pipelineState)
         
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
-        commandEncoder.setFragmentTexture(input, index: 0)
+        for i in 0 ..< self.maxNumberOfSources {
+            commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
+        }
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
@@ -49,8 +56,9 @@ extension MTLImageTarget {
     }
     
     /// Renders on `MTKView`
-    func render(texture: MTLTexture, in view: MTKView) {
-        guard let drawable = view.currentDrawable,
+    func render(in view: MTKView) {
+        guard self.texture(at: 0) != nil,
+            let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }
         
@@ -60,7 +68,9 @@ extension MTLImageTarget {
         commandEncoder.setRenderPipelineState(self.pipelineState)
        
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
-        commandEncoder.setFragmentTexture(texture, index: 0)
+        for i in 0 ..< self.maxNumberOfSources {
+            commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
+        }
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()

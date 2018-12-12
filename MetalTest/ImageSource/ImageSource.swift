@@ -44,7 +44,7 @@ public extension ImageSource {
         let (target, index) = target
         target.numberOfSources += 1
         
-        guard target.numberOfSources <= target.maxNumberOfSources else { fatalError("Number of sources of the target had exceeded the limit.") }
+        guard target.numberOfSources <= target.maxNumberOfSources else { fatalError("Number of sources of the target has exceeded the limit.") }
         
         let disposable = CompositeDisposable()
         
