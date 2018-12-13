@@ -63,7 +63,6 @@ extension MTLRenderView: MTLImageTarget {
         guard index < self.maxSourceCount else { fatalError("Array index out of bounds exception") }
         
         return self.reactive.makeBindingTarget { `self`, value in
-            // KDEV check
             guard let value = value else { return }
             `self`.texture = value
         }
