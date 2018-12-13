@@ -9,7 +9,6 @@
 import AVFoundation
 import Result
 import ReactiveSwift
-
 import UIKit
 
 // MARK: Main
@@ -27,9 +26,9 @@ public final class MTLCamera: Camera {
         
         self.textureCache = textureCache
         
-        guard let texture = MTL.default.makeEmptyTexture(width: 720, height: 1080) else { return nil }
+        guard let texture = MTL.default.makeEmptyTexture() else { return nil }
         
-        self.texture = MutableProperty(texture)
+        self.texture = MutableProperty<MTLTexture?>(texture)
         
         super.init(position: position)
     }

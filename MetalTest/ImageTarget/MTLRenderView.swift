@@ -21,7 +21,7 @@ public class MTLRenderView: UIView {
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
-    private var texture: MTLTexture
+    private var texture: MTLTexture?
 
     /// Metal view
     private lazy var metalView: MTKView = {
@@ -42,7 +42,7 @@ public class MTLRenderView: UIView {
         self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
         self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
 
-        self.texture = MTL.default.makeEmptyTexture(width: 720, height: 1280)!
+        self.texture = MTL.default.makeEmptyTexture()!
 
         super.init(frame: frame)
         

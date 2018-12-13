@@ -8,6 +8,7 @@
 
 import MetalKit
 
+/// A protocol for vertex struct
 protocol Vertex {
     
     /// Init without any parameter

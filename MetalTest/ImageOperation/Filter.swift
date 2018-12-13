@@ -64,9 +64,7 @@ extension Filter: MTLImageOperation {
     
     @objc open var maxSourceCount: Int { return self.inputs.count }
     
-    public func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        return self.inputs[index].bindingTarget
-    }
+    public func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.inputs[index].bindingTarget }
     
     final public var output: SignalProducer<MTLTexture, NoError> {
         return self._output.producer.skipNil()

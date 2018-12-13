@@ -28,12 +28,13 @@ public final class LookupFilter: Filter {
         
         super.init(maxSourceCount: 2, fragmentFunctionName: "fragment_lookup", params: intensity)
         
-        (self, 1) <-- self._image
+        (self, at: 1) <-- self._image
 
         self.params(at: 0) <~ self.intensity.map { $0 }
     }
 }
 
+// MARK: Public
 public extension LookupFilter {
     
     /// Current image (reactive)

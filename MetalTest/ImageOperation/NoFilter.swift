@@ -9,7 +9,5 @@
 /// Filter that passes the input to the output
 public final class NoFilter: Filter {
     
-    public init() {
-        super.init(fragmentFunctionName: "fragment_nofilter")
-    }
+    public init() { super.init(fragmentFunctionName: "fragment_nofilter") }
 }

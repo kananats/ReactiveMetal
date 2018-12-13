@@ -39,7 +39,7 @@ public extension ImageSource {
     
     /// Forwards all values emitted from source to specific input of the target
     @discardableResult
-    static func <-- <Target: ImageTarget>(target: (Target, Int), source: Self) -> Disposable? where Self.Data == Target.Data {
+    static func <-- <Target: ImageTarget>(target: (Target, at: Int), source: Self) -> Disposable? where Self.Data == Target.Data {
         
         let (target, index) = target
         guard index < target.maxSourceCount else { fatalError("Array index out of bounds exception") }
