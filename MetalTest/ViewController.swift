@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         self.source = MTLCamera(position: .front)!
-        self.filter = LookupFilter(image: "wallpaper", intensity: 0.3)
+        self.filter = LookupFilter(image: "wallpaper", intensity: 0)
         self.target = MTLRenderView(frame: self.view.frame)
         
         self.filter <-- self.source

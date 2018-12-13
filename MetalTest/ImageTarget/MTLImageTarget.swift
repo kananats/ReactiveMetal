@@ -20,21 +20,18 @@ protocol MTLImageTarget: ImageTarget where Data == MTLTexture {
     /// Vertex index buffer
     var indexBuffer: MTLBuffer { get }
     
-    /// Fragment texture at specified index
-    func texture(at index: Int) -> MTLTexture?
+    /// Fragment texture(s)
+    var textures: [MTLTexture?] { get }
     
-    /// Number of fragment buffer
-    var bufferCount: Int { get }
-    
-    /// Fragment buffer at specified index
-    func buffer(at index: Int) -> MTLBuffer
+    /// Fragment buffer(s)
+    var buffers: [MTLBuffer] { get }
 }
 
 extension MTLImageTarget {
     
     /// Renders to texture
     func render(completion: @escaping (MTLTexture) -> ()) {
-        guard self.texture(at: 0) != nil else { return }
+        guard self.textures[0] != nil else { return }
         
         let output = MTL.default.makeEmptyTexture()!
         
@@ -44,51 +41,48 @@ extension MTLImageTarget {
         descriptor.colorAttachments[0].storeAction = .store
         descriptor.colorAttachments[0].loadAction = .clear
         
-        let commandBuffer = MTL.default.commandQueue.makeCommandBuffer()!
-        let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
-        
-        commandEncoder.setRenderPipelineState(self.pipelineState)
-        
-        commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
-        
-        for i in 0 ..< self.maxSourceCount {
-            commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
+        self.render(descriptor: descriptor) { commandBuffer in
+            commandBuffer.addCompletedHandler { _ in completion(output) }
         }
-
-        for i in 0 ..< self.bufferCount {
-            commandEncoder.setFragmentBuffer(self.buffer(at: i), offset: 0, index: i)
-        }
-
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
-        
-        commandEncoder.endEncoding()
-        
-        commandBuffer.addCompletedHandler { _ in completion(output) }
-        commandBuffer.commit()
     }
     
     /// Renders on `MTKView`
     func render(in view: MTKView) {
-        guard self.texture(at: 0) != nil,
+        guard self.textures[0] != nil,
             let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }
         
+        self.render(descriptor: descriptor) { commandBuffer in
+            commandBuffer.present(drawable)
+        }
+    }
+    
+    /// Main implementation of `render`
+    private func render(descriptor: MTLRenderPassDescriptor, completion: @escaping (MTLCommandBuffer) -> ()) {
         let commandBuffer = MTL.default.commandQueue.makeCommandBuffer()!
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         
+        // Render pipeline state
         commandEncoder.setRenderPipelineState(self.pipelineState)
-       
+        
+        // Vertex buffer
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         
-        for i in 0 ..< self.maxSourceCount {
-            commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
-        }
+        // Fragment texture(s)
+        for (index, texture) in self.textures.enumerated() { commandEncoder.setFragmentTexture(texture, index: index) }
+        
+        // Fragment buffer(s)
+        for (index, buffer) in self.buffers.enumerated() { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
+        
+        // Draw indexed vertices
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
         
-        commandBuffer.present(drawable)
+        // Custom action
+        completion(commandBuffer)
+        
         commandBuffer.commit()
     }
 }

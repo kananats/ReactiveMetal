@@ -67,16 +67,10 @@ extension MTLRenderView: MTLImageTarget {
             `self`.texture = value
         }
     }
+
+    final var textures: [MTLTexture?] { return [self.texture] }
     
-    final var bufferCount: Int { return 0 }
-    
-    final func buffer(at index: Int) -> MTLBuffer { fatalError("Array index out of bounds exception") }
-    
-    final func texture(at index: Int) -> MTLTexture? {
-        guard index < self.maxSourceCount else { fatalError("Array index out of bounds exception") }
-        
-        return self.texture
-    }
+    final var buffers: [MTLBuffer] { return [] }
 }
 
 extension MTLRenderView: MTKViewDelegate {

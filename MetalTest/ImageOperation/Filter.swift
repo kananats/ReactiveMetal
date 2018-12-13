@@ -27,7 +27,7 @@ open class Filter: NSObject {
     private let _output = MutableProperty<MTLTexture?>(nil)
 
     /// Fragment buffer(s)
-    private let buffers: [MutableProperty<MTLBuffer>]
+    private let _buffers: [MutableProperty<MTLBuffer>]
 
     /// Initializes a filter with maximum source(s) count, fragment function name, and parameters passed to the fragment function
     init(maxSourceCount: Int = 1, fragmentFunctionName: String, params: MTLBufferConvertible...) {
@@ -50,7 +50,7 @@ open class Filter: NSObject {
         // Initializes fragment buffers
         var buffers: [MutableProperty<MTLBuffer>] = []
         for param in params { buffers.append(MutableProperty<MTLBuffer>(param.buffer!)) }
-        self.buffers = buffers
+        self._buffers = buffers
         
         super.init()
         
@@ -70,11 +70,9 @@ extension Filter: MTLImageOperation {
         return self._output.producer.skipNil()
     }
     
-    final func texture(at index: Int) -> MTLTexture? { return self.inputs[index].value }
+    final var textures: [MTLTexture?] { return self.inputs.map { $0.value } }
     
-    final var bufferCount: Int { return self.buffers.count }
-    
-    final func buffer(at index: Int) -> MTLBuffer { return self.buffers[index].value }
+    final var buffers: [MTLBuffer] { return self._buffers.map { $0.value } }
 }
 
 // MARK: Public
@@ -87,7 +85,7 @@ public extension Filter {
     final func params(at index: Int) -> BindingTarget<MTLBufferConvertible> {
         return self.reactive.makeBindingTarget { `self`, value in
             LookupFilter.dispatchQueue.sync {
-                `self`.buffers[index].swap(value.buffer!)
+                `self`._buffers[index].swap(value.buffer!)
             }
         }
     }
