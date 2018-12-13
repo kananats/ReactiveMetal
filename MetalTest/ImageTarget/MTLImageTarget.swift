@@ -17,11 +17,17 @@ protocol MTLImageTarget: ImageTarget where Data == MTLTexture {
     /// Vertex buffer
     var vertexBuffer: MTLBuffer { get }
     
-    /// Index buffer
+    /// Vertex index buffer
     var indexBuffer: MTLBuffer { get }
     
-    /// Texture
+    /// Fragment texture at specified index
     func texture(at index: Int) -> MTLTexture?
+    
+    /// Number of fragment buffer
+    var bufferCount: Int { get }
+    
+    /// Fragment buffer at specified index
+    func buffer(at index: Int) -> MTLBuffer
 }
 
 extension MTLImageTarget {
@@ -30,7 +36,7 @@ extension MTLImageTarget {
     func render(completion: @escaping (MTLTexture) -> ()) {
         guard self.texture(at: 0) != nil else { return }
         
-        let output = MTL.default.makeEmptyTexture(width: 720, height: 1280)!
+        let output = MTL.default.makeEmptyTexture()!
         
         let descriptor = MTLRenderPassDescriptor()
         descriptor.colorAttachments[0].texture = output
@@ -45,14 +51,14 @@ extension MTLImageTarget {
         
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         
-        for i in 0 ..< self.maxNumberOfSources {
+        for i in 0 ..< self.maxSourceCount {
             commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
         }
-        
-        let test: [Float] = [0.3]
-        let a = MTL.default.makeBuffer(from: test)
-        commandEncoder.setFragmentBuffer(a, offset: 0, index: 0)
-        
+
+        for i in 0 ..< self.bufferCount {
+            commandEncoder.setFragmentBuffer(self.buffer(at: i), offset: 0, index: i)
+        }
+
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
@@ -75,7 +81,7 @@ extension MTLImageTarget {
        
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         
-        for i in 0 ..< self.maxNumberOfSources {
+        for i in 0 ..< self.maxSourceCount {
             commandEncoder.setFragmentTexture(self.texture(at: i), index: i)
         }
         commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: TextureMapVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)

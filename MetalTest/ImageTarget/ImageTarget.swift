@@ -15,10 +15,10 @@ public protocol ImageTarget: AnyObject {
     associatedtype Data
     
     /// Current number of sources
-    var numberOfSources: Int { get set }
+    var sourceCount: Int { get set }
     
     /// Maximum number of sources
-    var maxNumberOfSources: Int { get }
+    var maxSourceCount: Int { get }
     
     /// Operates with image inputs
     func input(at index: Int) -> BindingTarget<Data?>

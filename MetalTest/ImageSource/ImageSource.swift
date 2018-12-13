@@ -42,14 +42,16 @@ public extension ImageSource {
     static func <-- <Target: ImageTarget>(target: (Target, Int), source: Self) -> Disposable? where Self.Data == Target.Data {
         
         let (target, index) = target
-        target.numberOfSources += 1
+        guard index < target.maxSourceCount else { fatalError("Array index out of bounds exception") }
         
-        guard target.numberOfSources <= target.maxNumberOfSources else { fatalError("Number of sources of the target has exceeded the limit.") }
+        target.sourceCount += 1
+        
+        guard target.sourceCount <= target.maxSourceCount else { fatalError("Number of sources of the target has exceeded the limit.") }
         
         let disposable = CompositeDisposable()
         
         disposable += target.input(at: index) <~ source.output
-        disposable += { [weak target] in target?.numberOfSources -= 1 }
+        disposable += { [weak target] in target?.sourceCount -= 1 }
         
         return disposable
     }

@@ -19,6 +19,9 @@ public final class MTL {
     /// Command queue of Metal enabled device
     let commandQueue: MTLCommandQueue
     
+    /// Preferred texture size
+    var preferredTextureSize = (width: 720, height: 1080)
+    
     private init?() {
         guard let device = MTLCreateSystemDefaultDevice(),
             let commandQueue = device.makeCommandQueue()
@@ -110,10 +113,16 @@ public extension MTL {
         return self.device.makeTexture(descriptor: textureDescriptor)
     }
     
+    /// Makes empty `MTLTexture` with the preferred texture size
+    func makeEmptyTexture() -> MTLTexture? {
+        return self.makeEmptyTexture(width: self.preferredTextureSize.width, height: self.preferredTextureSize.height)
+    }
+    
     /// Makes `MTLBuffer` from `Array<T>`
     func makeBuffer<T>(from array: [T]) -> MTLBuffer? {
         guard array.count > 0 else { return nil }
-            
+        
         return self.device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)
     }
+
 }

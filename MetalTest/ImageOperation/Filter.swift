@@ -13,12 +13,12 @@ import ReactiveSwift
 /// General superclass for image filter
 open class Filter: NSObject {
     
+    public var sourceCount = 0
+    
     let pipelineState: MTLRenderPipelineState
     
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
-    
-    public var numberOfSources = 0
     
     /// Cached pre-rendering texture
     private let inputs: [MutableProperty<MTLTexture?>]
@@ -26,7 +26,7 @@ open class Filter: NSObject {
     /// Cached post-rendering texture
     private let _output = MutableProperty<MTLTexture?>(nil)
 
-    init(maxNumberOfSources: Int = 1, fragmentFunctionName: String) {
+    init(maxSourceCount: Int = 1, fragmentFunctionName: String) {
         self.pipelineState = MTL.default.makePipelineState(
             vertexFunctionName: "vertex_nofilter",
             fragmentFunctionName: fragmentFunctionName,
@@ -37,7 +37,7 @@ open class Filter: NSObject {
         self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
         
         var inputs: [MutableProperty<MTLTexture?>] = []
-        for _ in 0 ... maxNumberOfSources { inputs.append(MutableProperty(nil)) }
+        for _ in 0 ..< maxSourceCount { inputs.append(MutableProperty(nil)) }
         
         self.inputs = inputs
         
@@ -53,7 +53,7 @@ open class Filter: NSObject {
 
 extension Filter: MTLImageOperation {
     
-    public var maxNumberOfSources: Int { return self.inputs.count }
+    @objc open var maxSourceCount: Int { return self.inputs.count }
     
     public func input(at index: Int) -> BindingTarget<MTLTexture?> {
         return self.inputs[index].bindingTarget
@@ -62,6 +62,10 @@ extension Filter: MTLImageOperation {
     public var output: SignalProducer<MTLTexture, NoError> {
         return self._output.producer.skipNil()
     }
-
-    func texture(at index: Int) -> MTLTexture? { return self.inputs[index].value }
+    
+    @objc open func texture(at index: Int) -> MTLTexture? { return self.inputs[index].value }
+    
+    @objc open var bufferCount: Int { return 0 }
+    
+    @objc open func buffer(at index: Int) -> MTLBuffer { fatalError("Array index out of bounds exception") }
 }

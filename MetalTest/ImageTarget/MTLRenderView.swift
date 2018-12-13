@@ -13,17 +13,16 @@ import ReactiveCocoa
 // MARK: Main
 /// View for rendering image output
 public class MTLRenderView: UIView {
-
+    
+    public var sourceCount = 0
+    
     let pipelineState: MTLRenderPipelineState
     
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
     private var texture: MTLTexture
-    
-    public var numberOfSources = 0
-    public let maxNumberOfSources = 1
-    
+
     /// Metal view
     private lazy var metalView: MTKView = {
         let view = MTKView(frame: frame)
@@ -57,18 +56,25 @@ public class MTLRenderView: UIView {
 
 /// MARK: Protocol
 extension MTLRenderView: MTLImageTarget {
+
+    public final var maxSourceCount: Int { return 1 }
     
-    public func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        guard index == 0 else { fatalError("Index out of bounds exception") }
+    public final func input(at index: Int) -> BindingTarget<MTLTexture?> {
+        guard index < self.maxSourceCount else { fatalError("Array index out of bounds exception") }
         
         return self.reactive.makeBindingTarget { `self`, value in
+            // KDEV check
             guard let value = value else { return }
             `self`.texture = value
         }
     }
     
-    func texture(at index: Int) -> MTLTexture? {
-        guard index == 0 else { fatalError("Index out of bounds exception") }
+    final var bufferCount: Int { return 0 }
+    
+    final func buffer(at index: Int) -> MTLBuffer { fatalError("Array index out of bounds exception") }
+    
+    final func texture(at index: Int) -> MTLTexture? {
+        guard index < self.maxSourceCount else { fatalError("Array index out of bounds exception") }
         
         return self.texture
     }
@@ -78,7 +84,7 @@ extension MTLRenderView: MTKViewDelegate {
     
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
-    public func draw(in view: MTKView) {
+    public final func draw(in view: MTKView) {
         self.render(in: view)
     }
 }
