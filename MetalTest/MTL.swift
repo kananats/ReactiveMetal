@@ -95,16 +95,7 @@ public extension MTL {
         
         return CVMetalTextureGetTexture(metalTexture!)
     }
-    
-    /// Makes `MTLTexture` from `UIImage`
-    func makeTexture(from image: UIImage?) -> MTLTexture? {
-        guard let image = image?.cgImage else { return nil }
-        
-        let loader = MTKTextureLoader(device: self.device)
-        
-        return try? loader.newTexture(cgImage: image, options: [.SRGB: false])
-    }
-    
+
     /// Makes empty `MTLTexture`
     func makeEmptyTexture(width: Int, height: Int) -> MTLTexture? {
         let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
@@ -124,5 +115,4 @@ public extension MTL {
         
         return self.device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)
     }
-
 }

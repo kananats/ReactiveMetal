@@ -31,6 +31,8 @@
 		59240D0021C0D4AE003D6FC3 /* NoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */; };
 		5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */; };
 		5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4921B79FB40097D1D6 /* Vertex.swift */; };
+		597AF90D21C227080047A57D /* MTLBufferConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF90C21C227080047A57D /* MTLBufferConvertible.swift */; };
+		597AF90F21C22D150047A57D /* ImageConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF90E21C22D150047A57D /* ImageConvertible.swift */; };
 		59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7221B7ADE8007E717E /* Camera.swift */; };
 		59E0EE7521B7D071007E717E /* MTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* MTL.swift */; };
 		59E0EE7A21B7D64E007E717E /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */; };
@@ -89,6 +91,8 @@
 		59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFilter.swift; sourceTree = "<group>"; };
 		5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureMapVertex.swift; sourceTree = "<group>"; };
 		5973DD4921B79FB40097D1D6 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		597AF90C21C227080047A57D /* MTLBufferConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLBufferConvertible.swift; sourceTree = "<group>"; };
+		597AF90E21C22D150047A57D /* ImageConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvertible.swift; sourceTree = "<group>"; };
 		59E0EE7221B7ADE8007E717E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		59E0EE7421B7D071007E717E /* MTL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTL.swift; sourceTree = "<group>"; };
 		59E0EE7721B7D647007E717E /* ReactiveMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMapKit.framework; path = Carthage/Build/iOS/ReactiveMapKit.framework; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				591DC73F21B61CA700D66900 /* ViewController.swift */,
 				59E0EE7421B7D071007E717E /* MTL.swift */,
 				59181C3B21BA3C3500CA48FB /* Extension.swift */,
+				597AF90C21C227080047A57D /* MTLBufferConvertible.swift */,
+				597AF90E21C22D150047A57D /* ImageConvertible.swift */,
 				59132CAD21B8BF0D0050D47B /* Data */,
 				59132CAB21B8BE310050D47B /* ImageSource */,
 				59132CAE21B8BF3B0050D47B /* ImageTarget */,
@@ -424,12 +430,14 @@
 				59240D0021C0D4AE003D6FC3 /* NoFilter.swift in Sources */,
 				591F635421BFC2FC005199C6 /* GrayscaleFilter.swift in Sources */,
 				5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */,
+				597AF90D21C227080047A57D /* MTLBufferConvertible.swift in Sources */,
 				59E0EE8321B7DD3F007E717E /* ImageSource.swift in Sources */,
 				5918663321BDF63700E16C67 /* MTLImageOperation.swift in Sources */,
 				5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */,
 				591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */,
 				59240CFC21C0AB16003D6FC3 /* LookupFilter.metal in Sources */,
 				59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */,
+				597AF90F21C22D150047A57D /* ImageConvertible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

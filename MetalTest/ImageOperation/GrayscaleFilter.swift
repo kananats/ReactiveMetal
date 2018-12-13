@@ -6,9 +6,10 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
+/// Filter that desaturates the color to grayscale
 public final class GrayscaleFilter: Filter {
 
-    public convenience init() {
-        self.init(fragmentFunctionName: "fragment_grayscale")
+    public init() {
+        super.init(fragmentFunctionName: "fragment_grayscale")
     }
 }

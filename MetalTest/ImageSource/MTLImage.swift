@@ -11,22 +11,21 @@ import Result
 import ReactiveSwift
 
 // MARK: Main
-class MTLImage {
-
-    /// Latest `MTLTexture` (observable)
-    private let texture: MutableProperty<MTLTexture>
+public class MTLImage {
     
-    init?(_ image: UIImage?) {
-        
-        guard let texture = MTL.default.makeTexture(from: image) else { return nil }
-        
-        self.texture = MutableProperty(texture)
+    /// Current image (reactive)
+    let image: MutableProperty<ImageConvertible>
+    
+    /// Initializes a `MTLImage` with image
+    init(image: ImageConvertible) {
+        self.image = MutableProperty<ImageConvertible>(image)
     }
 }
 
 // MARK: Protocol
 extension MTLImage: MTLImageSource {
 
-    var output: SignalProducer<MTLTexture, NoError> { return self.texture.producer }
+    public var output: SignalProducer<MTLTexture, NoError> {
+        return self.image.producer.filterMap { $0._mtlTexture }
+    }
 }
-

@@ -8,29 +8,34 @@
 //
 
 import UIKit
+import ReactiveSwift
 
+// MARK: Main
+/// Lookup filter
 public final class LookupFilter: Filter {
     
-    let image = MTLImage(UIImage(named: "wallpaper")!)!
+    /// `MTLImage` as lookup source
+    private let _image: MTLImage
     
-    var buffer: MTLBuffer
+    /// Applying intensity (range: 0 ~ 1)
+    let intensity: MutableProperty<Float>
     
-    public init(intensity: Float = 0.88) {
-        let a: [Float] = [1]
-        self.buffer = MTL.default.makeBuffer(from: a)!
+    /// Initializes with image and intensity
+    public init(image: ImageConvertible, intensity: Float = 0.88) {
+
+        self._image = MTLImage(image: image)
+        self.intensity = MutableProperty<Float>(intensity)
         
-        super.init(maxSourceCount: 2, fragmentFunctionName: "fragment_lookup")
+        super.init(maxSourceCount: 2, fragmentFunctionName: "fragment_lookup", params: intensity)
         
-        (self, 1) <-- self.image
+        (self, 1) <-- self._image
+
+        self.params(at: 0) <~ self.intensity.map { $0 }
     }
 }
 
-extension LookupFilter {
-    override public var bufferCount: Int {
-        return 1
-    }
+public extension LookupFilter {
     
-    @objc override public func buffer(at index: Int) -> MTLBuffer {
-        return self.buffer
-    }
+    /// Current image (reactive)
+    var image: MutableProperty<ImageConvertible> { return self._image.image }
 }
