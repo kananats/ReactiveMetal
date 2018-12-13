@@ -17,8 +17,8 @@ public final class LookupFilter: Filter {
     /// `MTLImage` as lookup source
     private let _image: MTLImage
     
-    /// Applying intensity (range: 0 ~ 1)
-    let intensity: MutableProperty<Float>
+    /// Applying intensity (range: 0 ~ 1) (reactive)
+    public let intensity: MutableProperty<Float>
     
     /// Initializes with image and intensity
     public init(image: ImageConvertible, intensity: Float = 0.88) {
