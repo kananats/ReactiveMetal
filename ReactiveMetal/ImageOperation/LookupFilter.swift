@@ -20,7 +20,7 @@ public final class LookupFilter: Filter {
     /// Applying intensity (range: 0 ~ 1) (reactive)
     public let intensity: MutableProperty<Float>
     
-    /// Initializes with image and intensity
+    /// Initializes with image and initial intensity
     public init(image: ImageConvertible, intensity: Float = 0.88) {
 
         self._image = MTLImage(image: image)

@@ -14,6 +14,7 @@ public final class LuminanceFilter: Filter {
     /// Applying intensity (range: 0 ~ 1) (reactive)
     public let intensity: MutableProperty<Float>
     
+    /// Initializes with initial intensity
     public init(intensity: Float = 1) {
         self.intensity = MutableProperty<Float>(intensity)
         

@@ -18,6 +18,8 @@
 		5918663521BDF70500E16C67 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5918663421BDF70500E16C67 /* Filter.swift */; };
 		5918663721BE5E2D00E16C67 /* LuminanceFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5918663621BE5E2D00E16C67 /* LuminanceFilter.metal */; };
 		591D9AF221C33B130022C884 /* DoubleConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF121C33B130022C884 /* DoubleConvertible.swift */; };
+		591D9AF421C34D7B0022C884 /* RGBFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF321C34D7B0022C884 /* RGBFilter.metal */; };
+		591D9AF621C34FD30022C884 /* RGBFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF521C34FD30022C884 /* RGBFilter.swift */; };
 		591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC73D21B61CA700D66900 /* AppDelegate.swift */; };
 		591DC74021B61CA700D66900 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC73F21B61CA700D66900 /* ViewController.swift */; };
 		591DC74321B61CA700D66900 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591DC74121B61CA700D66900 /* Main.storyboard */; };
@@ -73,6 +75,8 @@
 		5918663421BDF70500E16C67 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		5918663621BE5E2D00E16C67 /* LuminanceFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = LuminanceFilter.metal; sourceTree = "<group>"; };
 		591D9AF121C33B130022C884 /* DoubleConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleConvertible.swift; sourceTree = "<group>"; };
+		591D9AF321C34D7B0022C884 /* RGBFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RGBFilter.metal; sourceTree = "<group>"; };
+		591D9AF521C34FD30022C884 /* RGBFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBFilter.swift; sourceTree = "<group>"; };
 		591DC73A21B61CA700D66900 /* ReactiveMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		591DC73D21B61CA700D66900 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		591DC73F21B61CA700D66900 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 				591F635221BFA04E005199C6 /* MTLHeader.h */,
 				591DC76B21B623A900D66900 /* NoFilter.metal */,
 				5918663621BE5E2D00E16C67 /* LuminanceFilter.metal */,
+				591D9AF321C34D7B0022C884 /* RGBFilter.metal */,
 				59240CFB21C0AB16003D6FC3 /* LookupFilter.metal */,
 			);
 			path = Shader;
@@ -185,6 +190,7 @@
 				5918663421BDF70500E16C67 /* Filter.swift */,
 				59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */,
 				591F635321BFC2FC005199C6 /* LuminanceFilter.swift */,
+				591D9AF521C34FD30022C884 /* RGBFilter.swift */,
 				59240CFD21C0AE8F003D6FC3 /* LookupFilter.swift */,
 			);
 			path = ImageOperation;
@@ -420,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5918663021BDF59100E16C67 /* ImageOperation.swift in Sources */,
+				591D9AF621C34FD30022C884 /* RGBFilter.swift in Sources */,
 				591DC76C21B623A900D66900 /* NoFilter.metal in Sources */,
 				591DC74021B61CA700D66900 /* ViewController.swift in Sources */,
 				59E0EE8021B7D7CB007E717E /* MTLCamera.swift in Sources */,
@@ -444,6 +451,7 @@
 				5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */,
 				591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */,
 				59240CFC21C0AB16003D6FC3 /* LookupFilter.metal in Sources */,
+				591D9AF421C34D7B0022C884 /* RGBFilter.metal in Sources */,
 				59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */,
 				597AF90F21C22D150047A57D /* ImageConvertible.swift in Sources */,
 			);
