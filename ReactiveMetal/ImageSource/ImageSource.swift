@@ -28,6 +28,7 @@ public protocol ImageSource {
     var output: SignalProducer<Data, NoError> { get }
 }
 
+// MARK: Public
 public extension ImageSource {
     
     /// Forwards all values emitted from source to first input of the target

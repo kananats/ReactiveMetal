@@ -8,6 +8,7 @@
 
 import ReactiveSwift
 
+// MARK: Main
 /// Filter that desaturates the color to grayscale
 public final class LuminanceFilter: Filter {
 

@@ -10,7 +10,8 @@ import MetalKit
 import Result
 import ReactiveSwift
 
-/// General superclass for image filter
+// MARK: Main
+/// Base class for image filter
 open class Filter: NSObject {
     
     public var sourceCount = 0

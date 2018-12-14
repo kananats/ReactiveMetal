@@ -8,6 +8,7 @@
 
 import ReactiveSwift
 
+// MARK: Main
 /// Filter that transforms color in RGB color space
 public final class RGBFilter: Filter {
     
@@ -22,6 +23,7 @@ public final class RGBFilter: Filter {
     
     /// Initializes with initial RGB adjustment
     public init(red: Float = 1, green: Float = 1, blue: Float = 1) {
+        
         self.red = MutableProperty<Float>(red)
         self.green = MutableProperty<Float>(green)
         self.blue = MutableProperty<Float>(blue)

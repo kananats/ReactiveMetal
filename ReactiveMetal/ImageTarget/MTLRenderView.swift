@@ -11,7 +11,7 @@ import ReactiveSwift
 import ReactiveCocoa
 
 // MARK: Main
-/// View for rendering image output
+/// View for rendering image output using metal enabled device
 public class MTLRenderView: UIView {
     
     public var sourceCount = 0

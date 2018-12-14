@@ -8,5 +8,6 @@
 
 import MetalKit
 
+// MARK: Main
 /// Protocol for image processing operation using metal enabled device
 protocol MTLImageOperation: MTLImageSource, MTLImageTarget { }

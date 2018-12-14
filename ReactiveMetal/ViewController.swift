@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
         self.source = MTLCamera(position: .front)!
         // let filter = LookupFilter(image: "pretty", intensity: 1)
-        let filter = RGBFilter()
+        let filter = HSVFilter()
 
         self.filter = filter
         self.target = MTLRenderView(frame: self.view.frame)
@@ -32,9 +32,9 @@ class ViewController: UIViewController {
         
         self.view.addSubview(self.target)
         
-        Debugger.default.makeSilder(for: filter.red, range: 0 ... 1)
-        Debugger.default.makeSilder(for: filter.green, range: 0 ... 1)
-        Debugger.default.makeSilder(for: filter.blue, range: 0 ... 1)
+        Debugger.default.makeSilder(for: filter.hue, range: 0 ... 1)
+        Debugger.default.makeSilder(for: filter.saturation, range: 0 ... 1)
+        Debugger.default.makeSilder(for: filter.value, range: 0 ... 1)
     }
 }
 

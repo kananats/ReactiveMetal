@@ -12,6 +12,7 @@ import ReactiveSwift
 import UIKit
 
 // MARK: Main
+/// Camera using metal enabled device
 public final class MTLCamera: Camera {
 
     /// Latest `MTLTexture`

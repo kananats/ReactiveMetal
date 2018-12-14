@@ -8,6 +8,7 @@
 
 import MetalKit
 
+// MARK: Main
 /// A protocol for vertex struct
 protocol Vertex {
     
@@ -15,7 +16,8 @@ protocol Vertex {
     init()
 }
 
-extension Vertex {
+// MARK: Internal
+internal extension Vertex {
     
     /// Makes descriptor for the vertex
     static var descriptor: MTLVertexDescriptor {

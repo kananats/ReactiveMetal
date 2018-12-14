@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 
 // MARK: Main
+/// Base class for camera
 public class Camera: NSObject {
     
     /// Capture session

@@ -20,6 +20,8 @@
 		591D9AF221C33B130022C884 /* DoubleConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF121C33B130022C884 /* DoubleConvertible.swift */; };
 		591D9AF421C34D7B0022C884 /* RGBFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF321C34D7B0022C884 /* RGBFilter.metal */; };
 		591D9AF621C34FD30022C884 /* RGBFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF521C34FD30022C884 /* RGBFilter.swift */; };
+		591D9AF821C3530D0022C884 /* HSVFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSVFilter.metal */; };
+		591D9AFA21C368710022C884 /* HSVFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF921C368710022C884 /* HSVFilter.swift */; };
 		591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC73D21B61CA700D66900 /* AppDelegate.swift */; };
 		591DC74021B61CA700D66900 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC73F21B61CA700D66900 /* ViewController.swift */; };
 		591DC74321B61CA700D66900 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591DC74121B61CA700D66900 /* Main.storyboard */; };
@@ -77,6 +79,8 @@
 		591D9AF121C33B130022C884 /* DoubleConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleConvertible.swift; sourceTree = "<group>"; };
 		591D9AF321C34D7B0022C884 /* RGBFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RGBFilter.metal; sourceTree = "<group>"; };
 		591D9AF521C34FD30022C884 /* RGBFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBFilter.swift; sourceTree = "<group>"; };
+		591D9AF721C3530D0022C884 /* HSVFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = HSVFilter.metal; sourceTree = "<group>"; };
+		591D9AF921C368710022C884 /* HSVFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSVFilter.swift; sourceTree = "<group>"; };
 		591DC73A21B61CA700D66900 /* ReactiveMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		591DC73D21B61CA700D66900 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		591DC73F21B61CA700D66900 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				591DC76B21B623A900D66900 /* NoFilter.metal */,
 				5918663621BE5E2D00E16C67 /* LuminanceFilter.metal */,
 				591D9AF321C34D7B0022C884 /* RGBFilter.metal */,
+				591D9AF721C3530D0022C884 /* HSVFilter.metal */,
 				59240CFB21C0AB16003D6FC3 /* LookupFilter.metal */,
 			);
 			path = Shader;
@@ -191,6 +196,7 @@
 				59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */,
 				591F635321BFC2FC005199C6 /* LuminanceFilter.swift */,
 				591D9AF521C34FD30022C884 /* RGBFilter.swift */,
+				591D9AF921C368710022C884 /* HSVFilter.swift */,
 				59240CFD21C0AE8F003D6FC3 /* LookupFilter.swift */,
 			);
 			path = ImageOperation;
@@ -447,11 +453,13 @@
 				5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */,
 				597AF90D21C227080047A57D /* MTLBufferConvertible.swift in Sources */,
 				59E0EE8321B7DD3F007E717E /* ImageSource.swift in Sources */,
+				591D9AF821C3530D0022C884 /* HSVFilter.metal in Sources */,
 				5918663321BDF63700E16C67 /* MTLImageOperation.swift in Sources */,
 				5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */,
 				591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */,
 				59240CFC21C0AB16003D6FC3 /* LookupFilter.metal in Sources */,
 				591D9AF421C34D7B0022C884 /* RGBFilter.metal in Sources */,
+				591D9AFA21C368710022C884 /* HSVFilter.swift in Sources */,
 				59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */,
 				597AF90F21C22D150047A57D /* ImageConvertible.swift in Sources */,
 			);

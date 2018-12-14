@@ -8,5 +8,6 @@
 
 import MetalKit
 
+// MARK: Main
 /// Protocol for image source using metal enabled device
 protocol MTLImageSource: ImageSource where Data == MTLTexture { }

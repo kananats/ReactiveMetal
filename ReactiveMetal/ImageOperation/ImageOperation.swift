@@ -6,5 +6,6 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
+// MARK: Main
 /// Protocol for image processing operation
 public protocol ImageOperation: ImageSource, ImageTarget { }
