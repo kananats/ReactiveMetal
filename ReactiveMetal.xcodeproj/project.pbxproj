@@ -17,6 +17,7 @@
 		5918663321BDF63700E16C67 /* MTLImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5918663221BDF63700E16C67 /* MTLImageOperation.swift */; };
 		5918663521BDF70500E16C67 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5918663421BDF70500E16C67 /* Filter.swift */; };
 		5918663721BE5E2D00E16C67 /* GrayscaleFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5918663621BE5E2D00E16C67 /* GrayscaleFilter.metal */; };
+		591D9AF221C33B130022C884 /* DoubleConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF121C33B130022C884 /* DoubleConvertible.swift */; };
 		591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC73D21B61CA700D66900 /* AppDelegate.swift */; };
 		591DC74021B61CA700D66900 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC73F21B61CA700D66900 /* ViewController.swift */; };
 		591DC74321B61CA700D66900 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591DC74121B61CA700D66900 /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 		5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4921B79FB40097D1D6 /* Vertex.swift */; };
 		597AF90D21C227080047A57D /* MTLBufferConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF90C21C227080047A57D /* MTLBufferConvertible.swift */; };
 		597AF90F21C22D150047A57D /* ImageConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF90E21C22D150047A57D /* ImageConvertible.swift */; };
+		597AF91121C25A0A0047A57D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF91021C25A0A0047A57D /* Debugger.swift */; };
 		59E0EE7321B7ADE8007E717E /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7221B7ADE8007E717E /* Camera.swift */; };
 		59E0EE7521B7D071007E717E /* MTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* MTL.swift */; };
 		59E0EE7A21B7D64E007E717E /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */; };
@@ -70,6 +72,7 @@
 		5918663221BDF63700E16C67 /* MTLImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLImageOperation.swift; sourceTree = "<group>"; };
 		5918663421BDF70500E16C67 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		5918663621BE5E2D00E16C67 /* GrayscaleFilter.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = GrayscaleFilter.metal; sourceTree = "<group>"; };
+		591D9AF121C33B130022C884 /* DoubleConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleConvertible.swift; sourceTree = "<group>"; };
 		591DC73A21B61CA700D66900 /* ReactiveMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		591DC73D21B61CA700D66900 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		591DC73F21B61CA700D66900 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +96,7 @@
 		5973DD4921B79FB40097D1D6 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		597AF90C21C227080047A57D /* MTLBufferConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLBufferConvertible.swift; sourceTree = "<group>"; };
 		597AF90E21C22D150047A57D /* ImageConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvertible.swift; sourceTree = "<group>"; };
+		597AF91021C25A0A0047A57D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		59E0EE7221B7ADE8007E717E /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		59E0EE7421B7D071007E717E /* MTL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTL.swift; sourceTree = "<group>"; };
 		59E0EE7721B7D647007E717E /* ReactiveMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMapKit.framework; path = Carthage/Build/iOS/ReactiveMapKit.framework; sourceTree = "<group>"; };
@@ -165,10 +169,10 @@
 		59132CB521B8FB3B0050D47B /* Shader */ = {
 			isa = PBXGroup;
 			children = (
+				591F635221BFA04E005199C6 /* MTLHeader.h */,
 				591DC76B21B623A900D66900 /* NoFilter.metal */,
 				5918663621BE5E2D00E16C67 /* GrayscaleFilter.metal */,
 				59240CFB21C0AB16003D6FC3 /* LookupFilter.metal */,
-				591F635221BFA04E005199C6 /* MTLHeader.h */,
 			);
 			path = Shader;
 			sourceTree = "<group>";
@@ -212,8 +216,10 @@
 			children = (
 				591DC73D21B61CA700D66900 /* AppDelegate.swift */,
 				591DC73F21B61CA700D66900 /* ViewController.swift */,
+				597AF91021C25A0A0047A57D /* Debugger.swift */,
 				59E0EE7421B7D071007E717E /* MTL.swift */,
 				59181C3B21BA3C3500CA48FB /* Extension.swift */,
+				591D9AF121C33B130022C884 /* DoubleConvertible.swift */,
 				597AF90C21C227080047A57D /* MTLBufferConvertible.swift */,
 				597AF90E21C22D150047A57D /* ImageConvertible.swift */,
 				59132CAD21B8BF0D0050D47B /* Data */,
@@ -420,11 +426,13 @@
 				5918663521BDF70500E16C67 /* Filter.swift in Sources */,
 				59132CB221B8F5B60050D47B /* ImageTarget.swift in Sources */,
 				59132CAA21B8B6DB0050D47B /* MTLRenderView.swift in Sources */,
+				591D9AF221C33B130022C884 /* DoubleConvertible.swift in Sources */,
 				59240CFE21C0AE8F003D6FC3 /* LookupFilter.swift in Sources */,
 				59132CB421B8F68F0050D47B /* MTLImageSource.swift in Sources */,
 				5918663721BE5E2D00E16C67 /* GrayscaleFilter.metal in Sources */,
 				59132CB021B8BFBB0050D47B /* MTLImage.swift in Sources */,
 				59181C3C21BA3C3600CA48FB /* Extension.swift in Sources */,
+				597AF91121C25A0A0047A57D /* Debugger.swift in Sources */,
 				59E0EE7521B7D071007E717E /* MTL.swift in Sources */,
 				59181C3A21BA129500CA48FB /* MTLImageTarget.swift in Sources */,
 				59240D0021C0D4AE003D6FC3 /* NoFilter.swift in Sources */,

@@ -31,6 +31,7 @@ open class Filter: NSObject {
 
     /// Initializes a filter with maximum source(s) count, fragment function name, and parameters passed to the fragment function
     init(maxSourceCount: Int = 1, fragmentFunctionName: String, params: MTLBufferConvertible...) {
+        
         // Initializes pipeline state
         self.pipelineState = MTL.default.makePipelineState(
             vertexFunctionName: "vertex_nofilter",
