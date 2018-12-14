@@ -34,8 +34,8 @@ public class MTLRenderView: UIView {
     
     override init(frame: CGRect = .zero) {
         self.pipelineState = MTL.default.makePipelineState(
-            vertexFunctionName: "vertex_nofilter",
-            fragmentFunctionName: "fragment_nofilter",
+            vertexFunctionName: "vertex_texture_map",
+            fragmentFunctionName: "fragment_texture_map",
             vertexDescriptor: TextureMapVertex.descriptor
         )!
         

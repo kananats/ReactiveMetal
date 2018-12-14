@@ -40,7 +40,7 @@ public extension MTL {
     
     /// Makes pipeline state
     func makePipelineState(vertexFunctionName: String, fragmentFunctionName: String? = nil, vertexDescriptor: MTLVertexDescriptor? = nil) -> MTLRenderPipelineState? {
-        
+
         let library = self.device.makeDefaultLibrary()!
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()

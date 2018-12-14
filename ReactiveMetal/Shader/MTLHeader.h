@@ -12,13 +12,15 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct InputVertex
+/// Vertex shader input
+struct VertexInput
 {
     float4 position     [[attribute(0)]];
     float2 texcoord     [[attribute(1)]];
 };
 
-struct OutputVertex
+/// Fragment shader input
+struct FragmentInput
 {
     float4 position     [[position]];
     float2 texcoord;

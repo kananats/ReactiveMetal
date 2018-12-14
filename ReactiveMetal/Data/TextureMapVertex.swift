@@ -9,7 +9,7 @@
 import simd
 
 // MARK: Main
-/// Vertex for mapping texture coordinates to render view
+/// Vertex for mapping texture coordinates to render quad
 struct TextureMapVertex {
     
     /// position (x, y, z, w)

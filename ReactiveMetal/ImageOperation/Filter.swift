@@ -35,7 +35,7 @@ open class Filter: NSObject {
         
         // Initializes pipeline state
         self.pipelineState = MTL.default.makePipelineState(
-            vertexFunctionName: "vertex_nofilter",
+            vertexFunctionName: "vertex_texture_map",
             fragmentFunctionName: fragmentFunctionName,
             vertexDescriptor: TextureMapVertex.descriptor
         )!

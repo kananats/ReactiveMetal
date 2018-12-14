@@ -1,5 +1,5 @@
 //
-//  LookupFilter.metal
+//  Lookup.metal
 //  ReactiveMetal
 //
 //  Created by s.kananat on 2018/12/12.
@@ -8,7 +8,8 @@
 
 #include "MTLHeader.h"
 
-fragment half4 fragment_lookup(OutputVertex input [[stage_in]], texture2d<half> texture0 [[texture(0)]], texture2d<half> texture1 [[texture(1)]], device const float &intensity [[buffer(0)]]) {
+/// Lookup fragment shader
+fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half> texture0 [[texture(0)]], texture2d<half> texture1 [[texture(1)]], device const float &intensity [[buffer(0)]]) {
 
     constexpr sampler baseSampler;
     half4 base = texture0.sample(baseSampler, input.texcoord);

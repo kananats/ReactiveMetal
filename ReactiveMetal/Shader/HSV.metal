@@ -1,5 +1,5 @@
 //
-//  HSVFilter.metal
+//  HSV.metal
 //  ReactiveMetal
 //
 //  Created by s.kananat on 2018/12/14.
@@ -29,7 +29,7 @@ half3 hsv_to_rgb(half3 c)
 }
 
 /// HSV fragment shader
-fragment half4 fragment_hsv(OutputVertex input [[stage_in]], texture2d<half> texture [[texture(0)]], device const float &hue [[buffer(0)]], device const float &saturation [[buffer(1)]], device const float &value [[buffer(2)]]) {
+fragment half4 fragment_hsv(FragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]], device const float &hue [[buffer(0)]], device const float &saturation [[buffer(1)]], device const float &value [[buffer(2)]]) {
     constexpr sampler defaultSampler;
     half4 color = texture.sample(defaultSampler, input.texcoord);
     
