@@ -20,7 +20,7 @@ struct TextureMapVertex {
 }
 
 // MARK: Protocol
-extension TextureMapVertex: Vertex {
+extension TextureMapVertex: MTLVertex {
     
     init() { self.init(position: float4(), texture: float2()) }
 }

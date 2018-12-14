@@ -86,7 +86,7 @@ public extension Filter {
     /// Parameters at specified index
     final func params(at index: Int) -> BindingTarget<MTLBufferConvertible> {
         return self.reactive.makeBindingTarget { `self`, value in
-            LookupFilter.dispatchQueue.sync {
+            Filter.dispatchQueue.sync {
                 `self`._buffers[index].swap(value.buffer!)
             }
         }
