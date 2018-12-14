@@ -37,7 +37,7 @@ public final class Debugger: UIView {
 // MARK: Extension
 public extension Debugger {
     
-    /// Creates a slider with specified range, sending latest value to
+    /// Creates a slider with specified range to control property
     @discardableResult
     func makeSilder<Value: DoubleConvertible, Property: MutablePropertyProtocol>(for property: Property, range: ClosedRange<Value>) -> Disposable? where Property.Value == Value {
         let slider = UISlider()

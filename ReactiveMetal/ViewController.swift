@@ -13,7 +13,7 @@ import ReactiveSwift
 class ViewController: UIViewController {
 
     var source: MTLCamera!
-    var filter: LookupFilter!
+    var filter: Filter!
     var target: MTLRenderView!
 
     override func viewDidLoad() {
@@ -21,7 +21,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         self.source = MTLCamera(position: .front)!
-        self.filter = LookupFilter(image: "wallpaper", intensity: 1)
+        // let filter = LookupFilter(image: "pretty", intensity: 1)
+        let filter = LuminanceFilter()
+
+        self.filter = filter
         self.target = MTLRenderView(frame: self.view.frame)
         
         self.filter <-- self.source
@@ -29,7 +32,7 @@ class ViewController: UIViewController {
         
         self.view.addSubview(self.target)
         
-        Debugger.default.makeSilder(for: self.filter.intensity, range: 0 ... 1)
+        Debugger.default.makeSilder(for: filter.intensity, range: 0 ... 1)
     }
 }
 
