@@ -1,5 +1,5 @@
 //
-//  TextureMap.metal
+//  Default.metal
 //  ReactiveMetal
 //
 //  Created by s.kananat on 2018/12/04.
@@ -9,7 +9,7 @@
 #include "MTLHeader.h"
 
 /// Texture map vertex shader
-vertex FragmentInput vertex_texture_map(const VertexInput input [[stage_in]]) {
+vertex FragmentInput vertex_default(const VertexInput input [[stage_in]]) {
     FragmentInput fragmentInput;
     fragmentInput.position = input.position;
     fragmentInput.texcoord = input.texcoord;
@@ -17,7 +17,7 @@ vertex FragmentInput vertex_texture_map(const VertexInput input [[stage_in]]) {
 };
 
 /// Texture map fragment shader
-fragment half4 fragment_texture_map(FragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]]) {
+fragment half4 fragment_default(FragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]]) {
     constexpr sampler defaultSampler;
     half4 color = texture.sample(defaultSampler, input.texcoord);
     return color;

@@ -39,7 +39,12 @@ public extension MTL {
     static let `default`: MTL! = MTL()
     
     /// Makes pipeline state
-    func makePipelineState(vertexFunctionName: String, fragmentFunctionName: String? = nil, vertexDescriptor: MTLVertexDescriptor? = nil) -> MTLRenderPipelineState? {
+    func makePipelineState(fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
+        return self.makePipelineState(vertex: DefaultVertex.self, fragmentFunctionName: fragmentFunctionName)
+    }
+    
+    /// Makes pipeline state with specified vertex type
+    func makePipelineState<Vertex: MTLVertex>(vertex: Vertex.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
 
         let library = self.device.makeDefaultLibrary()!
         
@@ -47,25 +52,21 @@ public extension MTL {
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = library.makeFunction(name: vertexFunctionName) else {
-            fatalError("vertexFunction `\(vertexFunctionName)` not found.")
+        guard let vertexFunction = library.makeFunction(name: Vertex.functionName) else {
+            fatalError("vertexFunction `\(Vertex.functionName)` not found.")
         }
         
         pipelineDescriptor.vertexFunction = vertexFunction
         
-        // Fragment function (optional)
-        if let fragmentFunctionName = fragmentFunctionName {
-            guard let fragmentFunction = library.makeFunction(name: fragmentFunctionName) else {
-                fatalError("fragmentFunction `\(fragmentFunctionName)` not found.")
-            }
+        // Fragment function
+        guard let fragmentFunction = library.makeFunction(name: fragmentFunctionName) else {
+            fatalError("fragmentFunction `\(fragmentFunctionName)` not found.")
+        }
             
-            pipelineDescriptor.fragmentFunction = fragmentFunction
-        }
+        pipelineDescriptor.fragmentFunction = fragmentFunction
         
-        // Vertex descriptor (optional)
-        if let vertexDescriptor = vertexDescriptor {
-            pipelineDescriptor.vertexDescriptor = vertexDescriptor
-        }
+        // Vertex descriptor
+        pipelineDescriptor.vertexDescriptor = Vertex.descriptor
         
         return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }

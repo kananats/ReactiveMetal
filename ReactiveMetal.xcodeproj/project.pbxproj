@@ -29,13 +29,13 @@
 		591DC74821B61CA800D66900 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591DC74621B61CA800D66900 /* LaunchScreen.storyboard */; };
 		591DC75321B61CA800D66900 /* ReactiveMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75221B61CA800D66900 /* ReactiveMetalTests.swift */; };
 		591DC75E21B61CA800D66900 /* ReactiveMetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75D21B61CA800D66900 /* ReactiveMetalUITests.swift */; };
-		591DC76C21B623A900D66900 /* TextureMap.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591DC76B21B623A900D66900 /* TextureMap.metal */; };
+		591DC76C21B623A900D66900 /* Default.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591DC76B21B623A900D66900 /* Default.metal */; };
 		591F635421BFC2FC005199C6 /* LuminanceFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591F635321BFC2FC005199C6 /* LuminanceFilter.swift */; };
 		59240CFC21C0AB16003D6FC3 /* Lookup.metal in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFB21C0AB16003D6FC3 /* Lookup.metal */; };
 		59240CFE21C0AE8F003D6FC3 /* LookupFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFD21C0AE8F003D6FC3 /* LookupFilter.swift */; };
 		59240D0021C0D4AE003D6FC3 /* NoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */; };
-		5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */; };
-		5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4921B79FB40097D1D6 /* Vertex.swift */; };
+		5973DD4821B79F8C0097D1D6 /* DefaultVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4721B79F8C0097D1D6 /* DefaultVertex.swift */; };
+		5973DD4A21B79FB40097D1D6 /* MTLVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5973DD4921B79FB40097D1D6 /* MTLVertex.swift */; };
 		597AF90D21C227080047A57D /* MTLBufferConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF90C21C227080047A57D /* MTLBufferConvertible.swift */; };
 		597AF90F21C22D150047A57D /* ImageConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF90E21C22D150047A57D /* ImageConvertible.swift */; };
 		597AF91121C25A0A0047A57D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF91021C25A0A0047A57D /* Debugger.swift */; };
@@ -94,14 +94,14 @@
 		591DC75921B61CA800D66900 /* ReactiveMetalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveMetalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		591DC75D21B61CA800D66900 /* ReactiveMetalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveMetalUITests.swift; sourceTree = "<group>"; };
 		591DC75F21B61CA800D66900 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		591DC76B21B623A900D66900 /* TextureMap.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = TextureMap.metal; sourceTree = "<group>"; };
+		591DC76B21B623A900D66900 /* Default.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Default.metal; sourceTree = "<group>"; };
 		591F635221BFA04E005199C6 /* MTLHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTLHeader.h; sourceTree = "<group>"; };
 		591F635321BFC2FC005199C6 /* LuminanceFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminanceFilter.swift; sourceTree = "<group>"; };
 		59240CFB21C0AB16003D6FC3 /* Lookup.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lookup.metal; sourceTree = "<group>"; };
 		59240CFD21C0AE8F003D6FC3 /* LookupFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupFilter.swift; sourceTree = "<group>"; };
 		59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFilter.swift; sourceTree = "<group>"; };
-		5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureMapVertex.swift; sourceTree = "<group>"; };
-		5973DD4921B79FB40097D1D6 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		5973DD4721B79F8C0097D1D6 /* DefaultVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVertex.swift; sourceTree = "<group>"; };
+		5973DD4921B79FB40097D1D6 /* MTLVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLVertex.swift; sourceTree = "<group>"; };
 		597AF90C21C227080047A57D /* MTLBufferConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLBufferConvertible.swift; sourceTree = "<group>"; };
 		597AF90E21C22D150047A57D /* ImageConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvertible.swift; sourceTree = "<group>"; };
 		597AF91021C25A0A0047A57D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -158,8 +158,8 @@
 		59132CAD21B8BF0D0050D47B /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				5973DD4921B79FB40097D1D6 /* Vertex.swift */,
-				5973DD4721B79F8C0097D1D6 /* TextureMapVertex.swift */,
+				5973DD4921B79FB40097D1D6 /* MTLVertex.swift */,
+				5973DD4721B79F8C0097D1D6 /* DefaultVertex.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -178,7 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				591F635221BFA04E005199C6 /* MTLHeader.h */,
-				591DC76B21B623A900D66900 /* TextureMap.metal */,
+				591DC76B21B623A900D66900 /* Default.metal */,
 				5918663621BE5E2D00E16C67 /* Luminance.metal */,
 				591D9AF321C34D7B0022C884 /* RGB.metal */,
 				591D9AF721C3530D0022C884 /* HSV.metal */,
@@ -433,7 +433,7 @@
 			files = (
 				5918663021BDF59100E16C67 /* ImageOperation.swift in Sources */,
 				591D9AF621C34FD30022C884 /* RGBFilter.swift in Sources */,
-				591DC76C21B623A900D66900 /* TextureMap.metal in Sources */,
+				591DC76C21B623A900D66900 /* Default.metal in Sources */,
 				591DC74021B61CA700D66900 /* ViewController.swift in Sources */,
 				59E0EE8021B7D7CB007E717E /* MTLCamera.swift in Sources */,
 				5918663521BDF70500E16C67 /* Filter.swift in Sources */,
@@ -450,12 +450,12 @@
 				59181C3A21BA129500CA48FB /* MTLImageTarget.swift in Sources */,
 				59240D0021C0D4AE003D6FC3 /* NoFilter.swift in Sources */,
 				591F635421BFC2FC005199C6 /* LuminanceFilter.swift in Sources */,
-				5973DD4A21B79FB40097D1D6 /* Vertex.swift in Sources */,
+				5973DD4A21B79FB40097D1D6 /* MTLVertex.swift in Sources */,
 				597AF90D21C227080047A57D /* MTLBufferConvertible.swift in Sources */,
 				59E0EE8321B7DD3F007E717E /* ImageSource.swift in Sources */,
 				591D9AF821C3530D0022C884 /* HSV.metal in Sources */,
 				5918663321BDF63700E16C67 /* MTLImageOperation.swift in Sources */,
-				5973DD4821B79F8C0097D1D6 /* TextureMapVertex.swift in Sources */,
+				5973DD4821B79F8C0097D1D6 /* DefaultVertex.swift in Sources */,
 				591DC73E21B61CA700D66900 /* AppDelegate.swift in Sources */,
 				59240CFC21C0AB16003D6FC3 /* Lookup.metal in Sources */,
 				591D9AF421C34D7B0022C884 /* RGB.metal in Sources */,

@@ -34,13 +34,11 @@ public class MTLRenderView: UIView {
     
     override init(frame: CGRect = .zero) {
         self.pipelineState = MTL.default.makePipelineState(
-            vertexFunctionName: "vertex_texture_map",
-            fragmentFunctionName: "fragment_texture_map",
-            vertexDescriptor: TextureMapVertex.descriptor
+            fragmentFunctionName: "fragment_default"
         )!
         
-        self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
-        self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
+        self.vertexBuffer = MTL.default.makeBuffer(from: DefaultVertex.vertices)!
+        self.indexBuffer = MTL.default.makeBuffer(from: DefaultVertex.indices)!
 
         self.texture = MTL.default.makeEmptyTexture()!
 

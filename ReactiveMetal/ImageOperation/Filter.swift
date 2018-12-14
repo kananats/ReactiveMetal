@@ -29,20 +29,48 @@ open class Filter: NSObject {
 
     /// Fragment buffer(s)
     private let _buffers: [MutableProperty<MTLBuffer>]
+    
+    /// Initializes a filter with specified vertex type, maximum source(s) count, fragment function name, and parameters passed to the fragment function
+    init<Vertex: MTLVertex>(vertex: Vertex.Type, maxSourceCount: Int = 1, fragmentFunctionName: String, params: MTLBufferConvertible...) {
 
+        // Initializes pipeline state
+        self.pipelineState = MTL.default.makePipelineState(
+            vertex: vertex,
+            fragmentFunctionName: fragmentFunctionName
+        )!
+        
+        // Initializes vertex and index buffers
+        self.vertexBuffer = MTL.default.makeBuffer(from: Vertex.vertices)!
+        self.indexBuffer = MTL.default.makeBuffer(from: Vertex.indices)!
+        
+        // Initializes inputs
+        var inputs: [MutableProperty<MTLTexture?>] = []
+        for _ in 0 ..< maxSourceCount { inputs.append(MutableProperty<MTLTexture?>(nil)) }
+        self.inputs = inputs
+        
+        // Initializes fragment buffers
+        var buffers: [MutableProperty<MTLBuffer>] = []
+        for param in params { buffers.append(MutableProperty<MTLBuffer>(param.buffer!)) }
+        self._buffers = buffers
+        
+        super.init()
+        
+        // Reactively bind
+        self.bind()
+    }
+    
     /// Initializes a filter with maximum source(s) count, fragment function name, and parameters passed to the fragment function
     init(maxSourceCount: Int = 1, fragmentFunctionName: String, params: MTLBufferConvertible...) {
         
         // Initializes pipeline state
         self.pipelineState = MTL.default.makePipelineState(
-            vertexFunctionName: "vertex_texture_map",
-            fragmentFunctionName: fragmentFunctionName,
-            vertexDescriptor: TextureMapVertex.descriptor
+            vertex: DefaultVertex.self,
+            fragmentFunctionName: fragmentFunctionName
         )!
         
         // Initializes vertex and index buffers
-        self.vertexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.vertices)!
-        self.indexBuffer = MTL.default.makeBuffer(from: TextureMapVertex.indices)!
+        self.vertexBuffer = MTL.default.makeBuffer(from: DefaultVertex.vertices)!
+        self.indexBuffer = MTL.default.makeBuffer(from: DefaultVertex.indices)!
         
         // Initializes inputs
         var inputs: [MutableProperty<MTLTexture?>] = []
@@ -64,11 +92,11 @@ open class Filter: NSObject {
 // MARK: Protocol
 extension Filter: MTLImageOperation {
     
-    @objc open var maxSourceCount: Int { return self.inputs.count }
+    public final var maxSourceCount: Int { return self.inputs.count }
     
-    public func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.inputs[index].bindingTarget }
+    public final func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.inputs[index].bindingTarget }
     
-    final public var output: SignalProducer<MTLTexture, NoError> {
+    public final var output: SignalProducer<MTLTexture, NoError> {
         return self._output.producer.skipNil()
     }
     
