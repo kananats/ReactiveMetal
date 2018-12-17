@@ -9,4 +9,4 @@
 import Foundation
 
 /// Base class for image filter
-open class Filter: ImageOperation<DefaultVertex> { }
+open class Filter: Operation<DefaultVertex> { }

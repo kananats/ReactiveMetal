@@ -13,8 +13,7 @@ import ReactiveSwift
 class ViewController: UIViewController {
 
     var source: Camera!
-    var filter: Filter!
-    var rgbFilter: Filter!
+    var filter: ImageOperation!
     var target: RenderView!
 
     override func viewDidLoad() {
@@ -25,14 +24,14 @@ class ViewController: UIViewController {
         // let filter = LookupFilter(image: "pretty", intensity: 1)
         let filter = HSVFilter()
 
-        self.filter = filter
         self.target = RenderView(frame: self.view.frame)
         
         let rgb = RGBFilter()
-        self.rgbFilter = rgb
+        
+        self.filter = OperationGroup(operations: rgb, filter)
+    
         self.filter <-- self.source
-        rgb <-- self.filter
-        self.target <-- rgb
+        self.target <-- self.filter
         
         self.view.addSubview(self.target)
         

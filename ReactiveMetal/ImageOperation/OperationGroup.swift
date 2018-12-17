@@ -12,29 +12,28 @@ import ReactiveSwift
 
 // MARK: Main
 /// Group of image operations
-open class OperationGroup<V: Vertex> {
+
+open class OperationGroup {
     
     /// Array of image operations
     /// output <-- operations[0] <-- operations[1] ... <-- operations[count - 1] <-- source
-    private let operations: [ImageOperation<V>]
+    private let operations: [ImageOperation]
     
-    init(operations: ImageOperation<V>...) {
+    init(operations: ImageOperation...) {
         self.operations = operations
         
-        for index in 1 ..< operations.count { operations[index - 1] <-- operations[index] }
+        for index in 1 ..< operations.count {
+            operations[index - 1] <-- operations[index]
+        }
     }
 }
 
 // MARK: Protocol
-extension OperationGroup: ImageSource {
+extension OperationGroup: ImageOperation {
     
     public var output: SignalProducer<MTLTexture, NoError> {
         return self.operations.first!.output
     }
-}
-
-// MARK: Protocol
-extension OperationGroup: ImageTarget {
     
     public var sourceCount: Int {
         get { return self.operations.last!.sourceCount }
