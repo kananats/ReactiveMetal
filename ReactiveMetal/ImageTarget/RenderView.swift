@@ -26,6 +26,7 @@ public final class RenderView: UIView {
     /// Metal view
     private lazy var metalView: MTKView = {
         let view = MTKView(frame: self.frame)
+        
         view.device = MTL.default.device
         view.delegate = self
         
@@ -39,14 +40,26 @@ public final class RenderView: UIView {
         self.indexBuffer = MTL.default.makeBuffer(from: DefaultVertex.indices)!
 
         self.texture = MTL.default.makeEmptyTexture()!
-
-        super.init(frame: frame)
         
+        super.init(frame: frame)
+
         self.addSubview(self.metalView)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+/// MARK: Inheritance
+extension RenderView {
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        self.metalView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 
@@ -73,7 +86,5 @@ extension RenderView: MTKViewDelegate {
     
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
-    public func draw(in view: MTKView) {
-        self.render(in: view)
-    }
+    public func draw(in view: MTKView) { self.render(in: view) }
 }

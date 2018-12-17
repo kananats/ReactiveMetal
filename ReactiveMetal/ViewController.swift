@@ -12,7 +12,7 @@ import ReactiveSwift
 
 class ViewController: UIViewController {
 
-    var source: Camera!
+    var source: ImageSource!
     var filter: ImageOperation!
     var target: RenderView!
     
@@ -22,11 +22,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        self.source = Camera(position: .front)!
+        // self.source = Camera(position: .front)!
+        self.source = Image("wallpaper")
         
         let hsv = HSVFilter()
 
-        self.target = RenderView(frame: self.view.frame)
+        self.target = RenderView()
         
         let rgb = RGBFilter()
 
@@ -36,6 +37,10 @@ class ViewController: UIViewController {
         self.target <-- self.filter
         
         self.view.addSubview(self.target)
+        
+        self.target.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 
