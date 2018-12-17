@@ -13,6 +13,7 @@
 		5915F45F21C74041002EAB24 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5915F45E21C74040002EAB24 /* Filter.swift */; };
 		5915F46221C74F39002EAB24 /* ImageBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5915F46121C74F39002EAB24 /* ImageBinding.swift */; };
 		5915F46421C7515D002EAB24 /* ImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5915F46321C7515D002EAB24 /* ImageOperation.swift */; };
+		5915F46621C76BD6002EAB24 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5915F46521C76BD6002EAB24 /* SnapKit.framework */; };
 		59181C3A21BA129500CA48FB /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59181C3921BA129500CA48FB /* Renderer.swift */; };
 		59181C3C21BA3C3600CA48FB /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59181C3B21BA3C3500CA48FB /* Extension.swift */; };
 		5918663521BDF70500E16C67 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5918663421BDF70500E16C67 /* Operation.swift */; };
@@ -73,6 +74,7 @@
 		5915F45E21C74040002EAB24 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		5915F46121C74F39002EAB24 /* ImageBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBinding.swift; sourceTree = "<group>"; };
 		5915F46321C7515D002EAB24 /* ImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOperation.swift; sourceTree = "<group>"; };
+		5915F46521C76BD6002EAB24 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 		59181C3921BA129500CA48FB /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		59181C3B21BA3C3500CA48FB /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		5918663421BDF70500E16C67 /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				59E0EE7E21B7D655007E717E /* Result.framework in Frameworks */,
 				59E0EE7A21B7D64E007E717E /* ReactiveSwift.framework in Frameworks */,
 				59E0EE7C21B7D651007E717E /* ReactiveCocoa.framework in Frameworks */,
+				5915F46621C76BD6002EAB24 /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +282,7 @@
 		59E0EE7621B7D646007E717E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5915F46521C76BD6002EAB24 /* SnapKit.framework */,
 				59E0EE7D21B7D655007E717E /* Result.framework */,
 				59E0EE7B21B7D651007E717E /* ReactiveCocoa.framework */,
 				59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */,
@@ -426,6 +430,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 			);
 			outputFileListPaths = (
 			);
