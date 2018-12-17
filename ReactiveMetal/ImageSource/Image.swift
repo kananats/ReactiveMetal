@@ -17,8 +17,8 @@ public class Image {
     /// Current image (reactive)
     let image: MutableProperty<ImageConvertible>
     
-    /// Initializes a `MTLImage` with image
-    init(image: ImageConvertible) {
+    /// Initializes a `MTLImage` with an image
+    init(_ image: ImageConvertible) {
         self.image = MutableProperty<ImageConvertible>(image)
     }
 }

@@ -23,7 +23,7 @@ public final class LookupFilter: Filter {
     /// Initializes with image and initial intensity
     public init(image: ImageConvertible, intensity: Float = 0.88) {
 
-        self._image = Image(image: image)
+        self._image = Image(image)
         self.intensity = MutableProperty<Float>(intensity)
         
         super.init(maxSourceCount: 2, fragmentFunctionName: "fragment_lookup", params: [intensity])
