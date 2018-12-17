@@ -25,7 +25,7 @@ public final class RenderView: UIView {
 
     /// Metal view
     private lazy var metalView: MTKView = {
-        let view = MTKView(frame: frame)
+        let view = MTKView(frame: self.frame)
         view.device = MTL.default.device
         view.delegate = self
         
@@ -33,9 +33,7 @@ public final class RenderView: UIView {
     }()
     
     override init(frame: CGRect = .zero) {
-        self.pipelineState = MTL.default.makePipelineState(
-            fragmentFunctionName: "fragment_default"
-        )!
+        self.pipelineState = MTL.default.makePipelineState()!
         
         self.vertexBuffer = MTL.default.makeBuffer(from: DefaultVertex.vertices)!
         self.indexBuffer = MTL.default.makeBuffer(from: DefaultVertex.indices)!
