@@ -19,7 +19,7 @@ public final class LuminanceFilter: Filter {
     public init(intensity: Float = 1) {
         self.intensity = MutableProperty<Float>(intensity)
         
-        super.init(fragmentFunctionName: "fragment_luminance", params: intensity)
+        super.init(fragmentFunctionName: "fragment_luminance", params: [intensity])
         
         self.params(at: 0) <~ self.intensity.map { $0 }
     }

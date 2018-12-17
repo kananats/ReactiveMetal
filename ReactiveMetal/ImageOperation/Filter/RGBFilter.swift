@@ -28,7 +28,7 @@ public final class RGBFilter: Filter {
         self.green = MutableProperty<Float>(green)
         self.blue = MutableProperty<Float>(blue)
         
-        super.init(fragmentFunctionName: "fragment_rgb", params: red, green, blue)
+        super.init(fragmentFunctionName: "fragment_rgb", params: [red, green, blue])
         
         self.params(at: 0) <~ self.red.map { $0 }
         self.params(at: 1) <~ self.green.map { $0 }

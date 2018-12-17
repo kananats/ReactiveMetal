@@ -44,7 +44,7 @@ public extension MTL {
     }
     
     /// Makes pipeline state with specified vertex type
-    func makePipelineState<Vertex: MTLVertex>(vertex: Vertex.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
+    func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
 
         let library = self.device.makeDefaultLibrary()!
         
@@ -52,8 +52,8 @@ public extension MTL {
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = library.makeFunction(name: Vertex.functionName) else {
-            fatalError("vertexFunction `\(Vertex.functionName)` not found.")
+        guard let vertexFunction = library.makeFunction(name: V.functionName) else {
+            fatalError("vertexFunction `\(V.functionName)` not found.")
         }
         
         pipelineDescriptor.vertexFunction = vertexFunction
@@ -66,7 +66,7 @@ public extension MTL {
         pipelineDescriptor.fragmentFunction = fragmentFunction
         
         // Vertex descriptor
-        pipelineDescriptor.vertexDescriptor = Vertex.descriptor
+        pipelineDescriptor.vertexDescriptor = V.descriptor
         
         return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }

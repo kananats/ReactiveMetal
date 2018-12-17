@@ -1,5 +1,5 @@
 //
-//  MTLImageTarget.swift
+//  Renderer.swift
 //  ReactiveMetal
 //
 //  Created by s.kananat on 2018/12/07.
@@ -9,7 +9,7 @@
 import MetalKit
 
 /// Protocol for image target using metal enabled device
-protocol MTLImageTarget: ImageTarget where Data == MTLTexture {
+protocol Renderer: ImageTarget {
 
     /// Render pipeline state
     var pipelineState: MTLRenderPipelineState { get }
@@ -27,7 +27,7 @@ protocol MTLImageTarget: ImageTarget where Data == MTLTexture {
     var buffers: [MTLBuffer] { get }
 }
 
-extension MTLImageTarget {
+extension Renderer {
     
     /// Renders to texture
     func render(completion: @escaping (MTLTexture) -> ()) {

@@ -6,13 +6,11 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
+import MetalKit
 import ReactiveSwift
 
 /// Protocol for image target
 public protocol ImageTarget: AnyObject {
-    
-    /// Input data type
-    associatedtype Data
     
     /// Current number of sources
     var sourceCount: Int { get set }
@@ -21,5 +19,5 @@ public protocol ImageTarget: AnyObject {
     var maxSourceCount: Int { get }
     
     /// Operates with image inputs
-    func input(at index: Int) -> BindingTarget<Data?>
+    func input(at index: Int) -> BindingTarget<MTLTexture?>
 }

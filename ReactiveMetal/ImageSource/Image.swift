@@ -11,7 +11,8 @@ import Result
 import ReactiveSwift
 
 // MARK: Main
-public class MTLImage {
+/// Static image as image source
+public class Image {
     
     /// Current image (reactive)
     let image: MutableProperty<ImageConvertible>
@@ -23,7 +24,7 @@ public class MTLImage {
 }
 
 // MARK: Protocol
-extension MTLImage: MTLImageSource {
+extension Image: ImageSource {
 
     public var output: SignalProducer<MTLTexture, NoError> {
         return self.image.producer.filterMap { $0._mtlTexture }

@@ -1,5 +1,5 @@
 //
-//  MTLVertex.swift
+//  Vertex.swift
 //  ReactiveMetal
 //
 //  Created by s.kananat on 2018/12/05.
@@ -10,7 +10,7 @@ import MetalKit
 
 // MARK: Main
 /// A protocol for vertex struct
-public protocol MTLVertex {
+public protocol Vertex {
     
     /// Init without any parameter
     init()
@@ -26,7 +26,7 @@ public protocol MTLVertex {
 }
 
 // MARK: Internal
-internal extension MTLVertex {
+internal extension Vertex {
     
     /// Makes descriptor for the vertex
     static var descriptor: MTLVertexDescriptor {

@@ -12,29 +12,37 @@ import ReactiveSwift
 
 class ViewController: UIViewController {
 
-    var source: MTLCamera!
+    var source: Camera!
     var filter: Filter!
-    var target: MTLRenderView!
+    var rgbFilter: Filter!
+    var target: RenderView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        self.source = MTLCamera(position: .front)!
+        self.source = Camera(position: .front)!
         // let filter = LookupFilter(image: "pretty", intensity: 1)
         let filter = HSVFilter()
 
         self.filter = filter
-        self.target = MTLRenderView(frame: self.view.frame)
+        self.target = RenderView(frame: self.view.frame)
         
+        let rgb = RGBFilter()
+        self.rgbFilter = rgb
         self.filter <-- self.source
-        self.target <-- self.filter
+        rgb <-- self.filter
+        self.target <-- rgb
         
         self.view.addSubview(self.target)
         
         Debugger.default.makeSilder(for: filter.hue, range: 0 ... 1)
         Debugger.default.makeSilder(for: filter.saturation, range: 0 ... 1)
         Debugger.default.makeSilder(for: filter.value, range: 0 ... 1)
+        
+        Debugger.default.makeSilder(for: rgb.red, range: 0 ... 1)
+        Debugger.default.makeSilder(for: rgb.green, range: 0 ... 1)
+        Debugger.default.makeSilder(for: rgb.blue, range: 0 ... 1)
     }
 }
 

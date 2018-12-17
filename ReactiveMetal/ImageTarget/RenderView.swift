@@ -12,7 +12,7 @@ import ReactiveCocoa
 
 // MARK: Main
 /// View for rendering image output using metal enabled device
-public class MTLRenderView: UIView {
+public final class RenderView: UIView {
     
     public var sourceCount = 0
     
@@ -53,7 +53,7 @@ public class MTLRenderView: UIView {
 }
 
 /// MARK: Protocol
-extension MTLRenderView: MTLImageTarget {
+extension RenderView: Renderer {
 
     public final var maxSourceCount: Int { return 1 }
     
@@ -71,11 +71,11 @@ extension MTLRenderView: MTLImageTarget {
     final var buffers: [MTLBuffer] { return [] }
 }
 
-extension MTLRenderView: MTKViewDelegate {
+extension RenderView: MTKViewDelegate {
     
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
     
-    public final func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         self.render(in: view)
     }
 }

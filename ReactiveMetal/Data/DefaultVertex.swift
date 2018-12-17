@@ -20,7 +20,7 @@ public struct DefaultVertex {
 }
 
 // MARK: Protocol
-extension DefaultVertex: MTLVertex {
+extension DefaultVertex: Vertex {
     
     public static let functionName = "vertex_default"
     
