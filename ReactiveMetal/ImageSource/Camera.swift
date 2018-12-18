@@ -20,6 +20,7 @@ public final class Camera {
     /// Texture cache
     private let textureCache: CVMetalTextureCache
     
+    /// Init with a camera position
     init?(position: AVCaptureDevice.Position = .back) {
         guard let camera = AVCamera(position: position),
             let textureCache = MTL.default.makeTextureCache()

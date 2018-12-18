@@ -43,6 +43,7 @@ final class AVCamera: NSObject {
         return output
     }()
     
+    /// Init with a camera position
     init?(position: AVCaptureDevice.Position = .back) {
 
         // Requests access to camera
