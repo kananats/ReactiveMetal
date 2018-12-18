@@ -25,18 +25,14 @@ class ViewController: UIViewController {
 
         let camera = Camera(position: .front)!
         
-        camera.orientation <~ UIDevice.current.reactive.orientation.map { value in
+        camera.orientation <~ UIDevice.current.reactive.orientation.filterMap { value in
             let orientation: AVCaptureVideoOrientation
             
             switch value {
-            case .portraitUpsideDown:
-                orientation = .portraitUpsideDown
-            case .landscapeLeft:
-                orientation = .landscapeRight
-            case .landscapeRight:
-                orientation = .landscapeLeft
-            default:
-                orientation = .portrait
+            case .portrait:         orientation = .portrait
+            case .landscapeLeft:    orientation = .landscapeRight
+            case .landscapeRight:   orientation = .landscapeLeft
+            default: return nil
             }
             return orientation
         }
