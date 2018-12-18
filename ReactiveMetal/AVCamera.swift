@@ -15,6 +15,9 @@ import ReactiveSwift
 /// AVFoundation camera
 final class AVCamera: NSObject {
     
+    /// Dispatch queue for camera session output
+    private let dispatchQueue = DispatchQueue(label: "com.donuts.ReactiveMetal.AVCamera")
+    
     /// Captured sample buffer (reactive)
     private let _sampleBuffer = MutableProperty<CMSampleBuffer?>(nil)
     
@@ -37,7 +40,7 @@ final class AVCamera: NSObject {
     /// Capture session output
     private lazy var output: AVCaptureOutput = {
         let output = AVCaptureVideoDataOutput()
-        output.setSampleBufferDelegate(self, queue: AVCamera.dispatchQueue)
+        output.setSampleBufferDelegate(self, queue: self.dispatchQueue)
         output.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
         
         return output
@@ -121,11 +124,4 @@ internal extension AVCamera {
     var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> {
         return self._sampleBuffer.producer.skipNil()
     }
-}
-
-// MARK: Private
-private extension AVCamera {
-    
-    /// Dispatch queue for camera session
-    static let dispatchQueue = DispatchQueue(label: "CameraCaptureSession")
 }
