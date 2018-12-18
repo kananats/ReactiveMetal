@@ -22,7 +22,6 @@
 		5914EE3A21C8BCF2008CE46A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59132CAF21B8BFBB0050D47B /* Image.swift */; };
 		5914EE3B21C8BCF2008CE46A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59181C3B21BA3C3500CA48FB /* Extension.swift */; };
 		5914EE3C21C8BCF2008CE46A /* ImageBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5915F46121C74F39002EAB24 /* ImageBinding.swift */; };
-		5914EE3D21C8BCF2008CE46A /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF91021C25A0A0047A57D /* Debugger.swift */; };
 		5914EE3E21C8BCF2008CE46A /* MTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* MTL.swift */; };
 		5914EE3F21C8BCF2008CE46A /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59181C3921BA129500CA48FB /* Renderer.swift */; };
 		5914EE4021C8BCF2008CE46A /* NoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */; };
@@ -46,7 +45,6 @@
 		5914EE5521C8BCF2008CE46A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 591DC74421B61CA800D66900 /* Assets.xcassets */; };
 		5914EE5621C8BCF2008CE46A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 591DC74121B61CA700D66900 /* Main.storyboard */; };
 		5914EE6621C8BD13008CE46A /* ReactiveMetal.h in Headers */ = {isa = PBXBuildFile; fileRef = 5914EE6421C8BD13008CE46A /* ReactiveMetal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5914EE6C21C8C29F008CE46A /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597AF91021C25A0A0047A57D /* Debugger.swift */; };
 		5914EE6D21C8C2C1008CE46A /* MTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E0EE7421B7D071007E717E /* MTL.swift */; };
 		5914EE6E21C8C326008CE46A /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7D21B7D655007E717E /* Result.framework */; };
 		5914EE6F21C8C329008CE46A /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0EE7921B7D64E007E717E /* ReactiveSwift.framework */; };
@@ -130,7 +128,6 @@
 		5973DD4921B79FB40097D1D6 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		597AF90C21C227080047A57D /* MTLBufferConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLBufferConvertible.swift; sourceTree = "<group>"; };
 		597AF90E21C22D150047A57D /* ImageConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvertible.swift; sourceTree = "<group>"; };
-		597AF91021C25A0A0047A57D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		59E0EE7221B7ADE8007E717E /* AVCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVCamera.swift; sourceTree = "<group>"; };
 		59E0EE7421B7D071007E717E /* MTL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTL.swift; sourceTree = "<group>"; };
 		59E0EE7721B7D647007E717E /* ReactiveMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMapKit.framework; path = Carthage/Build/iOS/ReactiveMapKit.framework; sourceTree = "<group>"; };
@@ -285,7 +282,6 @@
 			children = (
 				591DC73D21B61CA700D66900 /* AppDelegate.swift */,
 				591DC73F21B61CA700D66900 /* ViewController.swift */,
-				597AF91021C25A0A0047A57D /* Debugger.swift */,
 				59E0EE7421B7D071007E717E /* MTL.swift */,
 				59E0EE7221B7ADE8007E717E /* AVCamera.swift */,
 				5915F46121C74F39002EAB24 /* ImageBinding.swift */,
@@ -534,7 +530,6 @@
 			files = (
 				5914EE4721C8BCF2008CE46A /* AppDelegate.swift in Sources */,
 				5914EE3221C8BCF2008CE46A /* ViewController.swift in Sources */,
-				5914EE3D21C8BCF2008CE46A /* Debugger.swift in Sources */,
 				5914EE3E21C8BCF2008CE46A /* MTL.swift in Sources */,
 				5914EE4B21C8BCF2008CE46A /* AVCamera.swift in Sources */,
 				5914EE3C21C8BCF2008CE46A /* ImageBinding.swift in Sources */,
@@ -571,7 +566,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5914EE6C21C8C29F008CE46A /* Debugger.swift in Sources */,
 				5914EE6D21C8C2C1008CE46A /* MTL.swift in Sources */,
 				5914EE7221C8C34F008CE46A /* AVCamera.swift in Sources */,
 				5914EE7421C8C353008CE46A /* ImageBinding.swift in Sources */,
