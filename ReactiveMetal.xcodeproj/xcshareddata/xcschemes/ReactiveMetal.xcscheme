@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "591DC73921B61CA700D66900"
-               BuildableName = "ReactiveMetal.app"
+               BlueprintIdentifier = "5914EE6121C8BD13008CE46A"
+               BuildableName = "ReactiveMetal.framework"
                BlueprintName = "ReactiveMetal"
                ReferencedContainer = "container:ReactiveMetal.xcodeproj">
             </BuildableReference>
@@ -52,8 +52,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "591DC73921B61CA700D66900"
-            BuildableName = "ReactiveMetal.app"
+            BlueprintIdentifier = "5914EE6121C8BD13008CE46A"
+            BuildableName = "ReactiveMetal.framework"
             BlueprintName = "ReactiveMetal"
             ReferencedContainer = "container:ReactiveMetal.xcodeproj">
          </BuildableReference>
@@ -76,8 +76,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "591DC73921B61CA700D66900"
-            BuildableName = "ReactiveMetal.app"
+            BlueprintIdentifier = "5914EE6121C8BD13008CE46A"
+            BuildableName = "ReactiveMetal.framework"
             BlueprintName = "ReactiveMetal"
             ReferencedContainer = "container:ReactiveMetal.xcodeproj">
          </BuildableReference>
@@ -95,8 +95,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "591DC73921B61CA700D66900"
-            BuildableName = "ReactiveMetal.app"
+            BlueprintIdentifier = "5914EE6121C8BD13008CE46A"
+            BuildableName = "ReactiveMetal.framework"
             BlueprintName = "ReactiveMetal"
             ReferencedContainer = "container:ReactiveMetal.xcodeproj">
          </BuildableReference>
