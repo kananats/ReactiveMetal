@@ -17,17 +17,24 @@ public final class Camera {
     /// Reference to AVCamera
     private let camera: AVCamera
     
+    #if arch(i386) || arch(x86_64)
+    #else
     /// Texture cache
     private let textureCache: CVMetalTextureCache
+    #endif
     
     /// Init with a camera position
     init?(position: AVCaptureDevice.Position = .back) {
-        guard let camera = AVCamera(position: position),
+        #if arch(i386) || arch(x86_64)
+            return nil
+        #else
+            guard let camera = AVCamera(position: position),
             let textureCache = MTL.default.makeTextureCache()
             else { return nil }
         
-        self.camera = camera
-        self.textureCache = textureCache
+            self.camera = camera
+            self.textureCache = textureCache
+        #endif
     }
 }
 
@@ -37,11 +44,15 @@ extension Camera: ImageSource {
     public var output: SignalProducer<MTLTexture, NoError> {
         
         return self.camera.sampleBuffer.filterMap { [weak self] value in
-            guard let `self` = self,
-                let texture = MTL.default.makeTexture(from: value, textureCache: `self`.textureCache)
+            #if arch(i386) || arch(x86_64)
+                return nil
+            #else
+                guard let `self` = self,
+                    let texture = MTL.default.makeTexture(from: value, textureCache: `self`.textureCache)
                 else { return nil }
             
-            return texture
+                return texture
+            #endif
         }
     }
 }

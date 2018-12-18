@@ -14,8 +14,7 @@ import SnapKit
 /// Debugger
 public final class Debugger: UIView {
     
-    public static let `default` = Debugger()
-    
+    /// Initializes
     private init() {
         super.init(frame: .zero)
         
@@ -29,7 +28,6 @@ public final class Debugger: UIView {
         }
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,6 +35,9 @@ public final class Debugger: UIView {
 
 // MARK: Extension
 public extension Debugger {
+    
+    /// Shared debugger
+    public static let `default` = Debugger()
     
     /// Creates a slider with specified range to control property
     @discardableResult

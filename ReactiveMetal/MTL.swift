@@ -7,7 +7,11 @@
 //
 
 import AVFoundation
+
+#if arch(i386) || arch(x86_64)
+#else
 import MetalKit
+#endif
 
 // MARK: Main
 /// Shared Metal resources
@@ -70,7 +74,9 @@ public extension MTL {
         
         return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }
-    
+   
+    #if arch(i386) || arch(x86_64)
+    #else
     /// Makes texture cache
     func makeTextureCache() -> CVMetalTextureCache? {
         var textureCache: CVMetalTextureCache?
@@ -79,7 +85,7 @@ public extension MTL {
         
         return textureCache
     }
-    
+
     /// Makes `MTLTexture` from `CMSampleBuffer`
     func makeTexture(from buffer: CMSampleBuffer, format: MTLPixelFormat = .bgra8Unorm, textureCache: CVMetalTextureCache) -> MTLTexture? {
         
@@ -96,7 +102,8 @@ public extension MTL {
         
         return CVMetalTextureGetTexture(metalTexture!)
     }
-
+    #endif
+    
     /// Makes empty `MTLTexture`
     func makeEmptyTexture(width: Int, height: Int) -> MTLTexture? {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
