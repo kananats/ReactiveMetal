@@ -22,6 +22,7 @@ public final class RenderView: UIView {
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
+    /// Texture
     private var texture: MTLTexture?
 
     /// Metal view
