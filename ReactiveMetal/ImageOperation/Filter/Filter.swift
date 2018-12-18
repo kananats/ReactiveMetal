@@ -9,4 +9,10 @@
 import Foundation
 
 /// Base class for image filter
-open class Filter: Operation<DefaultVertex> { }
+open class Filter: Operation<DefaultVertex> {
+    
+    override init(maxSourceCount: Int = 1, vertices: [DefaultVertex] = DefaultVertex.vertices, indices: [UInt16] = DefaultVertex.indices, fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
+        
+        super.init(vertices: vertices, indices: indices, fragmentFunctionName: fragmentFunctionName, params: params)
+    }
+}

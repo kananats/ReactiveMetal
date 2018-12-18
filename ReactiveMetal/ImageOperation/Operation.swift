@@ -14,7 +14,7 @@ import ReactiveSwift
 /// Base class for single image operation
 open class Operation<V: Vertex>: NSObject {
     
-    /// Shared dispatch queue for filter
+    /// Dispatch queue for operation
     private let dispatchQueue = DispatchQueue(label: "com.donuts.ReactiveMetal.Operation")
     
     public var sourceCount = 0
@@ -34,7 +34,7 @@ open class Operation<V: Vertex>: NSObject {
     private let _buffers: [MutableProperty<MTLBuffer>]
     
     /// Initializes a filter with maximum source(s) count, fragment function name, and parameters passed to the fragment function
-    init(maxSourceCount: Int = 1, fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
+    init(maxSourceCount: Int = 1, vertices: [V], indices: [UInt16], fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
 
         // Initializes pipeline state
         self.pipelineState = MTL.default.makePipelineState(
@@ -42,9 +42,11 @@ open class Operation<V: Vertex>: NSObject {
             fragmentFunctionName: fragmentFunctionName
         )!
         
-        // Initializes vertex and index buffers
-        self.vertexBuffer = MTL.default.makeBuffer(from: V.vertices)!
-        self.indexBuffer = MTL.default.makeBuffer(from: V.indices)!
+        // Initializes vertex buffer
+        self.vertexBuffer = MTL.default.makeBuffer(from: vertices)!
+        
+        // Initializes index buffer
+        self.indexBuffer = MTL.default.makeBuffer(from: indices)!
         
         // Initializes inputs
         var inputs: [MutableProperty<MTLTexture?>] = []

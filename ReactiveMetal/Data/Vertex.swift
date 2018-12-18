@@ -15,12 +15,6 @@ public protocol Vertex {
     /// Init without any parameter
     init()
     
-    /// All coordinate vertices
-    static var vertices: [Self] { get }
-    
-    /// All coordinate indices
-    static var indices: [UInt16] { get }
-    
     /// Corresponding vertex shader function name
     static var functionName: String { get }
 }

@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var filter: ImageOperation!
     var target: RenderView!
     
-    var debuggers: [Debugger] = []
+    // var debuggers: [Debugger] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()

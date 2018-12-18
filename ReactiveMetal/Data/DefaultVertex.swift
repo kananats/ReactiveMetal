@@ -23,12 +23,18 @@ public struct DefaultVertex {
 extension DefaultVertex: Vertex {
     
     public static let functionName = "vertex_default"
+
+    public init() { self.init(position: float4(), texcoord: float2()) }
+}
+
+// MARK: Public
+public extension DefaultVertex {
     
+    /// All coordinate vertices
     public static let vertices: [DefaultVertex] = [.topLeft, .bottomLeft, .bottomRight, .topRight]
     
+    /// All coordinate indices
     public static let indices: [UInt16] = [0, 1, 2, 2, 3, 0]
-    
-    public init() { self.init(position: float4(), texcoord: float2()) }
 }
 
 // MARK: Private
