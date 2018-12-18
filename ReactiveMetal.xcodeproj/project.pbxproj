@@ -81,6 +81,7 @@
 		5914EE8E21C8CE85008CE46A /* HSV.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSV.metal */; };
 		591DC75321B61CA800D66900 /* ReactiveMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75221B61CA800D66900 /* ReactiveMetalTests.swift */; };
 		591DC75E21B61CA800D66900 /* ReactiveMetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75D21B61CA800D66900 /* ReactiveMetalUITests.swift */; };
+		5983808A21C8F3A700806534 /* MTLHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 591F635221BFA04E005199C6 /* MTLHeader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -340,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5914EE6621C8BD13008CE46A /* ReactiveMetal.h in Headers */,
+				5983808A21C8F3A700806534 /* MTLHeader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
