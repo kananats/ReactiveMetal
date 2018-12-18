@@ -16,19 +16,17 @@ public final class Debugger: UIView {
     
     public static let `default` = Debugger()
     
-    init() {
+    private init() {
         super.init(frame: .zero)
         
         self.backgroundColor = .clear
         self.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
-        /*
         DispatchQueue.main.async {
             let window = UIApplication.shared.keyWindow!
             self.frame = window.frame
             
             window.addSubview(self)
         }
- */
     }
     
     
