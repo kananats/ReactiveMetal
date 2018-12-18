@@ -9,6 +9,7 @@
 import MetalKit
 import ReactiveSwift
 import ReactiveCocoa
+import SnapKit
 
 // MARK: Main
 /// View for rendering image output using metal enabled device
