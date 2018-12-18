@@ -18,6 +18,9 @@ final class AVCamera: NSObject {
     /// Captured sample buffer (reactive)
     private let _sampleBuffer = MutableProperty<CMSampleBuffer?>(nil)
     
+    /// Video orientation (reactive)
+    let orientation = MutableProperty<AVCaptureVideoOrientation>(.portrait)
+    
     /// Capture session
     private let session: AVCaptureSession = {
         let session = AVCaptureSession()
@@ -76,41 +79,27 @@ final class AVCamera: NSObject {
         // Finish atomic operation
         self.session.commitConfiguration()
         
+        guard let connection = self.output.connection(with: .video) else { return nil }
         
-        guard let connection = self.output.connection(with: .video), connection.isVideoOrientationSupported else { return nil }
-        
-        connection.videoOrientation = .portrait
-        /*
-        // Fix orientation
-        UIDevice.current.reactive.orientation.observeValues { [weak self] value in
+        // Fix video orientation
+        self.orientation.producer.startWithValues { [weak self] value in
             guard let `self` = self else { return }
             
             guard let connection = `self`.output.connection(with: .video),
                 connection.isVideoOrientationSupported
                 else { return }
             
-            let orientation: AVCaptureVideoOrientation
-
-            switch value {
-            case .portraitUpsideDown:
-                orientation = .portraitUpsideDown
-            case .landscapeLeft:
-                orientation = .landscapeLeft
-            case .landscapeRight:
-                orientation = .landscapeRight
-            default:
-                orientation = .portrait
-            }
-            connection.videoOrientation = orientation
+            connection.videoOrientation = value
         }
-        */
+        
+        // Fix mirror
+        if connection.isVideoMirroringSupported { connection.isVideoMirrored = position == .front }
+        
         // Start running
         self.session.startRunning()
     }
     
-    deinit {
-        self.session.stopRunning()
-    }
+    deinit { self.session.stopRunning() }
 }
 
 // MARK: Protocol

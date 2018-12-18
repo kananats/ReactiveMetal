@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import MetalKit
 import ReactiveSwift
 
@@ -22,8 +23,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        // self.source = Camera(position: .front)!
-        self.source = Image("wallpaper")
+        let camera = Camera(position: .front)!
+        
+        camera.orientation <~ UIDevice.current.reactive.orientation.map { value in
+            let orientation: AVCaptureVideoOrientation
+            
+            switch value {
+            case .portraitUpsideDown:
+                orientation = .portraitUpsideDown
+            case .landscapeLeft:
+                orientation = .landscapeRight
+            case .landscapeRight:
+                orientation = .landscapeLeft
+            default:
+                orientation = .portrait
+            }
+            return orientation
+        }
+        
+        self.source = camera
+        
+        //self.source = Image("wallpaper")
         
         let hsv = HSVFilter()
 

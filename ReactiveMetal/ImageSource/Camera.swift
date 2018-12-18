@@ -44,3 +44,10 @@ extension Camera: ImageSource {
         }
     }
 }
+
+// MARK: Public
+public extension Camera {
+    
+    /// Video orientation (reactive)
+    var orientation: MutableProperty<AVCaptureVideoOrientation> { return self.camera.orientation }
+}
