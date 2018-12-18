@@ -19,8 +19,8 @@ public protocol Vertex {
     static var functionName: String { get }
 }
 
-// MARK: Internal
-internal extension Vertex {
+// MARK: Public
+public extension Vertex {
     
     /// Makes descriptor for the vertex
     static var descriptor: MTLVertexDescriptor {

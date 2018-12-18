@@ -31,14 +31,14 @@ extension DefaultVertex: Vertex {
 public extension DefaultVertex {
     
     /// All coordinate vertices
-    public static let vertices: [DefaultVertex] = [.topLeft, .bottomLeft, .bottomRight, .topRight]
+    static let vertices: [DefaultVertex] = [.topLeft, .bottomLeft, .bottomRight, .topRight]
     
     /// All coordinate indices
-    public static let indices: [UInt16] = [0, 1, 2, 2, 3, 0]
+    static let indices: [UInt16] = [0, 1, 2, 2, 3, 0]
 }
 
 // MARK: Private
-extension DefaultVertex {
+private extension DefaultVertex {
     
     /// Bottom left coordinate
     static let bottomLeft = DefaultVertex(position: float4(-1, 1, 0, 1), texcoord: float2(0, 0))
