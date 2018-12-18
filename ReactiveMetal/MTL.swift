@@ -99,10 +99,10 @@ public extension MTL {
 
     /// Makes empty `MTLTexture`
     func makeEmptyTexture(width: Int, height: Int) -> MTLTexture? {
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
-        textureDescriptor.usage = [.renderTarget, .shaderRead]
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
+        descriptor.usage = [.renderTarget, .shaderRead]
         
-        return self.device.makeTexture(descriptor: textureDescriptor)
+        return self.device.makeTexture(descriptor: descriptor)
     }
     
     /// Makes empty `MTLTexture` with the preferred texture size

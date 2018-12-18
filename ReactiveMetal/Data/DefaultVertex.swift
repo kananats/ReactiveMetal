@@ -16,7 +16,7 @@ public struct DefaultVertex {
     var position: float4
     
     /// texture coordinates (u, v)
-    var texture: float2
+    var texcoord: float2
 }
 
 // MARK: Protocol
@@ -28,22 +28,22 @@ extension DefaultVertex: Vertex {
     
     public static let indices: [UInt16] = [0, 1, 2, 2, 3, 0]
     
-    public init() { self.init(position: float4(), texture: float2()) }
+    public init() { self.init(position: float4(), texcoord: float2()) }
 }
 
 // MARK: Private
 extension DefaultVertex {
     
     /// Bottom left coordinate
-    static let bottomLeft = DefaultVertex(position: float4(-1, 1, 0, 1), texture: float2(0, 0))
+    static let bottomLeft = DefaultVertex(position: float4(-1, 1, 0, 1), texcoord: float2(0, 0))
     
     /// Top left coordinate
-    static let topLeft = DefaultVertex(position: float4(-1, -1, 0, 1), texture: float2(0, 1))
+    static let topLeft = DefaultVertex(position: float4(-1, -1, 0, 1), texcoord: float2(0, 1))
     
     /// Top right coordinate
-    static let topRight = DefaultVertex(position: float4(1, -1, 0, 1), texture: float2(1, 1))
+    static let topRight = DefaultVertex(position: float4(1, -1, 0, 1), texcoord: float2(1, 1))
 
     /// Bottom right coordinate
     static let bottomRight =
-        DefaultVertex(position: float4(1, 1, 0, 1), texture: float2(1, 0))
+        DefaultVertex(position: float4(1, 1, 0, 1), texcoord: float2(1, 0))
 }
