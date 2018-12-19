@@ -41,11 +41,11 @@ class ViewController: UIViewController {
         
         //self.source = Image("wallpaper")
         
-        let hsv = HSVFilter()
+        let hsv = HSVFilter()!
 
         self.target = RenderView()
         
-        let rgb = RGBFilter()
+        let rgb = RGBFilter()!
 
         self.filter = OperationGroup(hsv, rgb)
     

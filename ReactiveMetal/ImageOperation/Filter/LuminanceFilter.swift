@@ -16,7 +16,7 @@ public final class LuminanceFilter: Filter {
     public let intensity: MutableProperty<Float>
     
     /// Initializes with initial intensity
-    public init(intensity: Float = 1) {
+    public init!(intensity: Float = 1) {
         self.intensity = MutableProperty<Float>(intensity)
         
         super.init(fragmentFunctionName: "fragment_luminance", params: [intensity])

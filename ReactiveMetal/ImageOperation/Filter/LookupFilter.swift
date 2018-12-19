@@ -21,7 +21,7 @@ public final class LookupFilter: Filter {
     public let intensity: MutableProperty<Float>
     
     /// Initializes with image and initial intensity
-    public init(image: ImageConvertible, intensity: Float = 0.88) {
+    public init!(image: ImageConvertible, intensity: Float = 0.88) {
 
         self._image = Image(image)
         self.intensity = MutableProperty<Float>(intensity)

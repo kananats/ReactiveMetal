@@ -22,7 +22,7 @@ public final class RGBFilter: Filter {
     public let blue: MutableProperty<Float>
     
     /// Initializes with initial RGB adjustment
-    public init(red: Float = 1, green: Float = 1, blue: Float = 1) {
+    public init!(red: Float = 1, green: Float = 1, blue: Float = 1) {
         
         self.red = MutableProperty<Float>(red)
         self.green = MutableProperty<Float>(green)

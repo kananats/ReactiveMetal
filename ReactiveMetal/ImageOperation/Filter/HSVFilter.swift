@@ -22,7 +22,7 @@ public final class HSVFilter: Filter {
     public let `value`: MutableProperty<Float>
     
     /// Initializes with initial HSV adjustment
-    public init(hue: Float = 0, saturation: Float = 1, `value`: Float = 1) {
+    public init!(hue: Float = 0, saturation: Float = 1, `value`: Float = 1) {
         
         self.hue = MutableProperty<Float>(hue)
         self.saturation = MutableProperty<Float>(saturation)
