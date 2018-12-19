@@ -18,14 +18,18 @@ import MetalKit
 public final class MTL {
     
     /// Metal enabled device
-    let device: MTLDevice
+    public let device: MTLDevice
     
-    /// Command queue of Metal enabled device
-    let commandQueue: MTLCommandQueue
+    /// Command queue of metal enabled device
+    public let commandQueue: MTLCommandQueue
     
     /// Preferred texture size
-    var preferredTextureSize = (width: 720, height: 1080)
+    public var preferredTextureSize = (width: 720, height: 1080)
     
+    let library: MTLLibrary
+    //var _library: MTLLibrary
+    
+    /// Initializes
     private init?() {
         guard let device = MTLCreateSystemDefaultDevice(),
             let commandQueue = device.makeCommandQueue()
@@ -33,6 +37,13 @@ public final class MTL {
         
         self.device = device
         self.commandQueue = commandQueue
+        
+        let bundle = Bundle(for: MTL.self)
+        guard let path = bundle.path(forResource: "default", ofType: "metallib"),
+            let library = try? device.makeLibrary(filepath: path)
+            else { return nil }
+        
+        self.library = library
     }
 }
 
@@ -50,7 +61,7 @@ public extension MTL {
     /// Makes pipeline state with specified vertex type
     func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
 
-        let library = self.device.makeDefaultLibrary()!
+        let library = self.library
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
