@@ -57,6 +57,7 @@ public extension MTL {
     /// Shared instance
     static let `default`: MTL! = MTL()
     
+    // TODO: fix
     /// Get function. Internal library takes priority.
     func function(name: String) -> MTLFunction? {
         if let function = self.internalLibrary.makeFunction(name: name)
@@ -66,12 +67,12 @@ public extension MTL {
     }
     
     /// Makes pipeline state
-    func makePipelineState(fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
-        return self.makePipelineState(vertex: DefaultVertex.self, fragmentFunctionName: fragmentFunctionName)
+    func makePipelineState(fragmentFunctionName: String = "fragment_basic") -> MTLRenderPipelineState? {
+        return self.makePipelineState(vertex: BasicVertex.self, fragmentFunctionName: fragmentFunctionName)
     }
     
     /// Makes pipeline state with specified vertex type
-    func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
+    func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_basic") -> MTLRenderPipelineState? {
 
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm

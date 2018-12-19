@@ -42,8 +42,8 @@ public final class RenderView: UIView {
 
         self.pipelineState = MTL.default.makePipelineState()!
         
-        self.vertexBuffer = MTL.default.makeBuffer(from: DefaultVertex.vertices)!
-        self.indexBuffer = MTL.default.makeBuffer(from: DefaultVertex.indices)!
+        self.vertexBuffer = MTL.default.makeBuffer(from: BasicVertex.vertices)!
+        self.indexBuffer = MTL.default.makeBuffer(from: BasicVertex.indices)!
 
         self.texture = MTL.default.makeEmptyTexture()!
         

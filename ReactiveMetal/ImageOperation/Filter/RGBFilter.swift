@@ -10,7 +10,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Filter that transforms color in RGB color space
-public final class RGBFilter: Filter {
+public final class RGBFilter: BasicFilter {
     
     /// Red component adjustment (range: 0 ~ 1) (reactive)
     public let red: MutableProperty<Float>

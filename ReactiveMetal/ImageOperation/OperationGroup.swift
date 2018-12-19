@@ -12,7 +12,6 @@ import ReactiveSwift
 
 // MARK: Main
 /// Group of image operations
-
 open class OperationGroup {
     
     /// Array of image operations

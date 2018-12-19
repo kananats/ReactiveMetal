@@ -12,7 +12,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Lookup filter
-public final class LookupFilter: Filter {
+public final class LookupFilter: BasicFilter {
     
     /// `MTLImage` as lookup source
     private let _image: Image

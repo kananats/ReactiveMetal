@@ -10,7 +10,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Filter that transforms color in HSV color space
-public final class HSVFilter: Filter {
+public final class HSVFilter: BasicFilter {
     
     /// Hue component adjustment (range: 0 ~ 1) (reactive)
     public let hue: MutableProperty<Float>

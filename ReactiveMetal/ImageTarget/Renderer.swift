@@ -76,7 +76,7 @@ extension Renderer {
         for (index, buffer) in self.buffers.enumerated() { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
         
         // Draw indexed vertices
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: DefaultVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: BasicVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
         
