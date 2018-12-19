@@ -15,7 +15,7 @@ import MetalKit
 
 // MARK: Main
 /// Shared Metal resources
-public final class MTL {
+public class MTL {
     
     /// Metal enabled device
     public let device: MTLDevice
@@ -26,9 +26,9 @@ public final class MTL {
     /// Preferred texture size
     public var preferredTextureSize = (width: 720, height: 1080)
     
-    let library: MTLLibrary
-    //var _library: MTLLibrary
-    
+    /// Cached library
+    private let library: MTLLibrary
+
     /// Initializes
     private init?() {
         guard let device = MTLCreateSystemDefaultDevice(),
@@ -61,20 +61,18 @@ public extension MTL {
     /// Makes pipeline state with specified vertex type
     func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
 
-        let library = self.library
-        
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = library.makeFunction(name: V.functionName) else {
+        guard let vertexFunction = self.library.makeFunction(name: V.functionName) else {
             fatalError("vertexFunction `\(V.functionName)` not found.")
         }
         
         pipelineDescriptor.vertexFunction = vertexFunction
         
         // Fragment function
-        guard let fragmentFunction = library.makeFunction(name: fragmentFunctionName) else {
+        guard let fragmentFunction = self.library.makeFunction(name: fragmentFunctionName) else {
             fatalError("fragmentFunction `\(fragmentFunctionName)` not found.")
         }
             
