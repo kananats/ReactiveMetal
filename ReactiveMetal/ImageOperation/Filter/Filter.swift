@@ -34,7 +34,7 @@ open class Filter<V: Vertex>: NSObject {
     private let _buffers: [MutableProperty<MTLBuffer>]
     
     /// Initializes a filter with maximum source(s) count, indexed vertices, fragment function name, and parameters passed to the fragment function
-    init!(maxSourceCount: Int = 1, vertices: [V], indices: [UInt16], fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
+    public init!(maxSourceCount: Int = 1, vertices: [V], indices: [UInt16], fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
 
         guard MTL.default != nil else { return nil }
         

@@ -12,7 +12,7 @@ import MetalKit
 /// A protocol for vertex struct
 public protocol Vertex {
     
-    /// Init without any parameter
+    /// Initializes
     init()
     
     /// Corresponding vertex shader function name

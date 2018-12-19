@@ -21,7 +21,7 @@ open class OperationGroup {
     /// Init with operations
     /// Parameters to the left are closer to output
     /// Parameters to the right are closer to input
-    init(_ operations: ImageOperation...) {
+    public init(_ operations: ImageOperation...) {
         self.operations = operations
         
         guard operations.count > 0 else { fatalError("At least one operation is required") }

@@ -7,7 +7,7 @@
 //
 
 // MARK: Main
-/// Filter that operates on default vertex
+/// Filter that operates on basic vertex
 open class BasicFilter: Filter<BasicVertex> {
     
     /// Initializes a basic filter with maximum source(s) count, fragment function name, and parameters passed to the fragment function
