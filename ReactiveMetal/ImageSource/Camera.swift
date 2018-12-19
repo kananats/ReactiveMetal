@@ -24,7 +24,7 @@ public final class Camera {
     #endif
     
     /// Init with a camera position
-    public init?(position: AVCaptureDevice.Position = .back) {
+    public init!(position: AVCaptureDevice.Position = .back) {
         #if arch(i386) || arch(x86_64)
             return nil
         #else

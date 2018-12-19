@@ -35,7 +35,11 @@ public final class RenderView: UIView {
         return view
     }()
     
-    override init(frame: CGRect = .zero) {
+    /// Initializes and returns a newly allocated view object with the specified frame rectangle
+    public init!(_ frame: CGRect = .zero) {
+        
+        guard MTL.default != nil else { return nil }
+
         self.pipelineState = MTL.default.makePipelineState()!
         
         self.vertexBuffer = MTL.default.makeBuffer(from: DefaultVertex.vertices)!

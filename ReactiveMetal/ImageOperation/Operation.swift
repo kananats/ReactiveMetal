@@ -34,8 +34,10 @@ open class Operation<V: Vertex>: NSObject {
     private let _buffers: [MutableProperty<MTLBuffer>]
     
     /// Initializes a filter with maximum source(s) count, fragment function name, and parameters passed to the fragment function
-    init(maxSourceCount: Int = 1, vertices: [V], indices: [UInt16], fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
+    init!(maxSourceCount: Int = 1, vertices: [V], indices: [UInt16], fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
 
+        guard MTL.default != nil else { return nil }
+        
         // Initializes pipeline state
         self.pipelineState = MTL.default.makePipelineState(
             vertex: V.self,
