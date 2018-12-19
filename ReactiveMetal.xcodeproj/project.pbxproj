@@ -73,11 +73,11 @@
 		5914EE8621C8C376008CE46A /* HSVFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF921C368710022C884 /* HSVFilter.swift */; };
 		5914EE8721C8C378008CE46A /* LookupFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFD21C0AE8F003D6FC3 /* LookupFilter.swift */; };
 		5914EE8821C8C379008CE46A /* OperationGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AFB21C3AB720022C884 /* OperationGroup.swift */; };
-		5914EE8921C8C380008CE46A /* Default.metal in Resources */ = {isa = PBXBuildFile; fileRef = 591DC76B21B623A900D66900 /* Default.metal */; };
-		5914EE8A21C8C382008CE46A /* Luminance.metal in Resources */ = {isa = PBXBuildFile; fileRef = 5918663621BE5E2D00E16C67 /* Luminance.metal */; };
-		5914EE8B21C8C384008CE46A /* RGB.metal in Resources */ = {isa = PBXBuildFile; fileRef = 591D9AF321C34D7B0022C884 /* RGB.metal */; };
-		5914EE8C21C8C386008CE46A /* HSV.metal in Resources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSV.metal */; };
-		5914EE8D21C8C388008CE46A /* Lookup.metal in Resources */ = {isa = PBXBuildFile; fileRef = 59240CFB21C0AB16003D6FC3 /* Lookup.metal */; };
+		5914EE8921C8C380008CE46A /* Default.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591DC76B21B623A900D66900 /* Default.metal */; };
+		5914EE8A21C8C382008CE46A /* Luminance.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5918663621BE5E2D00E16C67 /* Luminance.metal */; };
+		5914EE8B21C8C384008CE46A /* RGB.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF321C34D7B0022C884 /* RGB.metal */; };
+		5914EE8C21C8C386008CE46A /* HSV.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSV.metal */; };
+		5914EE8D21C8C388008CE46A /* Lookup.metal in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFB21C0AB16003D6FC3 /* Lookup.metal */; };
 		5914EE8E21C8CE85008CE46A /* HSV.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSV.metal */; };
 		591DC75321B61CA800D66900 /* ReactiveMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75221B61CA800D66900 /* ReactiveMetalTests.swift */; };
 		591DC75E21B61CA800D66900 /* ReactiveMetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75D21B61CA800D66900 /* ReactiveMetalUITests.swift */; };
@@ -477,11 +477,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5914EE8921C8C380008CE46A /* Default.metal in Resources */,
-				5914EE8A21C8C382008CE46A /* Luminance.metal in Resources */,
-				5914EE8B21C8C384008CE46A /* RGB.metal in Resources */,
-				5914EE8C21C8C386008CE46A /* HSV.metal in Resources */,
-				5914EE8D21C8C388008CE46A /* Lookup.metal in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +587,11 @@
 				5914EE8621C8C376008CE46A /* HSVFilter.swift in Sources */,
 				5914EE8721C8C378008CE46A /* LookupFilter.swift in Sources */,
 				5914EE8821C8C379008CE46A /* OperationGroup.swift in Sources */,
+				5914EE8921C8C380008CE46A /* Default.metal in Sources */,
+				5914EE8A21C8C382008CE46A /* Luminance.metal in Sources */,
+				5914EE8B21C8C384008CE46A /* RGB.metal in Sources */,
+				5914EE8C21C8C386008CE46A /* HSV.metal in Sources */,
+				5914EE8D21C8C388008CE46A /* Lookup.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
