@@ -26,8 +26,11 @@ public class MTL {
     /// Preferred texture size
     public var preferredTextureSize = (width: 720, height: 1080)
     
-    /// Cached library
-    private let library: MTLLibrary
+    /// Cached internal library
+    private let internalLibrary: MTLLibrary
+    
+    /// Cached external library
+    private let externalLibrary: MTLLibrary
 
     /// Initializes
     private init?() {
@@ -43,7 +46,8 @@ public class MTL {
             let library = try? device.makeLibrary(filepath: path)
             else { return nil }
         
-        self.library = library
+        self.internalLibrary = library
+        self.externalLibrary = device.makeDefaultLibrary()!
     }
 }
 
@@ -52,6 +56,14 @@ public extension MTL {
     
     /// Shared instance
     static let `default`: MTL! = MTL()
+    
+    /// Get function. Internal library takes priority.
+    func function(name: String) -> MTLFunction? {
+        if let function = self.internalLibrary.makeFunction(name: name)
+        { return function }
+        
+        return self.externalLibrary.makeFunction(name: name)
+    }
     
     /// Makes pipeline state
     func makePipelineState(fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
@@ -65,16 +77,13 @@ public extension MTL {
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = self.library.makeFunction(name: V.functionName) else {
-            fatalError("vertexFunction `\(V.functionName)` not found.")
-        }
+        guard let vertexFunction = self.function(name: V.functionName) else {
+            fatalError("vertexFunction `\(V.functionName)` not found.") }
         
         pipelineDescriptor.vertexFunction = vertexFunction
         
         // Fragment function
-        guard let fragmentFunction = self.library.makeFunction(name: fragmentFunctionName) else {
-            fatalError("fragmentFunction `\(fragmentFunctionName)` not found.")
-        }
+        guard let fragmentFunction = self.function(name: fragmentFunctionName)  else { fatalError("fragmentFunction `\(fragmentFunctionName)` not found.") }
             
         pipelineDescriptor.fragmentFunction = fragmentFunction
         
