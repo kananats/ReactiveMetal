@@ -41,13 +41,9 @@ class ViewController: UIViewController {
         
         //self.source = Image("wallpaper")
         
-        let hsv = HSVFilter()!
-
         self.target = RenderView()
-        
-        let rgb = RGBFilter()!
 
-        self.filter = OperationGroup(hsv, rgb)
+        self.filter = OperationGroup(HorizontalSmoothingFilter(), VerticalSmoothingFilter())
     
         self.filter <-- self.source
         self.target <-- self.filter

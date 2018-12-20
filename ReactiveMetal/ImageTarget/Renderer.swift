@@ -20,10 +20,10 @@ protocol Renderer: ImageTarget {
     /// Vertex index buffer
     var indexBuffer: MTLBuffer { get }
     
-    /// Fragment texture(s)
+    /// Fragment textures
     var textures: [MTLTexture?] { get }
     
-    /// Fragment buffer(s)
+    /// Fragment buffers
     var buffers: [MTLBuffer] { get }
 }
 
@@ -69,14 +69,15 @@ extension Renderer {
         // Vertex buffer
         commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
         
-        // Fragment texture(s)
+        // Fragment texture
         for (index, texture) in self.textures.enumerated() { commandEncoder.setFragmentTexture(texture, index: index) }
         
-        // Fragment buffer(s)
+        // Fragment buffer
         for (index, buffer) in self.buffers.enumerated() { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
         
+        // TODO
         // Draw indexed vertices
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: BasicVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: 6, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
         

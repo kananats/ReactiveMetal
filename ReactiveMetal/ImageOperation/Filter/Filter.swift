@@ -12,7 +12,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Base class for an image filter
-open class Filter<V: Vertex>: NSObject {
+open class Filter: NSObject {
     
     /// Dispatch queue for filter
     private let dispatchQueue = DispatchQueue(label: "com.donuts.ReactiveMetal.Filter")
@@ -24,41 +24,36 @@ open class Filter<V: Vertex>: NSObject {
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     
-    /// Pre-rendering texture(s) (reactive)
+    /// Pre-rendering textures (reactive)
     private let inputs: [MutableProperty<MTLTexture?>]
     
     /// Post-rendering texture (reactive)
     private let _output = MutableProperty<MTLTexture?>(nil)
 
-    /// Fragment buffer(s)
+    /// Fragment buffers
     private let _buffers: [MutableProperty<MTLBuffer>]
     
-    /// Initializes a filter with maximum source(s) count, indexed vertices, fragment function name, and parameters passed to the fragment function
-    public init!(maxSourceCount: Int = 1, vertices: [V], indices: [UInt16], fragmentFunctionName: String, params: [MTLBufferConvertible] = []) {
+    /// Initializes with maximum source count, vertex function, and fragment function
+    public init!(maxSourceCount: Int = 1, vertexFunction: VertexFunction = .default, fragmentFunction: FragmentFunction = .default) {
 
         guard MTL.default != nil else { return nil }
         
-        // Initializes pipeline state
-        self.pipelineState = MTL.default.makePipelineState(
-            vertex: V.self,
-            fragmentFunctionName: fragmentFunctionName
-        )!
+        // Pipeline state
+        self.pipelineState = MTL.default.makePipelineState(vertexFunction: vertexFunction, fragmentFunction: fragmentFunction)!
         
-        // Initializes vertex buffer
-        self.vertexBuffer = MTL.default.makeBuffer(from: vertices)!
+        // Vertex buffers
+        self.vertexBuffer = vertexFunction.vertexBuffer
         
-        // Initializes index buffer
-        self.indexBuffer = MTL.default.makeBuffer(from: indices)!
+        // Index buffers
+        self.indexBuffer = vertexFunction.indexBuffer
         
         // Initializes inputs
         var inputs: [MutableProperty<MTLTexture?>] = []
         for _ in 0 ..< maxSourceCount { inputs.append(MutableProperty<MTLTexture?>(nil)) }
         self.inputs = inputs
         
-        // Initializes fragment buffers
-        var buffers: [MutableProperty<MTLBuffer>] = []
-        for param in params { buffers.append(MutableProperty<MTLBuffer>(param.buffer!)) }
-        self._buffers = buffers
+        // Fragment buffers
+        self._buffers = fragmentFunction.buffers.map { MutableProperty<MTLBuffer>($0) }
         
         super.init()
         

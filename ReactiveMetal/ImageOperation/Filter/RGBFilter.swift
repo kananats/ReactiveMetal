@@ -10,7 +10,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Filter that transforms color in RGB color space
-public final class RGBFilter: BasicFilter {
+public final class RGBFilter: Filter {
     
     /// Red component adjustment (range: 0 ~ 1) (reactive)
     public let red: MutableProperty<Float>
@@ -28,8 +28,8 @@ public final class RGBFilter: BasicFilter {
         self.green = MutableProperty<Float>(green)
         self.blue = MutableProperty<Float>(blue)
         
-        super.init(fragmentFunctionName: "fragment_rgb", params: [red, green, blue])
-        
+        super.init(fragmentFunction: FragmentFunction.init(name: "fragment_rgb", params: red, green, blue))
+
         self.params(at: 0) <~ self.red.map { $0 }
         self.params(at: 1) <~ self.green.map { $0 }
         self.params(at: 2) <~ self.blue.map { $0 }

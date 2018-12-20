@@ -10,7 +10,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Filter that desaturates the color to grayscale
-public final class LuminanceFilter: BasicFilter {
+public final class LuminanceFilter: Filter {
 
     /// Applying intensity (range: 0 ~ 1) (reactive)
     public let intensity: MutableProperty<Float>
@@ -19,8 +19,8 @@ public final class LuminanceFilter: BasicFilter {
     public init!(intensity: Float = 1) {
         self.intensity = MutableProperty<Float>(intensity)
         
-        super.init(fragmentFunctionName: "fragment_luminance", params: [intensity])
-        
+        super.init(fragmentFunction: FragmentFunction(name: "fragment_luminance", params: intensity))
+
         self.params(at: 0) <~ self.intensity.map { $0 }
     }
 }

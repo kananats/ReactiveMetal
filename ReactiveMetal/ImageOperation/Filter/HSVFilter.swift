@@ -10,7 +10,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Filter that transforms color in HSV color space
-public final class HSVFilter: BasicFilter {
+public final class HSVFilter: Filter {
     
     /// Hue component adjustment (range: 0 ~ 1) (reactive)
     public let hue: MutableProperty<Float>
@@ -28,7 +28,7 @@ public final class HSVFilter: BasicFilter {
         self.saturation = MutableProperty<Float>(saturation)
         self.`value` = MutableProperty<Float>(`value`)
         
-        super.init(fragmentFunctionName: "fragment_hsv", params: [hue, saturation, `value`])
+        super.init(fragmentFunction: FragmentFunction(name: "fragment_hsv", params: hue, saturation, `value`))
         
         self.params(at: 0) <~ self.hue.map { $0 }
         self.params(at: 1) <~ self.saturation.map { $0 }

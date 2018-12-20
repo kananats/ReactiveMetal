@@ -12,7 +12,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Lookup filter
-public final class LookupFilter: BasicFilter {
+public final class LookupFilter: Filter {
     
     /// `MTLImage` as lookup source
     private let _image: Image
@@ -26,8 +26,8 @@ public final class LookupFilter: BasicFilter {
         self._image = Image(image)
         self.intensity = MutableProperty<Float>(intensity)
         
-        super.init(maxSourceCount: 2, fragmentFunctionName: "fragment_lookup", params: [intensity])
-        
+        super.init(maxSourceCount: 2, fragmentFunction: FragmentFunction(name: "fragment_lookup", params: intensity))
+
         (self, at: 1) <-- self._image
 
         self.params(at: 0) <~ self.intensity.map { $0 }

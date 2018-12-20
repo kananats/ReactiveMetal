@@ -21,13 +21,16 @@ open class OperationGroup {
     /// Init with operations
     /// Parameters to the left are closer to output
     /// Parameters to the right are closer to input
-    public init(_ operations: ImageOperation...) {
-        self.operations = operations
+    public init!(_ operations: ImageOperation?...) {
         
-        guard operations.count > 0 else { fatalError("At least one operation is required") }
+        guard !(operations.contains { $0 == nil }) else { return nil }
         
-        for index in 1 ..< operations.count {
-            operations[index - 1] <-- operations[index]
+        self.operations = operations.map { $0! }
+        
+        guard self.operations.count > 0 else { fatalError("At least one operation is required") }
+        
+        for index in 1 ..< self.operations.count {
+            self.operations[index - 1] <-- self.operations[index]
         }
     }
 }

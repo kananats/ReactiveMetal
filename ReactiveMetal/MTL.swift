@@ -57,39 +57,28 @@ public extension MTL {
     /// Shared instance
     static let `default`: MTL! = MTL()
     
-    // TODO: fix
-    /// Get function. Internal library takes priority.
-    func function(name: String) -> MTLFunction? {
+    /// Makes function. Internal library takes priority.
+    func makeFunction(name: String) -> MTLFunction? {
         if let function = self.internalLibrary.makeFunction(name: name)
         { return function }
         
         return self.externalLibrary.makeFunction(name: name)
     }
     
-    /// Makes pipeline state
-    func makePipelineState(fragmentFunctionName: String = "fragment_basic") -> MTLRenderPipelineState? {
-        return self.makePipelineState(vertex: BasicVertex.self, fragmentFunctionName: fragmentFunctionName)
-    }
-    
-    /// Makes pipeline state with specified vertex type
-    func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_basic") -> MTLRenderPipelineState? {
+    /// Makes pipeline state with vertex function and fragment function
+    func makePipelineState(vertexFunction: VertexFunction = .default, fragmentFunction: FragmentFunction = .default) -> MTLRenderPipelineState? {
 
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = self.function(name: V.functionName) else {
-            fatalError("vertexFunction `\(V.functionName)` not found.") }
-        
-        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.vertexFunction = vertexFunction.function
         
         // Fragment function
-        guard let fragmentFunction = self.function(name: fragmentFunctionName)  else { fatalError("fragmentFunction `\(fragmentFunctionName)` not found.") }
-            
-        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction.function
         
         // Vertex descriptor
-        pipelineDescriptor.vertexDescriptor = V.descriptor
+        pipelineDescriptor.vertexDescriptor = vertexFunction.descriptor
         
         return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }
@@ -137,7 +126,7 @@ public extension MTL {
     }
     
     /// Makes `MTLBuffer` from `Array<T>`
-    func makeBuffer<T>(from array: [T]) -> MTLBuffer? {
+    func makeBuffer<T>(array: [T]) -> MTLBuffer? {
         guard array.count > 0 else { return nil }
         
         return self.device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)

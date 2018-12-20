@@ -8,8 +8,8 @@
 
 // MARK: Main
 /// Filter that passes the input to the output
-public final class NoFilter: BasicFilter {
+public final class NoFilter: Filter {
     
     /// Initializes
-    public init!() { super.init(fragmentFunctionName: "fragment_basic") }
+    public init!() { super.init() }
 }
