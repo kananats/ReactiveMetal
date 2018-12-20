@@ -62,16 +62,12 @@ fragment half4 fragment_smoothing(SmoothingFragmentInput input [[stage_in]], tex
     gaussianWeightTotal += gaussianWeight;
     sum += sampleColor * gaussianWeight;
     
-    // TODO: Low performance
-    if (gaussianWeightTotal < 0.5) {
-        if (gaussianWeightTotal < 0.4) {
-            return centralColor;
-        } else {
-            return mix(sum / gaussianWeightTotal, centralColor, (gaussianWeightTotal - 0.4) / 0.1);
-        }
-    } else {
-        return sum / gaussianWeightTotal;
-    }
+    // gaussianWeightTotal < 0.4 --> centralColor
+    // 0.4 <= guassianWeightTotal < 0.5 --> mix(sum / gaussianWeightTotal, centralColor, (gaussianWeightTotal - 0.4) / 0.1)
+    // 0.5 <= guassianWeightTotal --> sum / gaussianWeightTotal
+    
+    half4 temp = mix(centralColor, mix(sum / gaussianWeightTotal, centralColor, (gaussianWeightTotal - 0.4) / 0.1), step(0.4, gaussianWeightTotal));
+    return mix(temp, sum / gaussianWeightTotal, step(0.5, gaussianWeightTotal));
 }
 
 
