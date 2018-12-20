@@ -19,11 +19,8 @@ public final class RenderView: UIView {
     
     let pipelineState: MTLRenderPipelineState
     
-    let vertexBuffer: MTLBuffer
-    let indexBuffer: MTLBuffer
-    
-    /// Texture
-    private var texture: MTLTexture?
+    let vertexFunction: VertexFunction = .default
+    let fragmentFunction: FragmentFunction = .default
 
     /// Metal view
     private lazy var metalView: MTKView = {
@@ -40,15 +37,7 @@ public final class RenderView: UIView {
         
         guard MTL.default != nil else { return nil }
 
-        let vertexFunction: VertexFunction = .default
-        let fragmentFunction: FragmentFunction = .default
-        
         self.pipelineState = MTL.default.makePipelineState(vertexFunction: vertexFunction, fragmentFunction: fragmentFunction)!
-        
-        self.vertexBuffer = vertexFunction.vertexBuffer
-        self.indexBuffer = vertexFunction.indexBuffer
-
-        self.texture = MTL.default.makeEmptyTexture()!
         
         super.init(frame: frame)
 
@@ -73,23 +62,7 @@ extension RenderView {
 }
 
 /// MARK: Protocol
-extension RenderView: Renderer {
-
-    public var maxSourceCount: Int { return 1 }
-    
-    public func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        guard index < self.maxSourceCount else { fatalError("Array index out of bounds exception") }
-        
-        return self.reactive.makeBindingTarget { `self`, value in
-            guard let value = value else { return }
-            `self`.texture = value
-        }
-    }
-
-    var textures: [MTLTexture?] { return [self.texture] }
-    
-    var buffers: [MTLBuffer] { return [] }
-}
+extension RenderView: Renderer { }
 
 extension RenderView: MTKViewDelegate {
     

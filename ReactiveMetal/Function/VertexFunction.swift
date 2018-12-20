@@ -21,6 +21,9 @@ public final class VertexFunction {
     /// Index buffer
     let indexBuffer: MTLBuffer
     
+    /// Index count
+    let indexCount: Int
+    
     /// Vertex descriptor
     let descriptor: MTLVertexDescriptor
     
@@ -38,6 +41,9 @@ public final class VertexFunction {
         // Index buffer
         self.indexBuffer = MTL.default.makeBuffer(array: indices)!
         
+        // Index count
+        self.indexCount = indices.count
+        
         // Vertex descriptor
         self.descriptor = V.descriptor
     }
@@ -52,7 +58,7 @@ public final class VertexFunction {
 public extension VertexFunction {
     
     /// Default vertex function
-    static let `default` = VertexFunction(vertices: DefaultVertex.vertices)!
+    static var `default`: VertexFunction { return VertexFunction(vertices: DefaultVertex.vertices)! }
 }
 
 // MARK: Private

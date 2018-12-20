@@ -7,27 +7,42 @@
 //
 
 import MetalKit
+import ReactiveSwift
 
 // MARK: Main
 /// Fragment function
 public final class FragmentFunction {
     
     /// Fragment function
-    public let function: MTLFunction
+    let function: MTLFunction
     
-    /// Fragment buffers
-    public let buffers: [MTLBuffer]
+    /// Maximum source count
+    let maxSourceCount: Int
+    
+    /// Fragment textures (reactive)
+    let textures: [MutableProperty<MTLTexture?>]
+    
+    /// Fragment buffers (reactive)
+    let buffers: [MutableProperty<MTLBuffer>]
     
     /// Initializes with function name, and parameters
-    public init!(name: String, params: MTLBufferConvertible...) {
+    public init!(name: String, maxSourceCount: Int = 1, params: MTLBufferConvertible...) {
         
         guard MTL.default != nil else { return nil }
         
-        // Vertex function
+        // Fragment function
         self.function = MTL.default.makeFunction(name: name)!
         
+        // Maximum source count
+        self.maxSourceCount = maxSourceCount
+        
+        // Fragment textures
+        var textures: [MutableProperty<MTLTexture?>] = []
+        for _ in 0 ..< maxSourceCount { textures.append(MutableProperty<MTLTexture?>(nil)) }
+        self.textures = textures
+        
         // Fragment buffers
-        self.buffers = params.map { $0.buffer! }
+        self.buffers = params.map { MutableProperty<MTLBuffer>($0.buffer!) }
     }
 }
 
@@ -35,5 +50,5 @@ public final class FragmentFunction {
 public extension FragmentFunction {
     
     /// Default fragment function
-    static let `default` = FragmentFunction(name: "fragment_default")!
+    static var `default`: FragmentFunction { return FragmentFunction(name: "fragment_default")! }
 }

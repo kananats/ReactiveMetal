@@ -26,7 +26,7 @@ public final class LookupFilter: Filter {
         self._image = Image(image)
         self.intensity = MutableProperty<Float>(intensity)
         
-        super.init(maxSourceCount: 2, fragmentFunction: FragmentFunction(name: "fragment_lookup", params: intensity))
+        super.init(fragmentFunction: FragmentFunction(name: "fragment_lookup", maxSourceCount: 2, params: intensity))
 
         (self, at: 1) <-- self._image
 

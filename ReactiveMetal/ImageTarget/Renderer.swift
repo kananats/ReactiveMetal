@@ -7,31 +7,36 @@
 //
 
 import MetalKit
+import ReactiveSwift
 
+// MARK: Main
 /// Protocol for image target using metal enabled device
 protocol Renderer: ImageTarget {
 
     /// Render pipeline state
     var pipelineState: MTLRenderPipelineState { get }
+
+    /// Vertex function
+    var vertexFunction: VertexFunction { get }
     
-    /// Vertex buffer
-    var vertexBuffer: MTLBuffer { get }
-    
-    /// Vertex index buffer
-    var indexBuffer: MTLBuffer { get }
-    
-    /// Fragment textures
-    var textures: [MTLTexture?] { get }
-    
-    /// Fragment buffers
-    var buffers: [MTLBuffer] { get }
+    /// Fragment function
+    var fragmentFunction: FragmentFunction { get }
 }
 
+// MARK: Public
 extension Renderer {
+    
+    public var maxSourceCount: Int { return self.fragmentFunction.maxSourceCount }
+    
+    public func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.fragmentFunction.textures[index].bindingTarget }
+}
+
+// MARK: Internal
+internal extension Renderer {
     
     /// Renders to texture
     func render(completion: @escaping (MTLTexture) -> ()) {
-        guard self.textures[0] != nil else { return }
+        guard self.fragmentFunction.textures[0].value != nil else { return }
         
         let output = MTL.default.makeEmptyTexture()!
         
@@ -48,7 +53,7 @@ extension Renderer {
     
     /// Renders on `MTKView`
     func render(in view: MTKView) {
-        guard self.textures[0] != nil,
+        guard self.fragmentFunction.textures[0].value != nil,
             let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }
@@ -67,17 +72,16 @@ extension Renderer {
         commandEncoder.setRenderPipelineState(self.pipelineState)
         
         // Vertex buffer
-        commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBuffer(self.vertexFunction.vertexBuffer, offset: 0, index: 0)
         
-        // Fragment texture
-        for (index, texture) in self.textures.enumerated() { commandEncoder.setFragmentTexture(texture, index: index) }
+        // Fragment textures
+        for (index, texture) in (self.fragmentFunction.textures.map { $0.value }.enumerated()) { commandEncoder.setFragmentTexture(texture, index: index) }
         
-        // Fragment buffer
-        for (index, buffer) in self.buffers.enumerated() { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
+        // Fragment buffers
+        for (index, buffer) in (self.fragmentFunction.buffers.map { $0.value }.enumerated()) { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
         
-        // TODO
         // Draw indexed vertices
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: 6, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: self.vertexFunction.indexCount, indexType: .uint16, indexBuffer: self.vertexFunction.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
         

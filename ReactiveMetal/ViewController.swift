@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         
         self.target = RenderView()
 
-        self.filter = OperationGroup(HorizontalSmoothingFilter(), VerticalSmoothingFilter())
+        self.filter = OperationGroup(LookupFilter(image: "pretty", intensity: 4), VerticalSmoothingFilter(), RGBFilter(red: 0))
     
         self.filter <-- self.source
         self.target <-- self.filter
