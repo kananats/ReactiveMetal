@@ -41,10 +41,11 @@ internal extension SmoothingFilterDirection {
 
 /// Unidirectional smoothing filter
 public class SmoothingFilter: Filter {
-    
-    // private let direction: SmoothingFilterDirection
-    
-    fileprivate init(direction: SmoothingFilterDirection) {
+
+    /// Initializes with direction
+    fileprivate init!(direction: SmoothingFilterDirection) {
+        
+        guard MTL.default != nil else { return nil }
         
         let size = MTL.default.preferredTextureSize
         let vertices = direction.makeVertices(inputTextureSize: CGSize(width: size.width, height: size.height))
@@ -57,12 +58,12 @@ public class SmoothingFilter: Filter {
 public final class HorizontalSmoothingFilter: SmoothingFilter {
     
     /// Initializes
-    public init() { super.init(direction: .horizontal) }
+    public init!() { super.init(direction: .horizontal) }
 }
 
 /// Vertical smoothing filter
 public final class VerticalSmoothingFilter: SmoothingFilter {
     
     /// Initializes
-    public init() { super.init(direction: .vertical) }
+    public init!() { super.init(direction: .vertical) }
 }
