@@ -8,6 +8,7 @@
 
 #include "MTLHeader.h"
 
+/// Smoothing vertex input
 struct SmoothingVertexInput
 {
     float4 position     [[attribute(0)]];
@@ -15,6 +16,7 @@ struct SmoothingVertexInput
     float2 size         [[attribute(2)]];
 };
 
+/// Smoothing fragment input
 struct SmoothingFragmentInput
 {
     float4 position     [[position]];
@@ -24,6 +26,7 @@ struct SmoothingFragmentInput
     float2 blurcoord3;
 };
 
+/// Smoothing vertex shader
 vertex SmoothingFragmentInput vertex_smoothing(SmoothingVertexInput input [[stage_in]])
 {
     SmoothingFragmentInput output;
@@ -36,6 +39,7 @@ vertex SmoothingFragmentInput vertex_smoothing(SmoothingVertexInput input [[stag
     return output;
 }
 
+/// Smoothing fragment shader
 fragment half4 fragment_smoothing(SmoothingFragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]])
 {
     half4 sum = half4(0, 0, 0, 1);

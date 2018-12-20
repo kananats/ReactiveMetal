@@ -12,10 +12,10 @@ import simd
 /// Vertex for mapping texture coordinates to render quad
 public struct DefaultVertex {
     
-    /// position (x, y, z, w)
+    /// Position
     var position: float4
     
-    /// texture coordinates (u, v)
+    /// Texture coordinates
     var texcoord: float2
 }
 

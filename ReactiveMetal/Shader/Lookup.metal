@@ -9,10 +9,10 @@
 #include "MTLHeader.h"
 
 /// Lookup fragment shader
-fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half> texture0 [[texture(0)]], texture2d<half> texture1 [[texture(1)]], device const float &intensity [[buffer(0)]]) {
+fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]], texture2d<half> lookupTexture [[texture(1)]], device const float &intensity [[buffer(0)]]) {
 
     constexpr sampler baseSampler;
-    half4 base = texture0.sample(baseSampler, input.texcoord);
+    half4 base = texture.sample(baseSampler, input.texcoord);
     
     half blue = base.b * 63.0;
     
@@ -33,14 +33,12 @@ fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half>
     texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.g);
     
     constexpr sampler quadSampler1;
-    half4 newColor1 = texture1.sample(quadSampler1, texPos1);
+    half4 newColor1 = lookupTexture.sample(quadSampler1, texPos1);
     constexpr sampler quadSampler2;
-    half4 newColor2 = texture1.sample(quadSampler2, texPos2);
+    half4 newColor2 = lookupTexture.sample(quadSampler2, texPos2);
     
     // frac(x) -> x - floor(x)
     half4 mixed = mix(newColor1, newColor2, fract(blue));
     
     return half4(mix(base, half4(mixed.rgb, base.w), half(intensity)));
 }
-
-

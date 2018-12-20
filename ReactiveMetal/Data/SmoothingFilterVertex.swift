@@ -11,8 +11,14 @@ import simd
 // MARK: Main
 /// Unidirectional smoothing filter vertex
 public struct SmoothingFilterVertex {
+    
+    /// Position
     var position: float4
+    
+    /// Texture coordinates
     var texcoord: float2
+    
+    /// Texture size
     var size: float2
 }
 
