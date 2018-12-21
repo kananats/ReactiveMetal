@@ -15,7 +15,7 @@ import MetalKit
 
 // MARK: Main
 /// Shared Metal resources
-public class MTL {
+public final class MTL {
     
     /// Metal enabled device
     public let device: MTLDevice
@@ -59,10 +59,12 @@ public extension MTL {
     
     /// Makes function. Internal library takes priority.
     func makeFunction(name: String) -> MTLFunction? {
-        if let function = self.internalLibrary.makeFunction(name: name)
-        { return function }
+        let internalFunction = self.internalLibrary.makeFunction(name: name)
+        let externalFunction = self.externalLibrary.makeFunction(name: name)
         
-        return self.externalLibrary.makeFunction(name: name)
+        guard internalFunction == nil || externalFunction == nil || internalFunction === externalFunction else { fatalError("Function \(name) is already defined in `com.donuts.ReactiveMetal`") }
+        
+        return internalFunction ?? externalFunction
     }
     
     /// Makes pipeline state with vertex function and fragment function

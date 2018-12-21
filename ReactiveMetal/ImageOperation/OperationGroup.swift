@@ -15,7 +15,7 @@ import ReactiveSwift
 open class OperationGroup {
     
     /// Array of image operations
-    /// output <-- operations[0] <-- operations[1] ... <-- operations[count - 1] <-- input
+    /// output <-- operations[0] <-- operations[1] ... <-- operations[n - 1] <-- input
     private let operations: [ImageOperation]
     
     /// Init with operations

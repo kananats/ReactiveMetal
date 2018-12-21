@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         self.source = camera
         self.source2 = Image("wallpaper")
         
-        self.filter = SmoothingMaskFilter()
+        self.filter = BlendFilter(interpolant: -0.5)
         
         (self.filter, at: 0) <-- self.source
         (self.filter, at: 1) <-- self.source2
