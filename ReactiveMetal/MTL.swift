@@ -123,6 +123,11 @@ public extension MTL {
     }
     
     /// Makes empty `MTLTexture` with specified texture size
+    func makeEmptyTexture(size: Int) -> MTLTexture? {
+        return self.makeEmptyTexture(width: size, height: size)
+    }
+    
+    /// Makes empty `MTLTexture` with specified texture size
     func makeEmptyTexture(size: (Int, Int)) -> MTLTexture? {
         let (width, height) = size
         return self.makeEmptyTexture(width: width, height: height)
