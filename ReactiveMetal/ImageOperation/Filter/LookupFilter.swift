@@ -7,17 +7,16 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
-import UIKit
 import ReactiveSwift
 
 // MARK: Main
 /// Lookup filter
 public final class LookupFilter: Filter {
     
-    /// `MTLImage` as lookup source
+    /// `Image` as lookup source
     private let _image: Image
     
-    /// Applying intensity (range: 0 ~ 1) (reactive)
+    /// Applied intensity (range: 0 ~ 1) (reactive)
     public let intensity: MutableProperty<Float>
     
     /// Initializes with image and initial intensity

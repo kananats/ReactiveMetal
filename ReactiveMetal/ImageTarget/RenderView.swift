@@ -8,8 +8,6 @@
 
 import MetalKit
 import ReactiveSwift
-import ReactiveCocoa
-import SnapKit
 
 // MARK: Main
 /// View for rendering image output using metal enabled device
@@ -29,6 +27,8 @@ public final class RenderView: UIView {
         view.device = MTL.default.device
         view.delegate = self
         
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         return view
     }()
     
@@ -37,27 +37,19 @@ public final class RenderView: UIView {
         
         guard MTL.default != nil else { return nil }
 
-        self.pipelineState = MTL.default.makePipelineState(vertexFunction: vertexFunction, fragmentFunction: fragmentFunction)!
+        self.pipelineState = MTL.default.makePipelineState(vertexFunction: self.vertexFunction, fragmentFunction: self.fragmentFunction)!
+        
+        let texture = MTL.default.makeEmptyTexture()
+        self.fragmentFunction.textures[0].swap(texture)
         
         super.init(frame: frame)
 
         self.addSubview(self.metalView)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-/// MARK: Inheritance
-extension RenderView {
-    
-    public override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        
-        self.metalView.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
-        }
     }
 }
 

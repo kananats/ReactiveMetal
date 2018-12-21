@@ -17,12 +17,12 @@ open class Filter: NSObject {
     /// Dispatch queue for filter
     private let dispatchQueue = DispatchQueue(label: "com.donuts.ReactiveMetal.Filter")
     
-    public var sourceCount = 0
+    public final var sourceCount = 0
     
-    let pipelineState: MTLRenderPipelineState
+    final let pipelineState: MTLRenderPipelineState
     
-    let vertexFunction: VertexFunction
-    let fragmentFunction: FragmentFunction
+    final let vertexFunction: VertexFunction
+    final let fragmentFunction: FragmentFunction
 
     /// Output texture (reactive)
     private let _output = MutableProperty<MTLTexture?>(nil)
@@ -51,10 +51,7 @@ open class Filter: NSObject {
 // MARK: Protocol
 extension Filter: ImageOperation {
     
-    public final var output: SignalProducer<MTLTexture, NoError> {
-        return self._output.producer.skipNil()
-    }
-    
+    public final var output: SignalProducer<MTLTexture, NoError> { return self._output.producer.skipNil() }
 }
 
 extension Filter: Renderer { }
@@ -80,12 +77,11 @@ private extension Filter {
     func bind() -> Disposable? {
         let disposable = CompositeDisposable()
         
-        disposable += SignalProducer.merge(self.fragmentFunction.textures.map { $0.producer }).startWithValues { [weak self] _ in
+        disposable += self.textureReceived.observeValues { [weak self] _, _ in
             guard let `self` = self else { return }
-            
             `self`.render { value in `self`._output.swap(value) }
         }
-        
+
         return disposable
     }
 }

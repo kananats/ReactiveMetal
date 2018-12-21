@@ -14,8 +14,13 @@ import ReactiveSwift
 class ViewController: UIViewController {
 
     var source: ImageSource!
+    var source2: ImageSource!
     var filter: ImageOperation!
-    var target: RenderView!
+    lazy var target: RenderView! = {
+        let view = RenderView()
+        view?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return view
+    }()
     
     // var debuggers: [Debugger] = []
 
@@ -37,22 +42,23 @@ class ViewController: UIViewController {
             return orientation
         }
         
-        self.source = camera
+        self.source = Image("wallpaper")
+        self.source2 = camera
         
-        //self.source = Image("wallpaper")
+        self.filter = BlendFilter()//LookupFilter(image: "wallpaper")
         
-        self.target = RenderView()
-
-        self.filter = OperationGroup(LookupFilter(image: "pretty", intensity: 4), VerticalSmoothingFilter(), RGBFilter(red: 0))
-    
-        self.filter <-- self.source
+        (self.filter, at: 0) <-- self.source2
+        (self.filter, at: 1) <-- self.source
+        
         self.target <-- self.filter
         
         self.view.addSubview(self.target)
-        
-        self.target.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.target.frame = self.view.bounds
     }
 }
 

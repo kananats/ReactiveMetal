@@ -38,9 +38,7 @@ open class OperationGroup {
 // MARK: Protocol
 extension OperationGroup: ImageOperation {
     
-    public var output: SignalProducer<MTLTexture, NoError> {
-        return self.operations.first!.output
-    }
+    public var output: SignalProducer<MTLTexture, NoError> { return self.operations.first!.output }
     
     public var sourceCount: Int {
         get { return self.operations.last!.sourceCount }
@@ -49,7 +47,5 @@ extension OperationGroup: ImageOperation {
     
     public var maxSourceCount: Int { return self.operations.last!.maxSourceCount }
     
-    public func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        return self.operations.last!.input(at: index)
-    }
+    public func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.operations.last!.input(at: index) }
 }

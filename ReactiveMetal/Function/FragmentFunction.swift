@@ -27,7 +27,6 @@ public final class FragmentFunction {
     
     /// Initializes with function name, and parameters
     public init!(name: String, maxSourceCount: Int = 1, params: MTLBufferConvertible...) {
-        
         guard MTL.default != nil else { return nil }
         
         // Fragment function
@@ -51,4 +50,11 @@ public extension FragmentFunction {
     
     /// Default fragment function
     static var `default`: FragmentFunction { return FragmentFunction(name: "fragment_default")! }
+}
+
+// MARK: Internal
+internal extension FragmentFunction {
+    
+    /// Returns `true` when there is no nil texture
+    var isRenderable: Bool { return !self.textures.contains { $0.value == nil } }
 }

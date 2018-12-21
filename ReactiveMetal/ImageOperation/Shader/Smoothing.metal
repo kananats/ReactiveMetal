@@ -43,26 +43,27 @@ vertex SmoothingFragmentInput vertex_smoothing(SmoothingVertexInput input [[stag
 fragment half4 fragment_smoothing(SmoothingFragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]])
 {
     half4 sum = half4(0, 0, 0, 1);
-    float distanceNormalizationFactor = 7;
+    float distanceNormalizationFactor = 7.0;
     float distanceFromCentralColor;
-    constexpr sampler colorSampler;
-    float gaussianWeight = 0;
-    float gaussianWeightTotal = 0;
+    
+    constexpr sampler defaultSampler;
+    float gaussianWeight = 0.0;
+    float gaussianWeightTotal = 0.0;
     half4 sampleColor;
     
-    half4 centralColor = texture.sample(colorSampler, input.blurcoord2);
+    half4 centralColor = texture.sample(defaultSampler, input.blurcoord2);
     gaussianWeightTotal = 0.18;
     sum = centralColor * 0.18;
     
-    sampleColor = texture.sample(colorSampler, input.blurcoord1);
+    sampleColor = texture.sample(defaultSampler, input.blurcoord1);
     distanceFromCentralColor = min(distance(centralColor, sampleColor) * distanceNormalizationFactor, 1.0);
-    gaussianWeight = 0.27 * (1 - distanceFromCentralColor);
+    gaussianWeight = 0.27 * (1.0 - distanceFromCentralColor);
     gaussianWeightTotal += gaussianWeight;
     sum += sampleColor * gaussianWeight;
     
-    sampleColor = texture.sample(colorSampler, input.blurcoord3);
+    sampleColor = texture.sample(defaultSampler, input.blurcoord3);
     distanceFromCentralColor = min(distance(centralColor, sampleColor) * distanceNormalizationFactor, 1.0);
-    gaussianWeight = 0.27 * (1 - distanceFromCentralColor);
+    gaussianWeight = 0.27 * (1.0 - distanceFromCentralColor);
     gaussianWeightTotal += gaussianWeight;
     sum += sampleColor * gaussianWeight;
     

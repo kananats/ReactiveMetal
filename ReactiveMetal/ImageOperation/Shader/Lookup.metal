@@ -11,10 +11,10 @@
 /// Lookup fragment shader
 fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]], texture2d<half> lookupTexture [[texture(1)]], device const float &intensity [[buffer(0)]]) {
 
-    constexpr sampler baseSampler;
-    half4 base = texture.sample(baseSampler, input.texcoord);
+    constexpr sampler defaultSampler;
+    half4 color = texture.sample(defaultSampler, input.texcoord);
     
-    half blue = base.b * 63.0;
+    half blue = color.b * 63.0;
     
     half2 quad1;
     quad1.y = floor(floor(blue) / 8.0);
@@ -25,12 +25,12 @@ fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half>
     quad2.x = ceil(blue) - (quad2.y * 8.0);
     
     float2 texPos1;
-    texPos1.x = (quad1.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.r);
-    texPos1.y = (quad1.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.g);
+    texPos1.x = (quad1.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * color.r);
+    texPos1.y = (quad1.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * color.g);
     
     float2 texPos2;
-    texPos2.x = (quad2.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.r);
-    texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * base.g);
+    texPos2.x = (quad2.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * color.r);
+    texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * color.g);
     
     constexpr sampler quadSampler1;
     half4 newColor1 = lookupTexture.sample(quadSampler1, texPos1);
@@ -40,5 +40,5 @@ fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half>
     // frac(x) -> x - floor(x)
     half4 mixed = mix(newColor1, newColor2, fract(blue));
     
-    return half4(mix(base, half4(mixed.rgb, base.w), half(intensity)));
+    return half4(mix(color, half4(mixed.rgb, color.w), half(intensity)));
 }

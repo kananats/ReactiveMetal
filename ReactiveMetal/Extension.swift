@@ -10,6 +10,7 @@ import UIKit
 import MetalKit
 import Result
 import ReactiveSwift
+import ReactiveCocoa
 
 public extension Reactive where Base: UIDevice {
     

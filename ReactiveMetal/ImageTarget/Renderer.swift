@@ -7,6 +7,7 @@
 //
 
 import MetalKit
+import Result
 import ReactiveSwift
 
 // MARK: Main
@@ -36,8 +37,6 @@ internal extension Renderer {
     
     /// Renders to texture
     func render(completion: @escaping (MTLTexture) -> ()) {
-        guard self.fragmentFunction.textures[0].value != nil else { return }
-        
         let output = MTL.default.makeEmptyTexture()!
         
         let descriptor = MTLRenderPassDescriptor()
@@ -53,8 +52,7 @@ internal extension Renderer {
     
     /// Renders on `MTKView`
     func render(in view: MTKView) {
-        guard self.fragmentFunction.textures[0].value != nil,
-            let drawable = view.currentDrawable,
+        guard let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }
         
@@ -63,8 +61,21 @@ internal extension Renderer {
         }
     }
     
+    /// Received new texture (reactive)
+    var textureReceived: Signal<(index: Int, element: MTLTexture?), NoError> {
+        return Signal.merge(self.fragmentFunction.textures.enumerated().map { index, element in element.map { value in (index, value) }.signal }
+        )
+    }
+}
+
+// MARK: Private
+private extension Renderer {
+    
     /// Main implementation of `render`
     private func render(descriptor: MTLRenderPassDescriptor, completion: @escaping (MTLCommandBuffer) -> ()) {
+        
+        guard self.fragmentFunction.isRenderable else { return }
+        
         let commandBuffer = MTL.default.commandQueue.makeCommandBuffer()!
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         
@@ -73,7 +84,7 @@ internal extension Renderer {
         
         // Vertex buffer
         commandEncoder.setVertexBuffer(self.vertexFunction.vertexBuffer, offset: 0, index: 0)
-        
+
         // Fragment textures
         for (index, texture) in (self.fragmentFunction.textures.map { $0.value }.enumerated()) { commandEncoder.setFragmentTexture(texture, index: index) }
         
