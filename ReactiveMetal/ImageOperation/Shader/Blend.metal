@@ -14,5 +14,6 @@ fragment half4 fragment_blend(FragmentInput input [[stage_in]], texture2d<half> 
     constexpr sampler defaultSampler;
     half4 color0 = texture0.sample(defaultSampler, input.texcoord);
     half4 color1 = texture1.sample(defaultSampler, input.texcoord);
+    
     return mix(color0, color1, interpolant);
 }

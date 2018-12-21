@@ -32,10 +32,8 @@ fragment half4 fragment_lookup(FragmentInput input [[stage_in]], texture2d<half>
     texPos2.x = (quad2.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * color.r);
     texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * color.g);
     
-    constexpr sampler quadSampler1;
-    half4 newColor1 = lookupTexture.sample(quadSampler1, texPos1);
-    constexpr sampler quadSampler2;
-    half4 newColor2 = lookupTexture.sample(quadSampler2, texPos2);
+    half4 newColor1 = lookupTexture.sample(defaultSampler, texPos1);
+    half4 newColor2 = lookupTexture.sample(defaultSampler, texPos2);
     
     // frac(x) -> x - floor(x)
     half4 mixed = mix(newColor1, newColor2, fract(blue));
