@@ -30,12 +30,7 @@ internal extension SmoothingFilterDirection {
         }
         
         let size = float2(width, height)
-        return [
-            SmoothingFilterVertex(position: float4(-1, 1, 0, 1), texcoord: float2(0, 0), size: size),
-            SmoothingFilterVertex(position: float4(-1, -1, 0, 1), texcoord: float2(0, 1), size: size),
-            SmoothingFilterVertex(position: float4(1, -1, 0, 1), texcoord: float2(1, 1), size: size),
-            SmoothingFilterVertex(position: float4(1, 1, 0, 1), texcoord: float2(1, 0), size: size)
-        ]
+        return SmoothingFilterVertex.vertices(for: size)
     }
 }
 
@@ -47,8 +42,8 @@ public class SmoothingFilter: Filter {
         
         guard MTL.default != nil else { return nil }
         
-        let size = MTL.default.preferredTextureSize
-        let vertices = direction.makeVertices(inputTextureSize: CGSize(width: size.width, height: size.height))
+        let preferredTextureSize = MTL.default.preferredTextureSize
+        let vertices = direction.makeVertices(inputTextureSize: CGSize(width: preferredTextureSize.width, height: preferredTextureSize.height))
         
         super.init(vertexFunction: VertexFunction(vertices: vertices), fragmentFunction: FragmentFunction(name: "fragment_smoothing"))
     }

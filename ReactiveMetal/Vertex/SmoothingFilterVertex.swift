@@ -10,7 +10,7 @@ import simd
 
 // MARK: Main
 /// Unidirectional smoothing filter vertex
-public struct SmoothingFilterVertex {
+struct SmoothingFilterVertex {
     
     /// Position
     var position: float4
@@ -28,4 +28,17 @@ extension SmoothingFilterVertex: Vertex {
     public init() { self.init(position: float4(), texcoord: float2(), size: float2())}
     
     public static let functionName = "vertex_smoothing"
+}
+
+// MARK: Internal
+internal extension SmoothingFilterVertex {
+    
+    static func vertices(for size: float2) -> [SmoothingFilterVertex] {
+        return [
+            SmoothingFilterVertex(position: float4(-1, 1, 0, 1), texcoord: float2(0, 0), size: size),
+            SmoothingFilterVertex(position: float4(-1, -1, 0, 1), texcoord: float2(0, 1), size: size),
+            SmoothingFilterVertex(position: float4(1, -1, 0, 1), texcoord: float2(1, 1), size: size),
+            SmoothingFilterVertex(position: float4(1, 1, 0, 1), texcoord: float2(1, 0), size: size)
+        ]
+    }
 }
