@@ -62,18 +62,14 @@ vertex SmoothingMaskFragmentInput vertex_smoothing_mask(SmoothingMaskVertexInput
 fragment half4 fragment_smoothing_mask(SmoothingMaskFragmentInput input             [[stage_in]], texture2d<half> texture [[texture(0)]], texture2d<half> inputTexture [[texture(1)]], device const float &intensity [[buffer(0)]])
 {
     constexpr sampler defaultSampler;
-    constexpr sampler defaultSampler2;
 
     half4 color = texture.sample(defaultSampler, input.texcoord);
-    // return color;
-    
-    // TODO: here
-    
-    //half2 hv = rgb_to_hsv(color.rgb).xz;
 
-    //float op = mix(0, intensity * hv2opacity(hv), step(1, step(0.2, float(hv.y)) + step(0.88, float(hv.x)) * step(float(hv.x), 0.17) + step(0, intensity)));
+    half2 hv = rgb_to_hsv(color.rgb).xz;
 
-    half4 newColor = inputTexture.sample(defaultSampler2, input.texcoord);
+    float op = mix(0, intensity * hv2opacity(hv), step(1, step(0.2, float(hv.y)) + step(0.88, float(hv.x)) * step(float(hv.x), 0.17) + step(0, intensity)));
 
-    return mix(color, newColor, 0.5);
+    half4 newColor = inputTexture.sample(defaultSampler, input.texcoord);
+
+    return mix(color, newColor, op);
 }

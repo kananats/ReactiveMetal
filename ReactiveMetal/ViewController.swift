@@ -42,13 +42,13 @@ class ViewController: UIViewController {
             return orientation
         }
         
-        self.source = Image("wallpaper")
-        self.source2 = camera
+        self.source = camera
+        self.source2 = Image("wallpaper")
         
-        self.filter = BlendFilter()//LookupFilter(image: "wallpaper")
+        self.filter = SmoothingMaskFilter()
         
-        (self.filter, at: 0) <-- self.source2
-        (self.filter, at: 1) <-- self.source
+        (self.filter, at: 0) <-- self.source
+        (self.filter, at: 1) <-- self.source2
         
         self.target <-- self.filter
         
