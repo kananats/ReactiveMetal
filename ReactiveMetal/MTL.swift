@@ -114,7 +114,7 @@ public extension MTL {
     }
     #endif
     
-    /// Makes empty `MTLTexture`
+    /// Makes empty `MTLTexture` with specified texture width and height
     func makeEmptyTexture(width: Int, height: Int) -> MTLTexture? {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
         descriptor.usage = [.renderTarget, .shaderRead]
@@ -122,9 +122,15 @@ public extension MTL {
         return self.device.makeTexture(descriptor: descriptor)
     }
     
+    /// Makes empty `MTLTexture` with specified texture size
+    func makeEmptyTexture(size: (Int, Int)) -> MTLTexture? {
+        let (width, height) = size
+        return self.makeEmptyTexture(width: width, height: height)
+    }
+    
     /// Makes empty `MTLTexture` with the preferred texture size
     func makeEmptyTexture() -> MTLTexture? {
-        return self.makeEmptyTexture(width: self.preferredTextureSize.width, height: self.preferredTextureSize.height)
+        return self.makeEmptyTexture(size: self.preferredTextureSize)
     }
     
     /// Makes `MTLBuffer` from `Array<T>`
