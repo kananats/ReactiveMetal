@@ -45,7 +45,6 @@ public final class RenderView: UIView {
         super.init(frame: frame)
 
         self.addSubview(self.metalView)
-
     }
 
     required init?(coder aDecoder: NSCoder) {

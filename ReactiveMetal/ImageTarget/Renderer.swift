@@ -22,10 +22,15 @@ protocol Renderer: ImageTarget {
     
     /// Fragment function
     var fragmentFunction: FragmentFunction { get }
+    
+    /// Encode with encoder (optional)
+    func encode(with encoder: MTLRenderCommandEncoder)
 }
 
 // MARK: Public
 extension Renderer {
+    
+    public func encode(with encoder: MTLRenderCommandEncoder) { }
     
     public var maxSourceCount: Int { return self.fragmentFunction.maxSourceCount }
     
@@ -82,23 +87,32 @@ private extension Renderer {
         // Render pipeline state
         commandEncoder.setRenderPipelineState(self.pipelineState)
         
-        // Vertex buffer
-        commandEncoder.setVertexBuffer(self.vertexFunction.vertexBuffer, offset: 0, index: 0)
-
-        // Fragment textures
-        for (index, texture) in (self.fragmentFunction.textures.map { $0.value }.enumerated()) { commandEncoder.setFragmentTexture(texture, index: index) }
+        // Begin encoding
+        self._encode(with: commandEncoder)
+        self.encode(with: commandEncoder)
         
-        // Fragment buffers
-        for (index, buffer) in (self.fragmentFunction.buffers.map { $0.value }.enumerated()) { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
-        
-        // Draw indexed vertices
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: self.vertexFunction.indexCount, indexType: .uint16, indexBuffer: self.vertexFunction.indexBuffer, indexBufferOffset: 0)
-        
+        // End encoding
         commandEncoder.endEncoding()
         
         // Custom action
         completion(commandBuffer)
         
         commandBuffer.commit()
+    }
+    
+    /// Default encoding
+    func _encode(with encoder: MTLRenderCommandEncoder) {
+        
+        // Vertex buffer
+        encoder.setVertexBuffer(self.vertexFunction.vertexBuffer, offset: 0, index: 0)
+        
+        // Fragment textures
+        for (index, texture) in (self.fragmentFunction.textures.map { $0.value }.enumerated()) { encoder.setFragmentTexture(texture, index: index) }
+        
+        // Fragment buffers
+        for (index, buffer) in (self.fragmentFunction.buffers.map { $0.value }.enumerated()) { encoder.setFragmentBuffer(buffer, offset: 0, index: index) }
+        
+        // Draw indexed vertices
+        encoder.drawIndexedPrimitives(type: .triangle, indexCount: self.vertexFunction.indexCount, indexType: .uint16, indexBuffer: self.vertexFunction.indexBuffer, indexBufferOffset: 0)
     }
 }
