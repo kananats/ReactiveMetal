@@ -54,7 +54,23 @@ extension Filter: ImageOperation {
     public final var output: SignalProducer<MTLTexture, NoError> { return self._output.producer.skipNil() }
 }
 
-extension Filter: Renderer { }
+extension Filter: Renderer {
+    
+    @objc open func encode(with encoder: MTLRenderCommandEncoder) {
+        
+        // Vertex buffer
+        encoder.setVertexBuffer(self.vertexFunction.vertexBuffer, offset: 0, index: 0)
+        
+        // Fragment textures
+        for (index, texture) in (self.fragmentFunction.textures.map { $0.value }.enumerated()) { encoder.setFragmentTexture(texture, index: index) }
+        
+        // Fragment buffers
+        for (index, buffer) in (self.fragmentFunction.buffers.map { $0.value }.enumerated()) { encoder.setFragmentBuffer(buffer, offset: 0, index: index) }
+        
+        // Draw indexed vertices
+        encoder.drawIndexedPrimitives(type: .triangle, indexCount: self.vertexFunction.indexCount, indexType: .uint16, indexBuffer: self.vertexFunction.indexBuffer, indexBufferOffset: 0)
+    }
+}
 
 // MARK: Public
 public extension Filter {
