@@ -47,7 +47,7 @@ final class AVCamera: NSObject {
     }()
     
     /// Init with a camera position
-    init?(position: AVCaptureDevice.Position = .back) {
+    init?(position: AVCaptureDevice.Position = .front) {
 
         // Requests access to camera
         var granted = true
