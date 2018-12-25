@@ -13,10 +13,10 @@ import simd
 public struct DefaultVertex {
     
     /// Position
-    var position: float4
+    public var position: float4
     
     /// Texture coordinates
-    var texcoord: float2
+    public var texcoord: float2
 }
 
 // MARK: Protocol
