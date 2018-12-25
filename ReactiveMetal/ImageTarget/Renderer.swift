@@ -72,7 +72,7 @@ internal extension Renderer {
 private extension Renderer {
     
     /// Main implementation of `render`
-    private func render(descriptor: MTLRenderPassDescriptor, completion: @escaping (MTLCommandBuffer) -> ()) {
+    func render(descriptor: MTLRenderPassDescriptor, completion: @escaping (MTLCommandBuffer) -> ()) {
         
         guard self.fragmentFunction.isRenderable else { return }
         
