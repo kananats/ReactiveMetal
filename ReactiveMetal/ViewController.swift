@@ -43,6 +43,14 @@ class ViewController: UIViewController {
         }
         
         self.source = camera
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            camera.stopCapture()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+            camera.startCapture()
+        }
+        
         self.source2 = Image("wallpaper")
         
         self.filter = BlendFilter(interpolant: -0.5)

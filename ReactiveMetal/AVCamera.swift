@@ -100,15 +100,15 @@ final class AVCamera: NSObject {
         if connection.isVideoMirroringSupported { connection.isVideoMirrored = position == .front }
         
         // Start running
-        self.session.startRunning()
+        self.startCapture()
     }
     
-    deinit { self.session.stopRunning() }
+    deinit { self.stopCapture() }
 }
 
 // MARK: Protocol
 extension AVCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
-
+    
     final func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         guard self.output == output else { return }
@@ -119,6 +119,20 @@ extension AVCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 // MARK: Internal
 internal extension AVCamera {
+    
+    // Starts the capture session
+    func startCapture() {
+        guard !self.session.isRunning else { return }
+        
+        self.session.startRunning()
+    }
+    
+    // Stops the capture session
+    func stopCapture() {
+        guard self.session.isRunning else { return }
+        
+        self.session.stopRunning()
+    }
     
     /// Captured sample buffer (reactive)
     var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> {

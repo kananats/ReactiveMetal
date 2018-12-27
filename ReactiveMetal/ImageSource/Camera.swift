@@ -12,7 +12,7 @@ import ReactiveSwift
 
 // MARK: Main
 /// Camera as image source
-public final class Camera {
+open class Camera {
 
     /// Reference to AVCamera
     private let camera: AVCamera
@@ -41,7 +41,7 @@ public final class Camera {
 // MARK: Protocol
 extension Camera: ImageSource {
     
-    public var output: SignalProducer<MTLTexture, NoError> {
+    public final var output: SignalProducer<MTLTexture, NoError> {
         
         return self.camera.sampleBuffer.filterMap { [weak self] value in
             #if arch(i386) || arch(x86_64)
@@ -60,6 +60,12 @@ extension Camera: ImageSource {
 // MARK: Public
 public extension Camera {
     
+    // Starts the capture session
+    final func startCapture() { self.camera.startCapture() }
+    
+    // Stops the capture session
+    final func stopCapture() { self.camera.stopCapture() }
+    
     /// Video orientation (reactive)
-    var orientation: MutableProperty<AVCaptureVideoOrientation> { return self.camera.orientation }
+    final var orientation: MutableProperty<AVCaptureVideoOrientation> { return self.camera.orientation }
 }
