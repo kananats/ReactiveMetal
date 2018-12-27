@@ -109,7 +109,7 @@ final class AVCamera: NSObject {
 // MARK: Protocol
 extension AVCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    final func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         guard self.output == output else { return }
 

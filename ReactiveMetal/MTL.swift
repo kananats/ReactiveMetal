@@ -7,11 +7,7 @@
 //
 
 import AVFoundation
-
-#if arch(i386) || arch(x86_64)
-#else
 import MetalKit
-#endif
 
 // MARK: Main
 /// Shared Metal resources
@@ -33,7 +29,7 @@ public final class MTL {
     private let externalLibrary: MTLLibrary
 
     /// Initializes
-    private init?() {
+    private init!() {
         guard let device = MTLCreateSystemDefaultDevice(),
             let commandQueue = device.makeCommandQueue()
             else { return nil }

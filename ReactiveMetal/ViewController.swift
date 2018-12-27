@@ -16,11 +16,7 @@ class ViewController: UIViewController {
     var source: ImageSource!
     var source2: ImageSource!
     var filter: ImageOperation!
-    lazy var target: RenderView! = {
-        let view = RenderView()
-        view?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        return view
-    }()
+    var target: RenderView!
     
     // var debuggers: [Debugger] = []
 
@@ -43,20 +39,14 @@ class ViewController: UIViewController {
         }
         
         self.source = camera
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            camera.stopCapture()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
-            camera.startCapture()
-        }
+        self.target = RenderView()
         
         self.source2 = Image("wallpaper")
         
         self.filter = BlendFilter(interpolant: -0.5)
         
-        (self.filter, at: 0) <-- self.source
-        (self.filter, at: 1) <-- self.source2
+        self.filter[0] <-- self.source
+        self.filter[1] <-- self.source2
         
         self.target <-- self.filter
         

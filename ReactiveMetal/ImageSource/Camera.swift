@@ -7,12 +7,13 @@
 //
 
 import AVFoundation
+import MetalKit
 import Result
 import ReactiveSwift
 
 // MARK: Main
 /// Camera as image source
-open class Camera {
+public final class Camera {
 
     /// Reference to AVCamera
     private let camera: AVCamera
@@ -42,7 +43,7 @@ open class Camera {
 // MARK: Protocol
 extension Camera: ImageSource {
     
-    public final var output: SignalProducer<MTLTexture, NoError> {
+    public var output: SignalProducer<MTLTexture, NoError> {
         
         return self.camera.sampleBuffer.filterMap { [weak self] value in
             #if arch(i386) || arch(x86_64)
@@ -61,12 +62,15 @@ extension Camera: ImageSource {
 // MARK: Public
 public extension Camera {
     
+    /// Captured sample buffer (reactive)
+    var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> { return self.camera.sampleBuffer }
+    
     // Starts the capture session
-    final func startCapture() { self.camera.startCapture() }
+    func startCapture() { self.camera.startCapture() }
     
     // Stops the capture session
-    final func stopCapture() { self.camera.stopCapture() }
+    func stopCapture() { self.camera.stopCapture() }
     
     /// Video orientation (reactive)
-    final var orientation: MutableProperty<AVCaptureVideoOrientation> { return self.camera.orientation }
+    var orientation: MutableProperty<AVCaptureVideoOrientation> { return self.camera.orientation }
 }
