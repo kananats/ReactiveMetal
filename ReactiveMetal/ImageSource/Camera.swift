@@ -61,10 +61,7 @@ extension Camera: ImageSource {
 
 // MARK: Public
 public extension Camera {
-    
-    /// Captured sample buffer (reactive)
-    var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> { return self.camera.sampleBuffer }
-    
+
     /// Is session running (reactive)
     var isRunning: MutableProperty<Bool> { return self.camera.isRunning }
     
