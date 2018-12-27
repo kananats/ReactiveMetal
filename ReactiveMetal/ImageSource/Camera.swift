@@ -65,11 +65,11 @@ public extension Camera {
     /// Captured sample buffer (reactive)
     var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> { return self.camera.sampleBuffer }
     
-    // Starts the capture session
-    func startCapture() { self.camera.startCapture() }
+    /// Is session running (reactive)
+    var isRunning: MutableProperty<Bool> { return self.camera.isRunning }
     
-    // Stops the capture session
-    func stopCapture() { self.camera.stopCapture() }
+    /// Is session pausing (reactive)
+    var isPausing: MutableProperty<Bool> { return self.camera.isPausing }
     
     /// Video orientation (reactive)
     var orientation: MutableProperty<AVCaptureVideoOrientation> { return self.camera.orientation }
