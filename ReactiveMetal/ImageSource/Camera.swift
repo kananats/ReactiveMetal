@@ -28,8 +28,9 @@ open class Camera {
         #if arch(i386) || arch(x86_64)
             return nil
         #else
-            guard let camera = AVCamera(position: position),
-            let textureCache = MTL.default.makeTextureCache()
+            guard MTL.default != nil,
+            let textureCache = MTL.default.makeTextureCache(),
+            let camera = AVCamera(position: position)
             else { return nil }
         
             self.camera = camera
