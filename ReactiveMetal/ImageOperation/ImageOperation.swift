@@ -6,6 +6,20 @@
 //  Copyright © 2018 s.kananat. All rights reserved.
 //
 
+// MARK: Main
 /// Protocol for image operation
 public protocol ImageOperation: ImageSource, ImageTarget { }
 
+// MARK: Public
+public extension ImageOperation {
+    
+    /// Returns the operation group containing two specified operations
+    static func + (left: Self, right: ImageOperation?) -> OperationGroup { return OperationGroup(left, right) }
+}
+
+// MARK: Extension
+public extension Optional where Wrapped: ImageOperation {
+    
+    /// Returns the operation group containing two specified operations
+    static func + (left: Optional, right: ImageOperation?) -> OperationGroup { return OperationGroup(left, right) }
+}

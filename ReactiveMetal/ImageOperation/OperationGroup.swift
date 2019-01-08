@@ -12,23 +12,24 @@ import ReactiveSwift
 
 // MARK: Main
 /// Group of image operations
-
 open class OperationGroup {
     
     /// Array of image operations
-    /// output <-- operations[0] <-- operations[1] ... <-- operations[count - 1] <-- input
+    /// output <-- operations[n - 1] <-- ... <-- operations[1] <-- operations[0] <-- input
     private let operations: [ImageOperation]
     
     /// Init with operations
-    /// Parameters to the left are closer to output
-    /// Parameters to the right are closer to input
-    init(_ operations: ImageOperation...) {
-        self.operations = operations
+    /// Operations to the left is going to be processed first
+    public init!(_ operations: ImageOperation?...) {
         
-        guard operations.count > 0 else { fatalError("At least one operation is required") }
+        guard !(operations.contains { $0 == nil }) else { return nil }
         
-        for index in 1 ..< operations.count {
-            operations[index - 1] <-- operations[index]
+        self.operations = operations.map { $0! }
+        
+        guard self.operations.count > 0 else { fatalError("At least one operation is required") }
+        
+        for index in 0 ..< self.operations.count - 1 {
+            self.operations[index + 1] <-- self.operations[index]
         }
     }
 }
@@ -36,18 +37,14 @@ open class OperationGroup {
 // MARK: Protocol
 extension OperationGroup: ImageOperation {
     
-    public var output: SignalProducer<MTLTexture, NoError> {
-        return self.operations.first!.output
-    }
+    public var output: SignalProducer<MTLTexture, NoError> { return self.operations.last!.output }
     
     public var sourceCount: Int {
-        get { return self.operations.last!.sourceCount }
-        set(value) { self.operations.last!.sourceCount = value }
+        get { return self.operations.first!.sourceCount }
+        set(value) { self.operations.first!.sourceCount = value }
     }
     
-    public var maxSourceCount: Int { return self.operations.last!.maxSourceCount }
+    public var maxSourceCount: Int { return self.operations.first!.maxSourceCount }
     
-    public func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        return self.operations.last!.input(at: index)
-    }
+    public func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.operations.first!.input(at: index) }
 }

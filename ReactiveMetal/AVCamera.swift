@@ -15,8 +15,17 @@ import ReactiveSwift
 /// AVFoundation camera
 final class AVCamera: NSObject {
     
+    /// Dispatch queue for camera session output
+    private let dispatchQueue = DispatchQueue(label: "com.donuts.ReactiveMetal.AVCamera")
+    
     /// Captured sample buffer (reactive)
     private let _sampleBuffer = MutableProperty<CMSampleBuffer?>(nil)
+    
+    /// Is session running (reactive)
+    let isRunning = MutableProperty<Bool>(true)
+    
+    /// Is session pausing (reactive)
+    let isPausing = MutableProperty<Bool>(false)
     
     /// Video orientation (reactive)
     let orientation = MutableProperty<AVCaptureVideoOrientation>(.portrait)
@@ -37,14 +46,14 @@ final class AVCamera: NSObject {
     /// Capture session output
     private lazy var output: AVCaptureOutput = {
         let output = AVCaptureVideoDataOutput()
-        output.setSampleBufferDelegate(self, queue: AVCamera.dispatchQueue)
+        output.setSampleBufferDelegate(self, queue: self.dispatchQueue)
         output.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
         
         return output
     }()
     
     /// Init with a camera position
-    init?(position: AVCaptureDevice.Position = .back) {
+    init?(position: AVCaptureDevice.Position = .front) {
 
         // Requests access to camera
         var granted = true
@@ -96,19 +105,19 @@ final class AVCamera: NSObject {
         // Fix mirror
         if connection.isVideoMirroringSupported { connection.isVideoMirrored = position == .front }
         
-        // Start running
-        self.session.startRunning()
+        // Reactively bind
+        self.bind()
     }
     
-    deinit { self.session.stopRunning() }
+    deinit { self.stopCapture() }
 }
 
 // MARK: Protocol
 extension AVCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
-
-    final func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        guard self.output == output else { return }
+        guard self.output == output, !self.isPausing.value else { return }
 
         self._sampleBuffer.swap(sampleBuffer)
     }
@@ -116,16 +125,40 @@ extension AVCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 // MARK: Internal
 internal extension AVCamera {
-    
+
     /// Captured sample buffer (reactive)
-    var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> {
-        return self._sampleBuffer.producer.skipNil()
-    }
+    var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> { return self._sampleBuffer.producer.skipNil() }
 }
 
 // MARK: Private
 private extension AVCamera {
     
-    /// Dispatch queue for camera session
-    static let dispatchQueue = DispatchQueue(label: "CameraCaptureSession")
+    /// Reactively bind
+    @discardableResult
+    func bind() -> Disposable? {
+        let disposable = CompositeDisposable()
+        
+        disposable += self.isRunning.producer.startWithValues { [weak self] value in
+            guard let `self` = self else { return }
+            
+            if value { `self`.startCapture() }
+            else { `self`.stopCapture() }
+        }
+        
+        return disposable
+    }
+    
+    // Starts the capture session
+    func startCapture() {
+        guard !self.session.isRunning else { return }
+        
+        DispatchQueue.main.async { self.session.startRunning() }
+    }
+    
+    // Stops the capture session
+    func stopCapture() {
+        guard self.session.isRunning else { return }
+        
+        DispatchQueue.main.async { self.session.stopRunning() }
+    }
 }

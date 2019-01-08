@@ -22,13 +22,13 @@ public final class HSVFilter: Filter {
     public let `value`: MutableProperty<Float>
     
     /// Initializes with initial HSV adjustment
-    public init(hue: Float = 0, saturation: Float = 1, `value`: Float = 1) {
+    public init!(hue: Float = 0, saturation: Float = 1, `value`: Float = 1) {
         
         self.hue = MutableProperty<Float>(hue)
         self.saturation = MutableProperty<Float>(saturation)
         self.`value` = MutableProperty<Float>(`value`)
         
-        super.init(fragmentFunctionName: "fragment_hsv", params: [hue, saturation, `value`])
+        super.init(fragmentFunction: FragmentFunction(name: "fragment_hsv", params: hue, saturation, `value`))
         
         self.params(at: 0) <~ self.hue.map { $0 }
         self.params(at: 1) <~ self.saturation.map { $0 }

@@ -18,7 +18,7 @@ public class Image {
     let image: MutableProperty<ImageConvertible>
     
     /// Initializes a `MTLImage` with an image
-    init(_ image: ImageConvertible) {
+    public init(_ image: ImageConvertible) {
         self.image = MutableProperty<ImageConvertible>(image)
     }
 }

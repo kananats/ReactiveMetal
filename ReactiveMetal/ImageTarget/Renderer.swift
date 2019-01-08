@@ -7,32 +7,36 @@
 //
 
 import MetalKit
+import Result
+import ReactiveSwift
 
+// MARK: Main
 /// Protocol for image target using metal enabled device
 protocol Renderer: ImageTarget {
 
     /// Render pipeline state
     var pipelineState: MTLRenderPipelineState { get }
+
+    /// Vertex function
+    var vertexFunction: VertexFunction { get }
     
-    /// Vertex buffer
-    var vertexBuffer: MTLBuffer { get }
-    
-    /// Vertex index buffer
-    var indexBuffer: MTLBuffer { get }
-    
-    /// Fragment texture(s)
-    var textures: [MTLTexture?] { get }
-    
-    /// Fragment buffer(s)
-    var buffers: [MTLBuffer] { get }
+    /// Fragment function
+    var fragmentFunction: FragmentFunction { get }
 }
 
+// MARK: Public
 extension Renderer {
+    
+    public var maxSourceCount: Int { return self.fragmentFunction.maxSourceCount }
+    
+    public func input(at index: Int) -> BindingTarget<MTLTexture?> { return self.fragmentFunction.textures[index].bindingTarget }
+}
+
+// MARK: Internal
+internal extension Renderer {
     
     /// Renders to texture
     func render(completion: @escaping (MTLTexture) -> ()) {
-        guard self.textures[0] != nil else { return }
-        
         let output = MTL.default.makeEmptyTexture()!
         
         let descriptor = MTLRenderPassDescriptor()
@@ -48,8 +52,7 @@ extension Renderer {
     
     /// Renders on `MTKView`
     func render(in view: MTKView) {
-        guard self.textures[0] != nil,
-            let drawable = view.currentDrawable,
+        guard let drawable = view.currentDrawable,
             let descriptor = view.currentRenderPassDescriptor
             else { return }
         
@@ -58,8 +61,21 @@ extension Renderer {
         }
     }
     
+    /// Received new texture (reactive)
+    var textureReceived: Signal<(index: Int, element: MTLTexture?), NoError> {
+        return Signal.merge(self.fragmentFunction.textures.enumerated().map { index, element in element.map { value in (index, value) }.signal }
+        )
+    }
+}
+
+// MARK: Private
+private extension Renderer {
+    
     /// Main implementation of `render`
-    private func render(descriptor: MTLRenderPassDescriptor, completion: @escaping (MTLCommandBuffer) -> ()) {
+    func render(descriptor: MTLRenderPassDescriptor, completion: @escaping (MTLCommandBuffer) -> ()) {
+        
+        guard self.fragmentFunction.isRenderable else { return }
+        
         let commandBuffer = MTL.default.commandQueue.makeCommandBuffer()!
         let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         
@@ -67,16 +83,16 @@ extension Renderer {
         commandEncoder.setRenderPipelineState(self.pipelineState)
         
         // Vertex buffer
-        commandEncoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
+        commandEncoder.setVertexBuffer(self.vertexFunction.vertexBuffer, offset: 0, index: 0)
+
+        // Fragment textures
+        for (index, texture) in (self.fragmentFunction.textures.map { $0.value }.enumerated()) { commandEncoder.setFragmentTexture(texture, index: index) }
         
-        // Fragment texture(s)
-        for (index, texture) in self.textures.enumerated() { commandEncoder.setFragmentTexture(texture, index: index) }
-        
-        // Fragment buffer(s)
-        for (index, buffer) in self.buffers.enumerated() { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
+        // Fragment buffers
+        for (index, buffer) in (self.fragmentFunction.buffers.map { $0.value }.enumerated()) { commandEncoder.setFragmentBuffer(buffer, offset: 0, index: index) }
         
         // Draw indexed vertices
-        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: DefaultVertex.indices.count, indexType: .uint16, indexBuffer: self.indexBuffer, indexBufferOffset: 0)
+        commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: self.vertexFunction.indexCount, indexType: .uint16, indexBuffer: self.vertexFunction.indexBuffer, indexBufferOffset: 0)
         
         commandEncoder.endEncoding()
         

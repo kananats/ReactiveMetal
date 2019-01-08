@@ -26,4 +26,7 @@ struct FragmentInput
     float2 texcoord;
 };
 
+half3 rgb_to_hsv(half3 c);
+half3 hsv_to_rgb(half3 c);
+
 #endif /* MTLHeader_h */

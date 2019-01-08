@@ -8,8 +8,6 @@
 
 import MetalKit
 import ReactiveSwift
-import ReactiveCocoa
-import SnapKit
 
 // MARK: Main
 /// View for rendering image output using metal enabled device
@@ -19,10 +17,8 @@ public final class RenderView: UIView {
     
     let pipelineState: MTLRenderPipelineState
     
-    let vertexBuffer: MTLBuffer
-    let indexBuffer: MTLBuffer
-    
-    private var texture: MTLTexture?
+    let vertexFunction: VertexFunction = .default
+    let fragmentFunction: FragmentFunction = .default
 
     /// Metal view
     private lazy var metalView: MTKView = {
@@ -31,19 +27,25 @@ public final class RenderView: UIView {
         view.device = MTL.default.device
         view.delegate = self
         
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         return view
     }()
     
-    override init(frame: CGRect = .zero) {
-        self.pipelineState = MTL.default.makePipelineState()!
+    /// Initializes and returns a newly allocated view object with the specified frame rectangle
+    public init!(_ frame: CGRect = .zero) {
         
-        self.vertexBuffer = MTL.default.makeBuffer(from: DefaultVertex.vertices)!
-        self.indexBuffer = MTL.default.makeBuffer(from: DefaultVertex.indices)!
+        guard MTL.default != nil else { return nil }
 
-        self.texture = MTL.default.makeEmptyTexture()!
+        self.pipelineState = MTL.default.makePipelineState(vertexFunction: self.vertexFunction, fragmentFunction: self.fragmentFunction)!
+        
+        let texture = MTL.default.makeEmptyTexture()
+        self.fragmentFunction.textures[0].swap(texture)
         
         super.init(frame: frame)
 
+        self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         self.addSubview(self.metalView)
     }
 
@@ -52,36 +54,8 @@ public final class RenderView: UIView {
     }
 }
 
-/// MARK: Inheritance
-extension RenderView {
-    
-    public override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        
-        self.metalView.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-}
-
 /// MARK: Protocol
-extension RenderView: Renderer {
-
-    public final var maxSourceCount: Int { return 1 }
-    
-    public final func input(at index: Int) -> BindingTarget<MTLTexture?> {
-        guard index < self.maxSourceCount else { fatalError("Array index out of bounds exception") }
-        
-        return self.reactive.makeBindingTarget { `self`, value in
-            guard let value = value else { return }
-            `self`.texture = value
-        }
-    }
-
-    final var textures: [MTLTexture?] { return [self.texture] }
-    
-    final var buffers: [MTLBuffer] { return [] }
-}
+extension RenderView: Renderer { }
 
 extension RenderView: MTKViewDelegate {
     

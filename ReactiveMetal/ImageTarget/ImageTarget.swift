@@ -21,3 +21,12 @@ public protocol ImageTarget: AnyObject {
     /// Operates with image inputs
     func input(at index: Int) -> BindingTarget<MTLTexture?>
 }
+
+public extension ImageTarget {
+    
+    /// For image binding
+    /// target[index] <-- source
+    subscript(index: Int) -> (ImageTarget, at: Int) {
+        get { return (self, index) }
+    }
+}

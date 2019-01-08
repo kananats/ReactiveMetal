@@ -22,14 +22,14 @@ public final class RGBFilter: Filter {
     public let blue: MutableProperty<Float>
     
     /// Initializes with initial RGB adjustment
-    public init(red: Float = 1, green: Float = 1, blue: Float = 1) {
+    public init!(red: Float = 1, green: Float = 1, blue: Float = 1) {
         
         self.red = MutableProperty<Float>(red)
         self.green = MutableProperty<Float>(green)
         self.blue = MutableProperty<Float>(blue)
         
-        super.init(fragmentFunctionName: "fragment_rgb", params: [red, green, blue])
-        
+        super.init(fragmentFunction: FragmentFunction.init(name: "fragment_rgb", params: red, green, blue))
+
         self.params(at: 0) <~ self.red.map { $0 }
         self.params(at: 1) <~ self.green.map { $0 }
         self.params(at: 2) <~ self.blue.map { $0 }

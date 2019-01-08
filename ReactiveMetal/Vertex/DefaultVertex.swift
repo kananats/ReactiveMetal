@@ -12,27 +12,36 @@ import simd
 /// Vertex for mapping texture coordinates to render quad
 public struct DefaultVertex {
     
-    /// position (x, y, z, w)
-    var position: float4
+    /// Position
+    private(set) public var position: float4
     
-    /// texture coordinates (u, v)
-    var texcoord: float2
+    /// Texture coordinates
+    private(set) public var texcoord: float2
+    
+    /// Initializes with positions and texture coordinates
+    public init(position: float4, texcoord: float2) {
+        self.position = position
+        self.texcoord = texcoord
+    }
 }
 
 // MARK: Protocol
 extension DefaultVertex: Vertex {
+
+    public init() { self.init(position: float4(), texcoord: float2()) }
     
     public static let functionName = "vertex_default"
+}
+
+// MARK: Public
+public extension DefaultVertex {
     
-    public static let vertices: [DefaultVertex] = [.topLeft, .bottomLeft, .bottomRight, .topRight]
-    
-    public static let indices: [UInt16] = [0, 1, 2, 2, 3, 0]
-    
-    public init() { self.init(position: float4(), texcoord: float2()) }
+    /// All coordinate vertices
+    static let vertices: [DefaultVertex] = [.topLeft, .bottomLeft, .bottomRight, .topRight]
 }
 
 // MARK: Private
-extension DefaultVertex {
+private extension DefaultVertex {
     
     /// Bottom left coordinate
     static let bottomLeft = DefaultVertex(position: float4(-1, 1, 0, 1), texcoord: float2(0, 0))

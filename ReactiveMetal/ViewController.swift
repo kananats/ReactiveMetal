@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var filter: ImageOperation!
     var target: RenderView!
     
-    var debuggers: [Debugger] = []
+    // var debuggers: [Debugger] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,25 +38,19 @@ class ViewController: UIViewController {
         }
         
         self.source = camera
-        
-        //self.source = Image("wallpaper")
-        
-        let hsv = HSVFilter()
-
         self.target = RenderView()
         
-        let rgb = RGBFilter()
+        self.filter = BrightnessFilter()
 
-        self.filter = OperationGroup(hsv, rgb)
-    
-        self.filter <-- self.source
         self.target <-- self.filter
         
         self.view.addSubview(self.target)
-        
-        self.target.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.target.frame = self.view.bounds
     }
 }
 

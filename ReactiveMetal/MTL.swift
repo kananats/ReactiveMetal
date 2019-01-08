@@ -7,32 +7,43 @@
 //
 
 import AVFoundation
-
-#if arch(i386) || arch(x86_64)
-#else
 import MetalKit
-#endif
 
 // MARK: Main
 /// Shared Metal resources
 public final class MTL {
     
     /// Metal enabled device
-    let device: MTLDevice
+    public let device: MTLDevice
     
-    /// Command queue of Metal enabled device
-    let commandQueue: MTLCommandQueue
+    /// Command queue of metal enabled device
+    public let commandQueue: MTLCommandQueue
     
     /// Preferred texture size
-    var preferredTextureSize = (width: 720, height: 1080)
+    public var preferredTextureSize = (width: 720, height: 1080)
     
-    private init?() {
+    /// Cached internal library
+    private let internalLibrary: MTLLibrary
+    
+    /// Cached external library
+    private let externalLibrary: MTLLibrary
+
+    /// Initializes
+    private init!() {
         guard let device = MTLCreateSystemDefaultDevice(),
             let commandQueue = device.makeCommandQueue()
             else { return nil }
         
         self.device = device
         self.commandQueue = commandQueue
+        
+        let bundle = Bundle(for: MTL.self)
+        guard let path = bundle.path(forResource: "default", ofType: "metallib"),
+            let library = try? device.makeLibrary(filepath: path)
+            else { return nil }
+        
+        self.internalLibrary = library
+        self.externalLibrary = device.makeDefaultLibrary()!
     }
 }
 
@@ -42,35 +53,30 @@ public extension MTL {
     /// Shared instance
     static let `default`: MTL! = MTL()
     
-    /// Makes pipeline state
-    func makePipelineState(fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
-        return self.makePipelineState(vertex: DefaultVertex.self, fragmentFunctionName: fragmentFunctionName)
+    /// Makes function. Internal library takes priority.
+    func makeFunction(name: String) -> MTLFunction? {
+        let internalFunction = self.internalLibrary.makeFunction(name: name)
+        let externalFunction = self.externalLibrary.makeFunction(name: name)
+        
+        guard internalFunction == nil || externalFunction == nil || internalFunction === externalFunction else { fatalError("Function \(name) is already defined in `com.donuts.ReactiveMetal`") }
+        
+        return internalFunction ?? externalFunction
     }
     
-    /// Makes pipeline state with specified vertex type
-    func makePipelineState<V: Vertex>(vertex: V.Type, fragmentFunctionName: String = "fragment_default") -> MTLRenderPipelineState? {
+    /// Makes pipeline state with vertex function and fragment function
+    func makePipelineState(vertexFunction: VertexFunction = .default, fragmentFunction: FragmentFunction = .default) -> MTLRenderPipelineState? {
 
-        let library = self.device.makeDefaultLibrary()!
-        
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         
         // Vertex function
-        guard let vertexFunction = library.makeFunction(name: V.functionName) else {
-            fatalError("vertexFunction `\(V.functionName)` not found.")
-        }
-        
-        pipelineDescriptor.vertexFunction = vertexFunction
+        pipelineDescriptor.vertexFunction = vertexFunction.function
         
         // Fragment function
-        guard let fragmentFunction = library.makeFunction(name: fragmentFunctionName) else {
-            fatalError("fragmentFunction `\(fragmentFunctionName)` not found.")
-        }
-            
-        pipelineDescriptor.fragmentFunction = fragmentFunction
+        pipelineDescriptor.fragmentFunction = fragmentFunction.function
         
         // Vertex descriptor
-        pipelineDescriptor.vertexDescriptor = V.descriptor
+        pipelineDescriptor.vertexDescriptor = vertexFunction.descriptor
         
         return try? self.device.makeRenderPipelineState(descriptor: pipelineDescriptor)
     }
@@ -104,7 +110,7 @@ public extension MTL {
     }
     #endif
     
-    /// Makes empty `MTLTexture`
+    /// Makes empty `MTLTexture` with specified texture width and height
     func makeEmptyTexture(width: Int, height: Int) -> MTLTexture? {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm, width: width, height: height, mipmapped: false)
         descriptor.usage = [.renderTarget, .shaderRead]
@@ -112,13 +118,24 @@ public extension MTL {
         return self.device.makeTexture(descriptor: descriptor)
     }
     
+    /// Makes empty `MTLTexture` with specified texture size
+    func makeEmptyTexture(size: Int) -> MTLTexture? {
+        return self.makeEmptyTexture(width: size, height: size)
+    }
+    
+    /// Makes empty `MTLTexture` with specified texture size
+    func makeEmptyTexture(size: (Int, Int)) -> MTLTexture? {
+        let (width, height) = size
+        return self.makeEmptyTexture(width: width, height: height)
+    }
+    
     /// Makes empty `MTLTexture` with the preferred texture size
     func makeEmptyTexture() -> MTLTexture? {
-        return self.makeEmptyTexture(width: self.preferredTextureSize.width, height: self.preferredTextureSize.height)
+        return self.makeEmptyTexture(size: self.preferredTextureSize)
     }
     
     /// Makes `MTLBuffer` from `Array<T>`
-    func makeBuffer<T>(from array: [T]) -> MTLBuffer? {
+    func makeBuffer<T>(array: [T]) -> MTLBuffer? {
         guard array.count > 0 else { return nil }
         
         return self.device.makeBuffer(bytes: array, length: array.count * MemoryLayout<T>.stride)

@@ -8,15 +8,15 @@
 
 #include "MTLHeader.h"
 
-/// Texture map vertex shader
+/// Default vertex shader
 vertex FragmentInput vertex_default(const VertexInput input [[stage_in]]) {
-    FragmentInput fragmentInput;
-    fragmentInput.position = input.position;
-    fragmentInput.texcoord = input.texcoord;
-    return fragmentInput;
+    FragmentInput output;
+    output.position = input.position;
+    output.texcoord = input.texcoord;
+    return output;
 };
 
-/// Texture map fragment shader
+/// Default fragment shader
 fragment half4 fragment_default(FragmentInput input [[stage_in]], texture2d<half> texture [[texture(0)]]) {
     constexpr sampler defaultSampler;
     half4 color = texture.sample(defaultSampler, input.texcoord);

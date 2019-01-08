@@ -22,7 +22,7 @@ private extension MTLBufferConvertible {
     
     /// Makes `MTLBuffer` from `[Float]`
     func makeBuffer(from array: [Float]) -> MTLBuffer? {
-        return MTL.default.makeBuffer(from: array)
+        return MTL.default.makeBuffer(array: array)
     }
 }
 

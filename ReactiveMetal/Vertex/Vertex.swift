@@ -12,21 +12,15 @@ import MetalKit
 /// A protocol for vertex struct
 public protocol Vertex {
     
-    /// Init without any parameter
+    /// Initializes
     init()
-    
-    /// All coordinate vertices
-    static var vertices: [Self] { get }
-    
-    /// All coordinate indices
-    static var indices: [UInt16] { get }
     
     /// Corresponding vertex shader function name
     static var functionName: String { get }
 }
 
-// MARK: Internal
-internal extension Vertex {
+// MARK: Public
+public extension Vertex {
     
     /// Makes descriptor for the vertex
     static var descriptor: MTLVertexDescriptor {
