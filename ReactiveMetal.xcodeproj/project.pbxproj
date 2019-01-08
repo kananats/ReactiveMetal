@@ -81,6 +81,8 @@
 		591A174121E47C12001ACDCD /* BrightnessFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A173F21E47B31001ACDCD /* BrightnessFilter.swift */; };
 		591A174221E47FD9001ACDCD /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5915F46521C76BD6002EAB24 /* SnapKit.framework */; };
 		591A174321E47FF1001ACDCD /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5915F46521C76BD6002EAB24 /* SnapKit.framework */; };
+		591A174521E4814B001ACDCD /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A174421E4814B001ACDCD /* Debugger.swift */; };
+		591A174721E48585001ACDCD /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A174421E4814B001ACDCD /* Debugger.swift */; };
 		591DC75321B61CA800D66900 /* ReactiveMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75221B61CA800D66900 /* ReactiveMetalTests.swift */; };
 		591DC75E21B61CA800D66900 /* ReactiveMetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75D21B61CA800D66900 /* ReactiveMetalUITests.swift */; };
 		5920AE3E21CC83A800EE4FA0 /* BlendFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5920AE3D21CC83A800EE4FA0 /* BlendFilter.swift */; };
@@ -124,6 +126,7 @@
 		5918663621BE5E2D00E16C67 /* Luminance.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Luminance.metal; sourceTree = "<group>"; };
 		591A173C21E477D8001ACDCD /* Brightness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Brightness.metal; sourceTree = "<group>"; };
 		591A173F21E47B31001ACDCD /* BrightnessFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessFilter.swift; sourceTree = "<group>"; };
+		591A174421E4814B001ACDCD /* Debugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		591D9AF121C33B130022C884 /* DoubleConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleConvertible.swift; sourceTree = "<group>"; };
 		591D9AF321C34D7B0022C884 /* RGB.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RGB.metal; sourceTree = "<group>"; };
 		591D9AF521C34FD30022C884 /* RGBFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBFilter.swift; sourceTree = "<group>"; };
@@ -326,6 +329,7 @@
 			children = (
 				591DC73D21B61CA700D66900 /* AppDelegate.swift */,
 				591DC73F21B61CA700D66900 /* ViewController.swift */,
+				591A174421E4814B001ACDCD /* Debugger.swift */,
 				59E0EE7421B7D071007E717E /* MTL.swift */,
 				59E0EE7221B7ADE8007E717E /* AVCamera.swift */,
 				5915F46121C74F39002EAB24 /* ImageBinding.swift */,
@@ -579,6 +583,7 @@
 			files = (
 				5914EE4721C8BCF2008CE46A /* AppDelegate.swift in Sources */,
 				5914EE3221C8BCF2008CE46A /* ViewController.swift in Sources */,
+				591A174721E48585001ACDCD /* Debugger.swift in Sources */,
 				5914EE3E21C8BCF2008CE46A /* MTL.swift in Sources */,
 				5914EE4B21C8BCF2008CE46A /* AVCamera.swift in Sources */,
 				5914EE3C21C8BCF2008CE46A /* ImageBinding.swift in Sources */,
@@ -647,6 +652,7 @@
 				5914EE8021C8C36B008CE46A /* ImageOperation.swift in Sources */,
 				5914EE8821C8C379008CE46A /* OperationGroup.swift in Sources */,
 				5914EE8121C8C36C008CE46A /* Filter.swift in Sources */,
+				591A174521E4814B001ACDCD /* Debugger.swift in Sources */,
 				5914EE8321C8C370008CE46A /* NoFilter.swift in Sources */,
 				5914EE8421C8C373008CE46A /* LuminanceFilter.swift in Sources */,
 				591A174021E47B31001ACDCD /* BrightnessFilter.swift in Sources */,
