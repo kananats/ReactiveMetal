@@ -75,6 +75,10 @@
 		5914EE8C21C8C386008CE46A /* HSV.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSV.metal */; };
 		5914EE8D21C8C388008CE46A /* Lookup.metal in Sources */ = {isa = PBXBuildFile; fileRef = 59240CFB21C0AB16003D6FC3 /* Lookup.metal */; };
 		5914EE8E21C8CE85008CE46A /* HSV.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591D9AF721C3530D0022C884 /* HSV.metal */; };
+		591A173D21E477D8001ACDCD /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591A173C21E477D8001ACDCD /* Brightness.metal */; };
+		591A173E21E47A48001ACDCD /* Brightness.metal in Sources */ = {isa = PBXBuildFile; fileRef = 591A173C21E477D8001ACDCD /* Brightness.metal */; };
+		591A174021E47B31001ACDCD /* BrightnessFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A173F21E47B31001ACDCD /* BrightnessFilter.swift */; };
+		591A174121E47C12001ACDCD /* BrightnessFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591A173F21E47B31001ACDCD /* BrightnessFilter.swift */; };
 		591DC75321B61CA800D66900 /* ReactiveMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75221B61CA800D66900 /* ReactiveMetalTests.swift */; };
 		591DC75E21B61CA800D66900 /* ReactiveMetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591DC75D21B61CA800D66900 /* ReactiveMetalUITests.swift */; };
 		5920AE3E21CC83A800EE4FA0 /* BlendFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5920AE3D21CC83A800EE4FA0 /* BlendFilter.swift */; };
@@ -116,6 +120,8 @@
 		59181C3B21BA3C3500CA48FB /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		5918663421BDF70500E16C67 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		5918663621BE5E2D00E16C67 /* Luminance.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Luminance.metal; sourceTree = "<group>"; };
+		591A173C21E477D8001ACDCD /* Brightness.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Brightness.metal; sourceTree = "<group>"; };
+		591A173F21E47B31001ACDCD /* BrightnessFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessFilter.swift; sourceTree = "<group>"; };
 		591D9AF121C33B130022C884 /* DoubleConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleConvertible.swift; sourceTree = "<group>"; };
 		591D9AF321C34D7B0022C884 /* RGB.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = RGB.metal; sourceTree = "<group>"; };
 		591D9AF521C34FD30022C884 /* RGBFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBFilter.swift; sourceTree = "<group>"; };
@@ -239,6 +245,7 @@
 				5984682321CB979E0007C709 /* MTLHeader.metal */,
 				591DC76B21B623A900D66900 /* Default.metal */,
 				5918663621BE5E2D00E16C67 /* Luminance.metal */,
+				591A173C21E477D8001ACDCD /* Brightness.metal */,
 				591D9AF321C34D7B0022C884 /* RGB.metal */,
 				591D9AF721C3530D0022C884 /* HSV.metal */,
 				5920AE3F21CC83B200EE4FA0 /* Blend.metal */,
@@ -264,6 +271,7 @@
 				5918663421BDF70500E16C67 /* Filter.swift */,
 				59240CFF21C0D4AE003D6FC3 /* NoFilter.swift */,
 				591F635321BFC2FC005199C6 /* LuminanceFilter.swift */,
+				591A173F21E47B31001ACDCD /* BrightnessFilter.swift */,
 				591D9AF521C34FD30022C884 /* RGBFilter.swift */,
 				591D9AF921C368710022C884 /* HSVFilter.swift */,
 				5920AE3D21CC83A800EE4FA0 /* BlendFilter.swift */,
@@ -589,6 +597,7 @@
 				5914EE3421C8BCF2008CE46A /* Filter.swift in Sources */,
 				5914EE4021C8BCF2008CE46A /* NoFilter.swift in Sources */,
 				5914EE4121C8BCF2008CE46A /* LuminanceFilter.swift in Sources */,
+				591A174121E47C12001ACDCD /* BrightnessFilter.swift in Sources */,
 				5914EE2F21C8BCF2008CE46A /* RGBFilter.swift in Sources */,
 				5914EE4A21C8BCF2008CE46A /* HSVFilter.swift in Sources */,
 				5920AE4221CC83FC00EE4FA0 /* BlendFilter.swift in Sources */,
@@ -598,6 +607,7 @@
 				5984682521CB99260007C709 /* MTLHeader.metal in Sources */,
 				5914EE3021C8BCF2008CE46A /* Default.metal in Sources */,
 				5914EE3921C8BCF2008CE46A /* Luminance.metal in Sources */,
+				591A173E21E47A48001ACDCD /* Brightness.metal in Sources */,
 				5914EE4921C8BCF2008CE46A /* RGB.metal in Sources */,
 				5914EE8E21C8CE85008CE46A /* HSV.metal in Sources */,
 				5920AE4121CC83F800EE4FA0 /* Blend.metal in Sources */,
@@ -634,6 +644,7 @@
 				5914EE8121C8C36C008CE46A /* Filter.swift in Sources */,
 				5914EE8321C8C370008CE46A /* NoFilter.swift in Sources */,
 				5914EE8421C8C373008CE46A /* LuminanceFilter.swift in Sources */,
+				591A174021E47B31001ACDCD /* BrightnessFilter.swift in Sources */,
 				5914EE8521C8C374008CE46A /* RGBFilter.swift in Sources */,
 				5914EE8621C8C376008CE46A /* HSVFilter.swift in Sources */,
 				5920AE3E21CC83A800EE4FA0 /* BlendFilter.swift in Sources */,
@@ -643,6 +654,7 @@
 				5984682421CB979E0007C709 /* MTLHeader.metal in Sources */,
 				5914EE8921C8C380008CE46A /* Default.metal in Sources */,
 				5914EE8A21C8C382008CE46A /* Luminance.metal in Sources */,
+				591A173D21E477D8001ACDCD /* Brightness.metal in Sources */,
 				5914EE8B21C8C384008CE46A /* RGB.metal in Sources */,
 				5914EE8C21C8C386008CE46A /* HSV.metal in Sources */,
 				5920AE4021CC83B200EE4FA0 /* Blend.metal in Sources */,

@@ -14,7 +14,6 @@ import ReactiveSwift
 class ViewController: UIViewController {
 
     var source: ImageSource!
-    var source2: ImageSource!
     var filter: ImageOperation!
     var target: RenderView!
     
@@ -41,13 +40,8 @@ class ViewController: UIViewController {
         self.source = camera
         self.target = RenderView()
         
-        self.source2 = Image("wallpaper")
-        
-        self.filter = BlendFilter(interpolant: -0.5)
-        
-        self.filter[0] <-- self.source
-        self.filter[1] <-- self.source2
-        
+        self.filter = BrightnessFilter()
+
         self.target <-- self.filter
         
         self.view.addSubview(self.target)
