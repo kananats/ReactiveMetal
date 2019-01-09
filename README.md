@@ -5,8 +5,11 @@ Image Processing with Metal
 API was inspired by BradLarson/GPUImage
 
 Make strong references to these
+
 let source = Camera()
-let filter = LuminanceFilter() + RGBFilter(red: 0.1, green: 0.2, blue: 0.3) // Filter is summable
+
+let filter = LuminanceFilter() + RGBFilter(red: 0.1, green: 0.2, blue: 0.3) // Filter is 
+
 let target = RenderView()
 
 filter <-- source
