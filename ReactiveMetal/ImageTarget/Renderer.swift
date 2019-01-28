@@ -58,6 +58,7 @@ internal extension Renderer {
         
         self.render(descriptor: descriptor) { commandBuffer in
             commandBuffer.present(drawable)
+            if view.isPaused { view.draw() }
         }
     }
     

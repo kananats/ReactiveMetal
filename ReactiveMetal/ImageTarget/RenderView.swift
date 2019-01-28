@@ -25,7 +25,7 @@ public final class RenderView: UIView {
         let view = MTKView(frame: self.frame)
         
         view.device = MTL.default.device
-        view.delegate = self
+        view.isPaused = true
         
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -47,6 +47,8 @@ public final class RenderView: UIView {
         self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.addSubview(self.metalView)
+        
+        self.bind()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -54,12 +56,23 @@ public final class RenderView: UIView {
     }
 }
 
-/// MARK: Protocol
+// MARK: Protocol
 extension RenderView: Renderer { }
 
-extension RenderView: MTKViewDelegate {
+// MARK: Private
+private extension RenderView {
     
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) { }
-    
-    public func draw(in view: MTKView) { self.render(in: view) }
+    /// Bind
+    @discardableResult
+    func bind() -> Disposable? {
+        let disposable = CompositeDisposable()
+            
+        disposable += self.textureReceived.observeValues { [weak self] _, _ in
+            guard let `self` = self else { return }
+            
+            `self`.render(in: `self`.metalView)
+        }
+        
+        return disposable
+    }
 }

@@ -15,11 +15,17 @@ import ReactiveSwift
 /// AVFoundation camera
 final class AVCamera: NSObject {
     
-    /// Dispatch queue for camera session output
+    /// Dispatch queue for processing
+    private let sampleBufferCallbackQueue = DispatchQueue.global()
+    
+    /// Dispatch queue for processing frame
     private let dispatchQueue = DispatchQueue(label: "com.donuts.ReactiveMetal.AVCamera")
     
-    /// Captured sample buffer (reactive)
-    private let _sampleBuffer = MutableProperty<CMSampleBuffer?>(nil)
+    /// Dispatch semaphore
+    private let semaphore = DispatchSemaphore(value: 1)
+    
+    /// Captured image buffer (reactive)
+    private let _imageBuffer = MutableProperty<CVImageBuffer?>(nil)
     
     /// Is session running (reactive)
     let isRunning = MutableProperty<Bool>(true)
@@ -44,24 +50,17 @@ final class AVCamera: NSObject {
     private let input: AVCaptureInput
     
     /// Capture session output
-    private lazy var output: AVCaptureOutput = {
+    private lazy var output: AVCaptureVideoDataOutput = {
         let output = AVCaptureVideoDataOutput()
-        output.setSampleBufferDelegate(self, queue: self.dispatchQueue)
+        output.setSampleBufferDelegate(self, queue: self.sampleBufferCallbackQueue)
         output.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
         
         return output
     }()
     
     /// Init with a camera position
-    init?(position: AVCaptureDevice.Position = .front) {
-
-        // Requests access to camera
-        var granted = true
+    init!(position: AVCaptureDevice.Position = .front) {
         
-        AVCaptureDevice.requestAccess(for: .video) { granted = $0 }
-        
-        guard granted else { return nil }
-
         // Discovers capture input devices
         let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: position).devices
         
@@ -109,25 +108,42 @@ final class AVCamera: NSObject {
         self.bind()
     }
     
-    deinit { self.stopCapture() }
+    deinit {
+        self.dispatchQueue.sync {
+            if self.session.isRunning { self.session.stopRunning() }
+            
+            self.output.setSampleBufferDelegate(nil, queue: nil)
+        }
+    }
 }
 
 // MARK: Protocol
 extension AVCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
-        guard self.output == output, !self.isPausing.value else { return }
 
-        self._sampleBuffer.swap(sampleBuffer)
+        guard self.output == output, !self.isPausing.value else { return }
+        
+        guard self.semaphore.wait(timeout: .now()) == .success else { return }
+        
+        let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
+        CVPixelBufferLockBaseAddress(imageBuffer, .readOnly)
+        
+        self.dispatchQueue.async {
+            self._imageBuffer.swap(imageBuffer)
+            
+            CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
+            
+            self.semaphore.signal()
+        }
     }
 }
 
 // MARK: Internal
 internal extension AVCamera {
 
-    /// Captured sample buffer (reactive)
-    var sampleBuffer: SignalProducer<CMSampleBuffer, NoError> { return self._sampleBuffer.producer.skipNil() }
+    /// Captured image buffer (reactive)
+    var imageBuffer: SignalProducer<CVImageBuffer, NoError> { return self._imageBuffer.producer.skipNil() }
 }
 
 // MARK: Private
@@ -148,17 +164,17 @@ private extension AVCamera {
         return disposable
     }
     
-    // Starts the capture session
+    /// Starts the capture session
     func startCapture() {
         guard !self.session.isRunning else { return }
-        
-        DispatchQueue.main.async { self.session.startRunning() }
+
+        self.session.startRunning()
     }
     
-    // Stops the capture session
+    /// Stops the capture session
     func stopCapture() {
         guard self.session.isRunning else { return }
-        
-        DispatchQueue.main.async { self.session.stopRunning() }
+
+        self.session.stopRunning()
     }
 }

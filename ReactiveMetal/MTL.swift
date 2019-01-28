@@ -94,15 +94,20 @@ public extension MTL {
 
     /// Makes `MTLTexture` from `CMSampleBuffer`
     func makeTexture(from buffer: CMSampleBuffer, format: MTLPixelFormat = .bgra8Unorm, textureCache: CVMetalTextureCache) -> MTLTexture? {
+        guard let buffer = CMSampleBufferGetImageBuffer(buffer) else { return nil }
         
-        guard let imageBuffer = CMSampleBufferGetImageBuffer(buffer) else { return nil }
+        return self.makeTexture(from: buffer, format: format, textureCache: textureCache)
+    }
+    
+    /// Makes `MTLTexture` from `CVImageBuffer`
+    func makeTexture(from buffer: CVImageBuffer, format: MTLPixelFormat = .bgra8Unorm, textureCache: CVMetalTextureCache) -> MTLTexture? {
         
-        let width = CVPixelBufferGetWidth(imageBuffer)
-        let height = CVPixelBufferGetHeight(imageBuffer)
-
+        let width = CVPixelBufferGetWidth(buffer)
+        let height = CVPixelBufferGetHeight(buffer)
+        
         var metalTexture: CVMetalTexture?
         
-        guard CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, imageBuffer, nil, format, width, height, 0, &metalTexture) == kCVReturnSuccess else { return nil }
+        guard CVMetalTextureCacheCreateTextureFromImage(kCFAllocatorDefault, textureCache, buffer, nil, format, width, height, 0, &metalTexture) == kCVReturnSuccess else { return nil }
         
         guard metalTexture != nil else { return nil }
         

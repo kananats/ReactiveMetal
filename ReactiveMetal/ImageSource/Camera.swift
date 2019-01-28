@@ -45,7 +45,7 @@ extension Camera: ImageSource {
     
     public var output: SignalProducer<MTLTexture, NoError> {
         
-        return self.camera.sampleBuffer.filterMap { [weak self] value in
+        return self.camera.imageBuffer.filterMap { [weak self] value in
             #if arch(i386) || arch(x86_64)
                 return nil
             #else
